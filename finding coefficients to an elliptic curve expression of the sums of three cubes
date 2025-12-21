@@ -1,0 +1,33 @@
+# SageMath code to express the elliptic curve equation in the form y^2 = ax^3 + bx^2 + cx + d
+
+# Define the rational field and polynomial ring
+Q = QQ
+R.<x> = PolynomialRing(Q)
+
+# Define constants
+A = 3782234599225650235415
+B = 2094194294170672539119
+
+# Define u = A*x + B
+u = A*x + B
+
+# Compute the right-hand side
+# y^2 = (19 + 6u)^2 + (36u^3 - 19)/19
+rhs = (19 + 6*u)^2 + (36*u^3 - 19)/19
+
+# The polynomial is already expanded, just extract coefficients
+coeffs = rhs.list()
+
+# Pad with zeros if necessary
+while len(coeffs) < 4:
+    coeffs.append(0)
+
+a = coeffs[3] if len(coeffs) > 3 else 0
+b = coeffs[2] if len(coeffs) > 2 else 0
+c = coeffs[1] if len(coeffs) > 1 else 0
+d = coeffs[0] if len(coeffs) > 0 else 0
+
+print(f"a = {a}")
+print(f"b = {b}")
+print(f"c = {c}")
+print(f"d = {d}")
