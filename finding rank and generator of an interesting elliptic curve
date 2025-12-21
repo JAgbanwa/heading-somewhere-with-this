@@ -1,0 +1,78 @@
+# SageMath code to find the rank of the elliptic curve
+# y^2 = ax^3 + bx^2 + cx + d
+
+# Define coefficients
+a = 102516622445224071181618629075661543598435443927642055302797028500
+b = 170288003150088713211165229564777675866712767658935950737783670400
+c = 94287161519712324562577411784076704909304399983333523978591825920
+d = 17402026102819032989296434839371590967156048128533655419095307484
+
+print("Elliptic Curve:")
+print(f"y^2 = {a}*x^3 + {b}*x^2 + {c}*x + {d}")
+print()
+
+# To use SageMath's EllipticCurve, we need to convert to Weierstrass form
+# y^2 = x^3 + Ax + B
+# We need to eliminate the x^2 term using the transformation x = X - b/(3a)
+
+# Calculate the shift
+shift = b / (3 * a)
+print(f"Shift to eliminate x^2 term: x = X - {shift}")
+print()
+
+# Define polynomial ring for the transformation
+Q = QQ
+R.<X> = PolynomialRing(Q)
+
+# Substitute x = X - shift into the original equation
+x_sub = X - shift
+rhs_transformed = a * x_sub^3 + b * x_sub^2 + c * x_sub + d
+
+# Extract coefficients of the transformed equation
+coeffs = rhs_transformed.list()
+
+# Pad with zeros if necessary
+while len(coeffs) < 4:
+    coeffs.append(0)
+
+# In Weierstrass form y^2 = X^3 + AX + B
+# coeffs[3] should be the coefficient of X^3 (should equal a after transformation)
+# coeffs[2] should be 0 (x^2 term eliminated)
+# coeffs[1] is A (coefficient of X)
+# coeffs[0] is B (constant term)
+
+A_coeff = coeffs[1] if len(coeffs) > 1 else 0
+B_coeff = coeffs[0] if len(coeffs) > 0 else 0
+
+print("Transformed to Weierstrass form:")
+print(f"y^2 = X^3 + A*X + B")
+print(f"A = {A_coeff}")
+print(f"B = {B_coeff}")
+print()
+
+# Create the elliptic curve
+E = EllipticCurve(Q, [A_coeff, B_coeff])
+
+print("Elliptic Curve object:", E)
+print()
+
+# Compute the rank
+print("Computing rank (this may take some time)...")
+rank = E.rank()
+
+print()
+print("=" * 60)
+print(f"Rank of the elliptic curve: {rank}")
+print("=" * 60)
+print()
+
+# Get generators of the Mordell-Weil group
+print("Finding generators...")
+gens = E.gens()
+print(f"Number of generators: {len(gens)}")
+if gens:
+    print("Generators:")
+    for i, gen in enumerate(gens):
+        print(f"  Generator {i+1}: {gen}")
+else:
+    print("  No generators (rank 0)")
