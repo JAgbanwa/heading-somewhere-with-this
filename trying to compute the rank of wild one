@@ -1,0 +1,99 @@
+# Define the coefficients of the elliptic curve
+# y^2 = a*x^3 + b*x^2 + c*x + d
+
+a = 102516622445224071181618629075661543598435443927642055302797028500
+b = 170288003150088713211165229564777675866712767658935950737783670400
+c = 94287161519712324562577411784076704909304399983333523978591825920
+d = 17402026102819032989296434839371590967156048128533655419095307484
+
+# First, we need to convert this to Weierstrass form
+# The given equation is: y^2 = a*x^3 + b*x^2 + c*x + d
+# This is already in generalized Weierstrass form: y^2 = x^3 + A*x^2 + B*x + C
+# where A = b/a, B = c/a, C = d/a
+
+# However, SageMath's EllipticCurve expects the coefficients to be integers
+# So we'll work with the curve as given, scaling appropriately
+
+# Define the curve over the rationals
+# We can factor out common factors if any exist
+print("Computing GCD of coefficients...")
+g = gcd([a, b, c, d])
+print(f"GCD of coefficients: {g}")
+
+# Scale the coefficients
+a_scaled = a // g
+b_scaled = b // g
+c_scaled = c // g
+d_scaled = d // g
+
+print(f"\nScaled coefficients:")
+print(f"a = {a_scaled}")
+print(f"b = {b_scaled}")
+print(f"c = {c_scaled}")
+print(f"d = {d_scaled}")
+
+# Transform to short Weierstrass form y^2 = x^3 + A*x + B
+# by completing the transformation
+print("\nTransforming to Weierstrass form...")
+
+# The curve y^2 = a*x^3 + b*x^2 + c*x + d can be written as
+# (y')^2 = (x')^3 + A*(x') + B after appropriate transformation
+
+# For curves over Q, we can use SageMath's built-in functionality
+# Create the curve in the form [a1, a2, a3, a4, a6] where
+# y^2 + a1*xy + a3*y = x^3 + a2*x^2 + a4*x + a6
+
+# Our curve is y^2 = a*x^3 + b*x^2 + c*x + d
+# We need to make the leading coefficient 1, so divide by a
+# This gives y^2 = x^3 + (b/a)*x^2 + (c/a)*x + (d/a)
+
+# Create rational coefficients
+A2 = b / a
+A4 = c / a  
+A6 = d / a
+
+print(f"\nWeierstrass coefficients [0, A2, 0, A4, A6]:")
+print(f"A2 = {A2}")
+print(f"A4 = {A4}")
+print(f"A6 = {A6}")
+
+# Create the elliptic curve
+E = EllipticCurve(QQ, [0, A2, 0, A4, A6])
+
+print(f"\nElliptic Curve: {E}")
+print(f"Discriminant: {E.discriminant()}")
+print(f"j-invariant: {E.j_invariant()}")
+
+# Compute the rank
+print("\n" + "="*60)
+print("Computing the rank of the elliptic curve...")
+print("This may take some time for large coefficients...")
+print("="*60)
+
+try:
+    rank = E.rank()
+    print(f"\nRank of the elliptic curve: {rank}")
+    
+    # Get generators if rank > 0
+    if rank > 0:
+        print(f"\nComputing generators...")
+        gens = E.gens()
+        print(f"Generators of the Mordell-Weil group:")
+        for i, gen in enumerate(gens):
+            print(f"  Generator {i+1}: {gen}")
+    else:
+        print("\nThe curve has rank 0 (no non-torsion rational points)")
+    
+    # Compute torsion subgroup
+    print(f"\nTorsion subgroup: {E.torsion_subgroup()}")
+    
+except Exception as e:
+    print(f"\nError computing rank: {e}")
+    print("\nTrying alternative methods...")
+    
+    # Try computing rank bounds
+    try:
+        lower_bound = E.rank_bound()
+        print(f"Rank lower bound: {lower_bound}")
+    except:
+        print("Could not compute rank bounds")
