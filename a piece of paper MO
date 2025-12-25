@@ -6,6 +6,10 @@
 \end{align*}
 
 ***********************
+Suppose $ k_2 = X^{\frac{2}{3}}$,
+\begin{equation}\label{6.8}
+X^2 - Y_2^2 = 1729
+\end{equation}
 
 Equations of the form $X^2 - Y^2 = a$ are solved as follows:
 \begin{align*}
