@@ -32,3 +32,18 @@ To yield integer solutions, the target is solving equation \eqref{6.9}:
     k_2 ^3 - Y_2^2 = 1729
 \end{equation}
 Equation \eqref{7.1} has the two integer points below $10000$ are $(k_2, Y_2) = (2305, 110664) ,(2305, -110664)$
+
+
+***********************
+
+\begin{align*}
+    Y^2 &= k_1^3 - 1729 \cdot \left(11346703797676950706245\right)^3\\
+    Y^2 &=  \left(k_2 \cdot11346703797676950706245\right)^3 - 1729 \cdot \left(11346703797676950706245\right)^3 \\
+    \left(\dfrac{Y}{11346703797676950706245^{\frac{3}{2}}}\right)^2 &=  k_2 ^3 - 1729  \\
+    Y_2^2 &= k_2 ^3  - 1729 \\
+\end{align*}
+where $Y_2 = \dfrac{Y}{11346703797676950706245^{\frac{3}{2}}}$
+\begin{equation} \label{7.1}
+    k_2 ^3 - Y_2^2 = 1729
+\end{equation}
+Equation \eqref{7.1} has the two integer points below $10000$ are $(k_2, Y_2) = (2305, 110664) ,(2305, -110664)$
