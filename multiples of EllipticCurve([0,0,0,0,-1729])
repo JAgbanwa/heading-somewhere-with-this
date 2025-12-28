@@ -1,0 +1,8 @@
+E := EllipticCurve([0,0,0,0,-1729]);
+P := E![2305,110664];
+
+// Compute specific multiples
+P;
+2*P;
+3*P;
+4*P;
