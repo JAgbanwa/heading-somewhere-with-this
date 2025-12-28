@@ -1,0 +1,232 @@
+# Solve x^3 - y^2 = 1729 for integer solutions
+n = 1729
+
+print("="*70)
+print(f"SOLVING: x³ - y² = {n}")
+print(f"Note: {n} = 7 × 13 × 19 (Hardy-Ramanujan number)")
+print("="*70)
+print()
+
+# Method 1: Direct search for small solutions
+print("METHOD 1: Direct search for small solutions")
+print("Searching x up to 10^5...")
+
+solutions = []
+for x in range(-10**5, 10**5 + 1):
+    y_squared = x**3 - n
+    
+    if y_squared < 0:
+        continue
+    
+    y = floor(sqrt(y_squared))
+    if y**2 == y_squared:
+        solutions.append((x, y))
+        # Also include -y since y² = (-y)²
+        if y != 0:
+            solutions.append((x, -y))
+
+# Remove duplicates and sort
+solutions = sorted(set(solutions))
+
+print(f"Found {len(solutions)} solution(s) with |x| ≤ 10^5:")
+for i, (x, y) in enumerate(solutions):
+    print(f"  Solution {i+1}: x = {x}, y = {y}")
+    print(f"    Check: {x}³ - {y}² = {x**3} - {y**2} = {x**3 - y**2}")
+    if x**3 - y**2 == n:
+        print("    ✓ Verified!")
+    print()
+
+# Method 2: Using elliptic curve representation
+print("\n" + "="*70)
+print("METHOD 2: Elliptic curve approach")
+print("Equation: y² = x³ - 1729")
+print("="*70)
+print()
+
+E = EllipticCurve([0, 0, 0, 0, -n])  # y² = x³ - 1729
+
+print(f"Elliptic curve: {E}")
+print(f"Discriminant Δ: {E.discriminant()}")
+print(f"j-invariant: {E.j_invariant()}")
+print()
+
+# Find integral points
+print("Searching for integral points on the elliptic curve...")
+try:
+    int_points = E.integral_points()
+    print(f"Found {len(int_points)} integral point(s):")
+    for i, P in enumerate(int_points):
+        x_val = P[0]
+        y_val = P[1]
+        print(f"\n  Point {i+1}:")
+        print(f"    x = {x_val}")
+        print(f"    y = {y_val}")
+        print(f"    Check: {x_val}³ - {y_val}² = {x_val**3 - y_val**2}")
+        if x_val**3 - y_val**2 == n:
+            print("    ✓ Verified!")
+        
+        # Also include negative y
+        if y_val != 0:
+            print(f"    Also valid: x = {x_val}, y = {-y_val}")
+except Exception as e:
+    print(f"Error in integral point search: {e}")
+
+# Method 3: Factorization approach
+print("\n" + "="*70)
+print("METHOD 3: Factorization approach")
+print("Rewrite: x³ - y² = 1729 => (x - a)(x² + ax + a²) = 1729 + y²")
+print("="*70)
+print()
+
+# Since 1729 = 7 × 13 × 19, check if x³ ≡ y² (mod small primes)
+print("Modular analysis:")
+for p in [2, 3, 5, 7, 11, 13, 17, 19]:
+    print(f"  Mod {p}: x³ - y² ≡ 0 => x³ ≡ y² (mod {p})")
+    # List cubes mod p
+    cubes_mod_p = {pow(i, 3, p) for i in range(p)}
+    squares_mod_p = {pow(i, 2, p) for i in range(p)}
+    valid_pairs = [(a, b) for a in range(p) for b in range(p) 
+                   if (pow(a, 3, p) - pow(b, 2, p)) % p == n % p]
+    print(f"    Possible (x,y) mod {p}: {valid_pairs[:5]}...")
+
+# Method 4: Check known small solutions
+print("\n" + "="*70)
+print("METHOD 4: Known solutions check")
+print("="*70)
+print()
+
+# Known from sum of two cubes representations of 1729
+# 1729 = 1³ + 12³ = 9³ + 10³
+# So if we set x = a³ and y = b³, we might get solutions
+
+known_pairs = [
+    (1, 12), (12, 1), (9, 10), (10, 9),
+    (-1, 12), (12, -1), (-9, 10), (10, -9)
+]
+
+print("Checking if 1729 = a³ + b³ gives solutions to x³ - y² = 1729...")
+for a, b in known_pairs:
+    # Try x = a³, then y² = x³ - 1729
+    x_candidate = a**3
+    y_squared = x_candidate**3 - n
+    
+    if y_squared >= 0:
+        y = floor(sqrt(y_squared))
+        if y**2 == y_squared:
+            print(f"  From {a}³ + {b}³ = 1729:")
+            print(f"    x = {a}³ = {x_candidate}")
+            print(f"    y = ±{y} (since y² = {y_squared})")
+
+# Method 5: Search for perfect power solutions
+print("\n" + "="*70)
+print("METHOD 5: Search for x = a³ (perfect cube)")
+print("This would give: a⁹ - y² = 1729")
+print("="*70)
+print()
+
+print("Searching for a such that a⁹ - 1729 is a perfect square...")
+print("(This corresponds to special cases of your original problem)")
+
+for a in range(1, 100):
+    a9 = a**9
+    diff = a9 - n
+    
+    if diff < 0:
+        continue
+    
+    y_candidate = floor(sqrt(diff))
+    if y_candidate**2 == diff:
+        print(f"\n  Found: a = {a}")
+        print(f"    x = a³ = {a}³ = {a**3}")
+        print(f"    a⁹ = {a9}")
+        print(f"    y = √(a⁹ - 1729) = {y_candidate}")
+        print(f"    Check: {a**3}³ - {y_candidate}² = {a**9} - {y_candidate**2} = {n}")
+
+# Method 6: Analyze curve properties
+print("\n" + "="*70)
+print("METHOD 6: Elliptic curve analysis")
+print("="*70)
+print()
+
+print("Analyzing curve E: y² = x³ - 1729")
+try:
+    # Compute rank
+    rank_bound = E.rank_bound()
+    print(f"Rank lower bound: {rank_bound}")
+    
+    # Try to compute actual rank
+    rank = E.rank(proof=False)
+    print(f"Rank (unverified): {rank}")
+    
+    # Get generators if rank > 0
+    if rank > 0:
+        print("\nGenerators of the Mordell-Weil group:")
+        gens = E.gens(proof=False)
+        for i, P in enumerate(gens):
+            print(f"  Generator {i+1}: {P}")
+    
+    # Torsion subgroup
+    torsion = E.torsion_subgroup()
+    print(f"\nTorsion subgroup: {torsion}")
+    print(f"Torsion order: {torsion.order()}")
+    
+    # List torsion points
+    if torsion.order() > 1:
+        print("Torsion points (finite order):")
+        for T in torsion:
+            if T != E(0):  # Not point at infinity
+                x_val, y_val = T.xy()
+                print(f"  T = ({x_val}, {y_val})")
+                # Check if it satisfies x³ - y² = 1729
+                if x_val**3 - y_val**2 == n:
+                    print(f"    ✓ Valid solution!")
+    
+except Exception as e:
+    print(f"Analysis error: {e}")
+
+# Final summary
+print("\n" + "="*70)
+print("SUMMARY OF ALL INTEGER SOLUTIONS")
+print("="*70)
+print()
+
+# Collect all unique solutions
+all_solutions = set()
+
+# From direct search
+for x, y in solutions:
+    all_solutions.add((x, y))
+
+# From elliptic curve points
+try:
+    for P in E.integral_points():
+        x_val = P[0]
+        y_val = P[1]
+        all_solutions.add((x_val, y_val))
+        all_solutions.add((x_val, -y_val))
+except:
+    pass
+
+# Sort and display
+sorted_solutions = sorted(all_solutions, key=lambda s: (abs(s[0]), s[0]))
+
+if sorted_solutions:
+    print(f"Total unique integer solutions found: {len(sorted_solutions)}")
+    print("\nAll solutions (x, y):")
+    for i, (x, y) in enumerate(sorted_solutions):
+        print(f"  {i+1:2d}. x = {x:6d}, y = {y:6d}")
+        print(f"       Check: {x}³ - {y}² = {x**3 - y**2} {'✓' if x**3 - y**2 == n else '✗'}")
+else:
+    print("No integer solutions found in search range.")
+
+# Special note about 1729
+print("\n" + "="*70)
+print("HISTORICAL NOTE")
+print("="*70)
+print()
+print("1729 is the Hardy-Ramanujan number: the smallest integer")
+print("that can be expressed as a sum of two cubes in two different ways:")
+print("  1729 = 1³ + 12³ = 9³ + 10³")
+print()
+print("The equation x³ - y² = 1729 is therefore of special interest")
+print("in number theory, connecting sums of cubes with elliptic curves.")
