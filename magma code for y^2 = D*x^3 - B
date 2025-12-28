@@ -1,0 +1,78 @@
+D := 11346703797676950706245;
+C := 1729 * D^3;
+
+print "Original: Y^2 = X^3 - C where C = 1729*D^3";
+print "C =", C;
+
+// Your reparametrized equation: y^2 = D*x^3 - B
+B := 19618450866183447771097605;
+print "\nReparametrized: y^2 = D*x^3 - B";
+print "B =", B;
+
+// Check relationship: if (X,Y) solves Y^2 = X^3 - 1729*D^3
+// and we set x = X/D, y = Y/D^(3/2)... need integer transformation
+
+// Actually, try: X = D*x, Y = D*y
+// Then Y^2 = D^2*y^2 and X^3 = D^3*x^3
+// So: D^2*y^2 = D^3*x^3 - 1729*D^3
+//     D^2*y^2 = D^3(x^3 - 1729)
+//     y^2 = D(x^3 - 1729)
+//     y^2 = D*x^3 - 1729*D
+
+print "\nExpected B = 1729*D =", 1729*D;
+print "Actual B =", B;
+print "Match?", B eq 1729*D;
+
+// So the transformation is: (X, Y) on Y^2 = X^3 - 1729*D^3
+// corresponds to (x, y) = (X/D, Y/D) on y^2 = D*x^3 - 1729*D
+
+print "\n=== Solving Y^2 = X^3 - 1729*D^3 ===";
+
+E := EllipticCurve([0, 0, 0, 0, -C]);
+print "Curve:", E;
+
+Em, phi := MinimalModel(E);
+print "Minimal model:", Em;
+print "Conductor:", Conductor(Em);
+
+print "\nSearching for points...";
+pts := PointSearch(Em, 1000000);
+print "Points found:", #pts;
+
+for P in pts do
+    if P ne Em!0 then
+        Q := phi(P);
+        X := Q[1];
+        Y := Q[2];
+        
+        // Check if X divisible by D and Y divisible by D
+        if X mod D eq 0 and Y mod D eq 0 then
+            x := X div D;
+            y := Y div D;
+            
+            print "\nInteger solution on original curve:";
+            print "(X, Y) =", (X, Y);
+            print "\nTransformed to reparametrized curve:";
+            print "(x, y) =", (x, y);
+            
+            // Verify both equations
+            check1 := Y^2 - (X^3 - C);
+            check2 := y^2 - (D*x^3 - 1729*D);
+            print "Verification Y^2 = X^3 - C:", check1 eq 0;
+            print "Verification y^2 = D*x^3 - 1729*D:", check2 eq 0;
+        end if;
+    end if;
+end for;
+
+print "\n=== Alternative: Direct computation on Mordell curve ===";
+try
+    int_pts := IntegralPoints(Em : Bound := 10^30);
+    print "Integral points found:", #int_pts;
+    
+    for P in int_pts do
+        Q := phi(P);
+        print "Point:", Q;
+    end for;
+catch e
+    print "IntegralPoints failed, bound might be too large";
+end try;
