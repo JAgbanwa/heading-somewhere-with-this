@@ -59,6 +59,18 @@ Equation \eqref{7.1} has the two integer points below $10000$ are $(k_2, Y_2) = 
 where $Y_2 = \dfrac{Y}{11346703797676950706245}$ .
 
 **************************(another re-expression of the above)
+\begin{equation} \label{7.1}
+    k_2 ^3 - Y_2^2 = 1729
+\end{equation}
+To ensure $Y$ is integer, let $Y_2 = Y_3 \cdot \sqrt{11346703797676950706245}$. Thus equation \eqref{7.1} is re-expressed as:
+\begin{equation} \label{7.2}
+    k_2 ^3 - (Y_3 \cdot \sqrt{11346703797676950706245})^2 = 1729
+\end{equation}
+Equation \eqref{7.1} has the two integer points below $10000$ are $(k_2, Y_2) = (2305, 110664) ,(2305, -110664)$
+
+\begin{align*}
+    Y &= \sqrt{11346703797676950706245^3} \cdot \sqrt{11346703797676950706245} \cdot \dfrac{110664}{\sqrt{11346703797676950706245}}
+\end{align*}
 
 \begin{align*}
     Y^2 &= k_1^3 - 1729 \cdot \left(11346703797676950706245\right)^3\\
