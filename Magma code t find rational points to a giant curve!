@@ -1,0 +1,7 @@
+Q := Rationals();
+E := EllipticCurve([0, 0, 0, -2525830172961041971790515187823418026564152076350226869064138887440125, 0]);
+rankE, gens := Rank(E);
+torsionE := TorsionSubgroup(E);
+ratPts := RationalPoints(E : Bound := 10^6);
+<rankE, gens, torsionE, ratPts>;
+ 
