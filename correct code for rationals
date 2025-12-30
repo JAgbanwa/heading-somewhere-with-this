@@ -1,0 +1,22 @@
+Q := Rationals();
+B := 3000;   // search bound (increase if desired)
+
+solutions := [];
+
+for a in [-B..B] do
+    for b in [1..B] do
+        if GCD(a,b) ne 1 then continue; end if;
+        if a eq 0 then continue; end if;
+
+        y := Q!a / Q!b;
+        x2 := (y^3 + 1729)/(3*y);
+
+        if IsSquare(x2) then
+            x := Sqrt(x2);
+            Append(~solutions, < x, y >);
+            Append(~solutions, < -x, y >);
+        end if;
+    end for;
+end for;
+
+solutions;
