@@ -1,0 +1,28 @@
+Q := Rationals();
+P<[X]> := ProjectiveSpace(Q, 2);
+
+// Define the homogeneous cubic polynomial:
+f := 3*X[1]^2*X[2] - X[2]^3 - 1729*X[3]^3;
+
+// Create the plane cubic
+C := Curve(P, f);
+
+// Get the Jacobian (Weierstrass form) of the curve
+E := Jacobian(C);
+
+// Compute rank and generators
+r := Rank(E);
+gens := Generators(E);
+
+// Enumerate some rational points
+pts := RationalPoints(E : Bound := 100);
+print "Rank:", r;
+print "Generators:", gens;
+print "Rational points (bounded):", pts;
+
+// Map back to (x,y) solutions if needed
+for P in pts do
+    // Use the birational map if available, e.g. E! -> curve
+    // Depends on Magma’s output maps
+    print P;
+end for;
