@@ -97,3 +97,24 @@ Equation \eqref{7.1} has the two integer points below $10000$ are $(k_2, Y_2) = 
 \begin{equation}\label{7.0}
     Y^2 = k_1^3 - 1729 \cdot \left(11346703797676950706245\right)^3
 \end{equation}
+
+************************
+
+Equation \eqref{6.89} has rank 2. On solving equation \eqref{6.89} computationally with Magma \cite{GitHubAtItAgain}, an integer point is $\left(X, \gamma\right) = \left(429, -12636\right)$. 
+
+\begin{align*}
+    a &= 429 \cdot 11346703797676950706245 \\
+      &= 4867735929203411852979105\\
+    b &= -12636 \cdot 11346703797676950706245\\
+      &= -143376949187445949124111820
+\end{align*}
+
+From equation \eqref{6.87},
+
+\begin{align*}
+    Y &= (4867735929203411852979105)^3 - 3(4867735929203411852979105)\cdot (-143376949187445949124111820)^2 \\
+     &= -300082065591611961815755134455637830066586069716994838882540053311809591623375
+\end{align*}
+
+
+
