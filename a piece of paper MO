@@ -116,5 +116,86 @@ From equation \eqref{6.87},
      &= -300082065591611961815755134455637830066586069716994838882540053311809591623375
 \end{align*}
 
+************************(a section on gaussian integers - keeping this year for now)
+
+From page 139 of (cite Grechuk), we approach this problem using the properties of rings.
+\begin{multline*}
+    \mathbb{Z}\left[- 2525830172961041971790515187823418026564152076350226869064138887440125\right] = \\
+    \{a + b \cdot \sqrt{- 2525830172961041971790515187823418026564152076350226869064138887440125}, a, b \in \mathbb{Z}\}
+\end{multline*}
+
+\begin{multline}\label{6.81}
+    k_1^3 = Y^2 + 2525830172961041971790515187823418026564152076350226869064138887440125
+\end{multline}
+\begin{multline}\label{6.82}
+    k_1^3 = \left(Y + 2525830172961041971790515187823418026564152076350226869064138887440125 \cdot \mathrm{i}\right)\\
+    \cdot \left(Y - 2525830172961041971790515187823418026564152076350226869064138887440125 \cdot \mathrm{i}\right)
+\end{multline}
+Given that $Y$ is an integer, $Y + 2525830172961041971790515187823418026564152076350226869064138887440125 \cdot \mathrm{i}$ and $Y - 2525830172961041971790515187823418026564152076350226869064138887440125 \cdot \mathrm{i}$ are integers.(refer to proposition 2.15 in grechuk's paper).
+\begin{align*}
+    Y + 2525830172961041971790515187823418026564152076350226869064138887440125 \cdot \mathrm{i} &= \left(a + b \mathrm{i}\right)^3
+\end{align*}
+\begin{multline*}
+    Y + 2525830172961041971790515187823418026564152076350226869064138887440125 \cdot \mathrm{i} = \\
+    \left(a^3 - 3a \cdot b^2\right) + \left(3a^2 \cdot b - b^3\right) \cdot \mathrm{i}
+\end{multline*}
+Comparing coefficients,
+
+\begin{equation}\label{6.86}
+2525830172961041971790515187823418026564152076350226869064138887440125 = b \cdot \left(3a^2 - b^2\right)
+\end{equation}
+
+and 
+
+\begin{equation}\label{6.871}
+    Y = a^3 - 3a \cdot b^2
+\end{equation}
+It is noteworthy that:
+\begin{multline*}
+2525830172961041971790515187823418026564152076350226869064138887440125 = \\
+1729 \cdot \left(11346703797676950706245\right)^3
+\end{multline*}
+
+\begin{equation}\label{6.86}
+ 1729 \cdot \left(11346703797676950706245\right)^3 = 3a^2 \cdot b- b^3
+\end{equation}
+\begin{equation}\label{6.87}
+ 1729 = 3 \cdot \left(\dfrac{a}{11346703797676950706245}\right)^2 \cdot \left(\dfrac{b}{11346703797676950706245}\right) - \left(\dfrac{b}{11346703797676950706245}\right)^3
+\end{equation}
+
+Let $X = \dfrac{a}{11346703797676950706245}$ and $\gamma = \dfrac{b}{11346703797676950706245}$.\\ 
+
+Equation \eqref{6.87} is expressible as:
+
+\begin{equation}\label{6.88}
+    3 X^2 \cdot \gamma - \gamma^3 = 1729 
+\end{equation}
+
+On solving equation \eqref{6.88} computationally with Magma, a rational point is $\left(X, \gamma\right) = \left(\dfrac{108}{11}, \dfrac{133}{11}\right)$. 
+
+\begin{align*}
+    a &= \dfrac{108}{11} \cdot 11346703797676950706245 \\
+      &= 111404000922646425115860\\
+    b &= \dfrac{133}{11} \cdot 11346703797676950706245\\
+      &= 137191964099184949448235
+\end{align*}
+
+From equation \eqref{6.871},
+
+\begin{align*}
+    Y &= (111404000922646425115860)^3 - 3(111404000922646425115860)\cdot (137191964099184949448235)^2 \\
+     &= -4907797829973180469755825572738232393015528859591853057975149936849500
+\end{align*}
+
+On substituting $Y = -4907797829973180469755825572738232393015528859591853057975149936849500$ into equation \eqref{6.81},
+
+\begin{multline*}
+     k_1 = \\
+     1031518527061540973295 \cdot \sqrt[3]{ 21945335783872995826844448188312751862946369668357601153209274346221025939299}
+\end{multline*}
+
+
+
+
 
 
