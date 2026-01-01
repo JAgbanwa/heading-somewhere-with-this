@@ -118,6 +118,35 @@ From equation \eqref{6.87},
 
 ************************(a section on gaussian integers - keeping this year for now)
 
+\subsubsection{The Gaussian–Integer Model}
+
+Given the fraction $\dfrac{36n^3 - 19}{\alpha}$, a possible value for $\alpha = 19$ and $n$ is divisible by 19. 
+
+It is also observable that $3782234599225650235415 \cdot k_1+  2094194294170672539119$ is divisible by 19.
+
+In this regard, we make the following supposition:
+
+Equation \eqref{5.99} can be then expressed as:
+\begin{equation}\label{6.01}
+  \Phi = -(19 + 6n) + Y
+\end{equation}
+\begin{multline}\label{6.1}
+     Y^2 = (19 + 6(3782234599225650235415 \cdot k_1 +  2094194294170672539119))^2 +  \\
+     \dfrac{36(3782234599225650235415 \cdot k_1+  2094194294170672539119)^3 - 19}{19}
+\end{multline}
+\begin{multline}\label{6.2}
+     Y^2 = 102516622445224071181618629075661543598435443927642055302797028500\cdot k_1 ^{3} + \\
+170288003150088713211165229564777675866712767658935950737783670400\cdot k_1 ^{2} + \\
+94287161519712324562577411784076704909304399983333523978591825920 \cdot k_1 + \\
+17402026102819032989296434839371590967156048128533655419095307484
+\end{multline}
+
+A question was posed on Math Overflow on finding rational points to equation \eqref{6.2} \cite{agbanwa-mathoverflow-2025}. A Math Overflow commenter, Chris Wuthrich found the global minimal model to be:
+\begin{equation}\label{6.7}
+    y^2 = x^3 - 2525830172961041971790515187823418026564152076350226869064138887440125
+\end{equation}
+The variables, $(k_1, Y)$ was denoted by $(x,y)$ in the question posed on Math Overflow. The equation \eqref{6.7} describes a Mordell curve \cite{mamukasums}. 
+
 From page 139 of (cite Grechuk), we approach this problem using the properties of rings.
 \begin{multline*}
     \mathbb{Z}\left[- 2525830172961041971790515187823418026564152076350226869064138887440125\right] = \\
