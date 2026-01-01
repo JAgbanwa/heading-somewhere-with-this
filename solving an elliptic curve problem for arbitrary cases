@@ -1,8 +1,24 @@
+**********************(when n = 1)
+
 A<x,y,z> := ProjectiveSpace(Rationals(),2);
 C := Curve(A, -y^2*z - 1*x^3+
 36*x^2*z-
 204*x*z^2+
 289*z^3);
+E,mapE := EllipticCurve(C);
+Em,mapEm := MinimalModel(E);
+_, Pm := MordellWeilShaInformation(Em);
+Pe := Pm@(mapEm^(-1));
+P := Pe@(mapE^(-1));
+P;
+
+***********************(when n = 18)
+
+A<x,y,z> := ProjectiveSpace(Rationals(),2);
+C := Curve(A, -y^2*z - 1*x^3+
+11664*x^2*z-
+45345528*x*z^2+
+44071864489*z^3);
 E,mapE := EllipticCurve(C);
 Em,mapEm := MinimalModel(E);
 _, Pm := MordellWeilShaInformation(Em);
