@@ -25,3 +25,17 @@ _, Pm := MordellWeilShaInformation(Em);
 Pe := Pm@(mapEm^(-1));
 P := Pe@(mapE^(-1));
 P;
+
+***********************(when n = 35)
+
+A<x,y,z> := ProjectiveSpace(Rationals(),2);
+C := Curve(A, -y^2*z - 1*x^3+
+44100*x^2*z-
+648262020*x*z^2+
+2382333597361*z^3);
+E,mapE := EllipticCurve(C);
+Em,mapEm := MinimalModel(E);
+_, Pm := MordellWeilShaInformation(Em);
+Pe := Pm@(mapEm^(-1));
+P := Pe@(mapE^(-1));
+P;
