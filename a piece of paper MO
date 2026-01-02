@@ -223,8 +223,22 @@ On substituting $Y = -4907797829973180469755825572738232393015528859591853057975
      1031518527061540973295 \cdot \sqrt[3]{ 21945335783872995826844448188312751862946369668357601153209274346221025939299}
 \end{multline*}
 
+************************
 
+\subsubsection{\texorpdfstring{$n \equiv{4(\mod 5)}$}{n equivalent (4 mod 5)}}
 
+When $n = 9$, equation \eqref{5.98}, is re-expressed as: 
+
+\begin{equation}\label{5.981}
+     P^{2} = -Q^{3} + 2916 \cdot Q^2 - 2832300  \cdot Q + 687750625
+\end{equation}
+which has an analytic rank of $0$ \cite{agbanwa_rational_points_mod5_2024}.
+
+On substituting $n = 14$ into equation \eqref{5.98};
+
+\begin{equation}\label{5.982}
+     P^{2} = -Q^{3} + 2916 \cdot Q^2 - 2832300  \cdot Q + 687750625
+\end{equation}
 
 
 
