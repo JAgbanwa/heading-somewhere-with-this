@@ -1,0 +1,13 @@
+******************(when n = 9)
+
+A<x,y,z> := ProjectiveSpace(Rationals(),2);
+C := Curve(A, -y^2*z - 1*x^3+
+2916*x^2*z-
+2832300*x*z^2+
+687750625*z^3);
+E,mapE := EllipticCurve(C);
+Em,mapEm := MinimalModel(E);
+_, Pm := MordellWeilShaInformation(Em);
+Pe := Pm@(mapEm^(-1));
+P := Pe@(mapE^(-1));
+P;
