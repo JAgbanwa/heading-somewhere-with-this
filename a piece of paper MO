@@ -300,6 +300,85 @@ It is observed that the density of points, as noted initially, becomes sparser w
 
 no further integer solutions are observed.\\
 
+************************
+
+\subsection{\texorpdfstring{$k = 192$}{k = 192}}
+
+The formula for $r = 6 \cdot n $ and $m = 36n^3 - 32$. \cite{wolfram51}
+
+\begin{equation*}
+    x_1 = -\alpha + \sqrt{(6n + \alpha)^2 + \frac{36n^3 - 32}{\alpha}} 
+\end{equation*}
+
+\begin{equation*}
+    y_1 = 2 \cdot \alpha + 6n 
+\end{equation*}
+
+\begin{equation*}
+    z_1 = -\alpha - \sqrt{(6n + \alpha)^2 + \frac{36n^3 - 32}{\alpha}} 
+\end{equation*}
+
+where for any arbitrary value of $\alpha, n \in \mathbb{R}$ and $\alpha \neq 0$ , real and non-integer values are yielded and at very specific values of $(\alpha, n)$ integer values would be yielded for $x,y,z$. For instance, $(\alpha,n) = (2,2)$, we get $16^3 + 16^3 + (-20)^3 = 192$. 
+
+
+************************
+
+\subsection{\texorpdfstring{$k = 375$}{k = 375}}
+
+\begin{equation} \label{3.16}
+    m = \dfrac{r^3 - 375}{6}
+\end{equation}
+
+The resulting formulas for $r = 6 \cdot n + 3$ and $m = 36n^3 + 54n^2 + 27n - 58$. \cite{WolframAlpha_2025} . A known non-primitive solution is: $20^3 + 20^3 + (-25)^3 = 375$. \cite{Bernstein_2001} To determine $n$ for this case, we take the sum of the values, $x+y+z = 6n + 3$:
+
+\begin{align*}
+     6n + 3 &= x+y+z \\
+     6n + 3 &= 15 \\
+     n &= 2
+\end{align*}
+
+\begin{equation*}
+    x_1 = -\alpha + \sqrt{(6n + 3 + \alpha)^2 + \frac{36n^3 + 54n^2 + 27n - 58}{\alpha}} 
+\end{equation*}
+
+\begin{equation*}
+    y_1 = 2 \cdot \alpha + 6n + 3
+\end{equation*}
+
+\begin{equation*}
+    z_1 = -\alpha - \sqrt{(6n + 3 + \alpha)^2 + \frac{36n^3 + 54n^2 + 27n - 58}{\alpha}} 
+\end{equation*}
+
+************************
+
+\subsection{\texorpdfstring{$k = 600$}{k = 600}}
+
+\begin{equation} \label{3.17}
+    m = \dfrac{r^3 - 600}{6}
+\end{equation}
+
+The resulting formulas for $r = 6 \cdot n $ and $m = 36n^3 - 100$. \cite{WolframAlpha_600} . A known non-primitive solution is: $870406166^3 + 8762318^3 + (-870406462)^3 = 600$. \cite{Bernstein_2001} To determine $n$ for this case, we take the sum of the values, $x+y+z = 6n$:
+
+\begin{align*}
+     6 \cdot n &= x+y+z \\
+     6 \cdot n  &= 870406166 + 8762318 + (-870406462)\\
+     n &= 1460337
+\end{align*}
+
+\begin{equation*}
+    x_1 = -\alpha + \sqrt{(6n + \alpha)^2 + \frac{36n^3 - 100}{\alpha}} 
+\end{equation*}
+
+\begin{equation*}
+    y_1 = 2 \cdot \alpha + 6n 
+\end{equation*}
+
+\begin{equation*}
+    z_1 = -\alpha - \sqrt{(6n  + \alpha)^2 + \frac{36n^3 - 100}{\alpha}} 
+\end{equation*}
+
+
+
 
 
 
