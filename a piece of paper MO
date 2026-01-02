@@ -240,5 +240,66 @@ On substituting $n = 14$ into equation \eqref{5.98};
      P^{2} = -Q^{3} + 2916 \cdot Q^2 - 2832300  \cdot Q + 687750625
 \end{equation}
 
+************************
+
+\subsubsection{\texorpdfstring{Graphical visualization of $x (n, \alpha) ^3 + y (n, \alpha) ^3 + z (n, \alpha) ^3 = 192$}{Graphical visualization of x (n, alpha) ^3 + y (n, alpha) ^3 + z (n, alpha) ^3 = 192}}
+
+Given the problem:
+
+\begin{equation*}
+    x^3 + y^3 + z^3 = 192
+\end{equation*}
+
+The equation below can be visualized as follows:\\
+
+\begin{equation*}
+    \Biggl( -\alpha + \sqrt{(6n + \alpha)^2 + \frac{36n^3 - 32}{\alpha}} \Biggl)^{3} + \Biggl( -\alpha - \sqrt{(6n + \alpha)^2 + \frac{36n^3 - 32}{\alpha}} \Biggl)^{3} + \Biggl( 2 \cdot \alpha + 6n \Biggl)^{3} = 192
+\end{equation*}
+.\\
+
+\includegraphics[width=\textwidth]{IMG_1471.jpg}
+
+On further zooming in on the magnitude of this graph, \cite{agbanwa2025parametric192} to higher powers of $10^{101}$, below is a visualization of what happens:
+
+\includegraphics[width=\textwidth]{IMG_1473.jpg}
+
+
+
+\subsubsection{\texorpdfstring{Graphical visualization of $x (n, \alpha) ^3 + y (n, \alpha) ^3 + z (n, \alpha) ^3 = 375$}{Graphical visualization of x (n, alpha) ^3 + y (n, alpha) ^3 + z (n, alpha) ^3 = 375}}
+
+The equation below can be visualized as follows:
+
+\begin{align*}
+(-\alpha + \sqrt{(6n + 3 + \alpha)^2 + \frac{36n^3 + 54n^2 + 27n - 58}{\alpha}})^3 + (2 \cdot \alpha + 6n + 3)^3  \\
++ (-\alpha - \sqrt{(6n  + \alpha)^2 + \frac{36n^3 + 54n^2 + 27n - 58}{\alpha}} )^3 = 375
+\end{align*}
+
+
+\includegraphics[width=\textwidth]{IMG_1467.jpg}
+
+This same graph, \cite{agbanwa2025parametric}, when zoomed further to $10^{101}$, yields the visualization shown below:
+
+\includegraphics[width=\textwidth]{IMG_1469.jpg}
+
+Numerical exploration reveals a rapid decay in solution density for $|n| = 10^{100}$, with no solutions observed beyond a computational horizon of $|n| \approx 10^{103}$.
+
+
+\subsubsection{Graphical visualization of \texorpdfstring{$x (n, \alpha) ^3 + y (n, \alpha) ^3 + z (n, \alpha) ^3 = 600$}{x(n, alpha)^3 + y(n, alpha)^3 + z(n, alpha)^3 = 600}}
+
+The equation below can be visualized as follows on Desmos.
+
+\begin{align*}
+    (-\alpha + \sqrt{(6n + \alpha)^2 + \frac{36n^3 - 100}{\alpha}})^3 + (2 \cdot \alpha + 6n )^3 + (-\alpha - \sqrt{(6n  + \alpha)^2 + \frac{36n^3 - 100}{\alpha}} )^3 = 600
+\end{align*}
+
+\includegraphics[width=\textwidth]{IMG_1463.jpg}
+
+It is observed that the density of points, as noted initially, becomes sparser when further zooming in on the graph to higher numbers, as can be seen here. \cite{Desmos_2025} By zooming to $10^{102}$, the solution candidates exhibit a spiral pattern that dissipates, as can be seen in the graph below:
+
+\includegraphics[width=\textwidth]{IMG_1465.jpg}
+
+no further integer solutions are observed.\\
+
+
 
 
