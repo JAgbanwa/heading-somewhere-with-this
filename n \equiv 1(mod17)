@@ -1,0 +1,10 @@
+*********************(when n = 1)
+
+E := EllipticCurve([0, 36, 0, 204, 289]);
+P := E![6,55];
+
+// Compute specific multiples
+P;
+2*P;
+3*P;
+4*P;
