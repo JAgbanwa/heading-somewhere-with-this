@@ -1,0 +1,28 @@
+A<x,y,z> := ProjectiveSpace(Rationals(),2);
+C := Curve(A, -y^2*z + (36/17)*x^3+
+36*x^2*z+
+228*x*z^2+
+(6118/17)*z^3);
+E,mapE := EllipticCurve(C);
+Em,mapEm := MinimalModel(E);
+_, Pm := MordellWeilShaInformation(Em);
+Pe := Pm@(mapEm^(-1));
+P := Pe@(mapE^(-1));
+P;
+
+
+******************
+
+Using model [ 0, 0, 0, 4244832, -17475973344 ]
+Torsion Subgroup is trivial
+The 2-Selmer group has rank 1
+After 2-descent:
+    0 <= Rank(E) <= 1
+    Sha(E)[2] <= (Z/2)^1
+(Searched up to height 10000 on the 2-coverings.)
+After 4-descent:
+    0 <= Rank(E) <= 1
+    Sha(E)[4] <= (Z/4)^1
+(Searched up to height 10^7 on the 4-coverings.)
+
+[]
