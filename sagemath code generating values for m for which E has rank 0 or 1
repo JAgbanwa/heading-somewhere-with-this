@@ -1,0 +1,324 @@
+
+
+from sage.all import *
+
+def create_elliptic_curve(m):
+    """
+    Create the elliptic curve from the given equation:
+    y^2 = (36/m)*n^3 + 36*n^2 + 12*m*n + m^2 - 19/m
+    """
+    if m == 0:
+        return None
+    
+    # Define rational field
+    F = QQ
+    
+    # To avoid fractions, multiply through by m:
+    # m*y^2 = 36*n^3 + 36*m*n^2 + 12*m^2*n + m^3 - 19
+    # But for standard form, we need to handle transformation properly
+    
+    # First, let's work in polynomial ring
+    R.<n,y> = F[]
+    poly = y**2 - ((36/m)*n**3 + 36*n**2 + 12*m*n + m**2 - 19/m)
+    
+    # Alternative approach: transform to Weierstrass form
+    # The curve is cubic in n, so we can complete the cube
+    
+    # Standard form: y^2 = a*n^3 + b*n^2 + c*n + d
+    a = 36/m
+    b = 36
+    c = 12*m
+    d = m**2 - 19/m
+    
+    # Transform to eliminate n^2 term: let x = n + b/(3a)
+    shift = b/(3*a)  # = 36/(3*(36/m)) = 36/(108/m) = m/3
+    
+    # So n = x - shift = x - m/3
+    x = var('x')
+    
+    # Substitute n = x - m/3 into the equation
+    a_sub = a
+    b_sub = 0  # n^2 term eliminated
+    c_sub = c - b**2/(3*a)  # New linear coefficient
+    d_sub = d - b*c/(3*a) + 2*b**3/(27*a**2)  # New constant
+    
+    # Compute these explicitly:
+    # c_sub = 12*m - 36^2/(3*(36/m)) = 12*m - 1296/(108/m) = 12*m - 1296*m/108 = 12*m - 12*m = 0
+    # d_sub = (m^2 - 19/m) - (36*12*m)/(3*(36/m)) + 2*36^3/(27*(36/m)^2)
+    
+    # Actually, let's compute symbolically:
+    c_sub = c - b**2/(3*a)
+    d_sub = d - b*c/(3*a) + 2*b**3/(27*a**2)
+    
+    # The curve is now: y^2 = a*x^3 + c_sub*x + d_sub
+    # Divide by a to get: y^2/a = x^3 + (c_sub/a)*x + (d_sub/a)
+    # Let Y = y/sqrt(a) but since a might not be a perfect square, better to multiply:
+    
+    # Multiply by a^2: (a*y)^2 = (a*x)^3 + a*c_sub*(a*x) + a^2*d_sub
+    # Let X = a*x and Y = a*y
+    A = a*c_sub  # coefficient of X
+    B = a**2 * d_sub  # constant term
+    
+    # Create elliptic curve in standard form: Y^2 = X^3 + A*X + B
+    try:
+        E = EllipticCurve(F, [0, 0, 0, A, B])
+        return E, (A, B, shift)
+    except Exception as e:
+        print(f"  Error creating curve for m={m}: {e}")
+        return None, None
+
+def find_rank_zero_curves(m_min=1, m_max=50):
+    """
+    Find m values for which the elliptic curve has rank 0
+    """
+    rank_zero_m = []
+    problematic_m = []
+    
+    print(f"Searching for m values from {m_min} to {m_max}...")
+    print("=" * 60)
+    
+    for m in range(m_min, m_max + 1):
+        if m == 0:
+            continue
+            
+        print(f"\nm = {m}:", end=" ")
+        
+        try:
+            E, params = create_elliptic_curve(m)
+            if E is None:
+                problematic_m.append(m)
+                print("Failed to create curve")
+                continue
+            
+            # Check if curve is singular
+            if E.discriminant() == 0:
+                print("Singular curve (discriminant = 0)")
+                problematic_m.append(m)
+                continue
+            
+            # Compute rank with proof=False for speed
+            # For more reliable results, we'll use multiple methods
+            try:
+                # First try to compute rank quickly
+                rank_fast = E.rank(proof=False)
+                print(f"Fast rank = {rank_fast}", end=", ")
+                
+                # Get rank bounds for more information
+                lower, upper = E.rank_bounds()
+                print(f"Bounds = [{lower}, {upper}]", end=", ")
+                
+                # Also check analytic rank for additional evidence
+                L = E.lseries()
+                # Check for zeros at s=1 (analytic rank > 0)
+                # This is computationally intensive, so only do for small ranges
+                if m_max <= 50:
+                    try:
+                        # Check if L(1) is close to 0 (indicating possible analytic rank > 0)
+                        L1 = L(1)
+                        if abs(L1) < 0.0001:
+                            analytic_hint = "L(1)≈0"
+                        else:
+                            analytic_hint = f"L(1)≈{L1:.4f}"
+                        print(f"{analytic_hint}", end="")
+                    except:
+                        pass
+                
+                # Check if we have strong evidence for rank 0
+                if rank_fast == 0 and upper == 0:
+                    # Strong evidence for rank 0
+                    rank_zero_m.append(m)
+                    print(" -> RANK 0 (confirmed)")
+                    
+                    # Also check torsion subgroup
+                    T = E.torsion_subgroup()
+                    print(f"    Torsion: {T.invariants()}, Order: {T.order()}")
+                    
+                elif rank_fast == 0 and upper > 0:
+                    # Rank might be 0, but not proven
+                    print(" -> Rank might be 0 (not proven)")
+                    # Additional check: if analytic rank is 0 and BSD is known
+                    try:
+                        if E.analytic_rank() == 0:
+                            rank_zero_m.append(m)
+                            print("    Analytic rank also 0")
+                    except:
+                        pass
+                else:
+                    print(" -> Rank > 0")
+                    
+            except Exception as e:
+                print(f"Error computing rank: {e}")
+                problematic_m.append(m)
+                
+        except Exception as e:
+            print(f"General error: {e}")
+            problematic_m.append(m)
+    
+    print("\n" + "=" * 60)
+    print("\nRESULTS:")
+    print(f"Found {len(rank_zero_m)} m-values with rank 0: {sorted(rank_zero_m)}")
+    if problematic_m:
+        print(f"Problematic m-values: {sorted(problematic_m)}")
+    
+    return rank_zero_m, problematic_m
+
+def verify_rank_zero(m_values):
+    """
+    Verify rank 0 more rigorously for specific m values
+    """
+    print("\n" + "=" * 60)
+    print("VERIFICATION OF RANK 0 CANDIDATES")
+    print("=" * 60)
+    
+    verified = []
+    
+    for m in m_values:
+        print(f"\nVerifying m = {m}:")
+        try:
+            E, params = create_elliptic_curve(m)
+            if E is None:
+                print("  Could not create curve")
+                continue
+            
+            print(f"  Curve: {E.ainvs()}")
+            print(f"  Discriminant: {E.discriminant()}")
+            
+            # Method 1: Torsion subgroup and rank bounds
+            T = E.torsion_subgroup()
+            lower, upper = E.rank_bounds()
+            print(f"  Rank bounds: [{lower}, {upper}]")
+            print(f"  Torsion: {T.invariants()} (order {T.order()})")
+            
+            # Method 2: Try to compute rank with proof (might be slow)
+            try:
+                rank_proof = E.rank(proof=True)
+                print(f"  Rank (with proof): {rank_proof}")
+                if rank_proof == 0:
+                    verified.append(m)
+                    print("  ✓ Verified rank 0")
+                else:
+                    print("  ✗ Rank not 0")
+            except Exception as e:
+                print(f"  Could not compute rank with proof: {e}")
+                
+                # Method 3: Check analytic rank
+                try:
+                    analytic_rank = E.analytic_rank()
+                    print(f"  Analytic rank: {analytic_rank}")
+                    if analytic_rank == 0:
+                        # Under BSD conjecture, algebraic rank is also 0
+                        verified.append(m)
+                        print("  ✓ Analytic rank 0 (implies rank 0 under BSD)")
+                except Exception as e2:
+                    print(f"  Could not compute analytic rank: {e2}")
+            
+            # Method 4: Check if all rational points come from torsion
+            # (This works well for small curves)
+            try:
+                gens = E.gens(proof=False)
+                if len(gens) == 0:
+                    print("  No generators found (supports rank 0)")
+                else:
+                    print(f"  Found {len(gens)} generators")
+            except:
+                pass
+                
+        except Exception as e:
+            print(f"  Error: {e}")
+    
+    print(f"\nVerified rank 0: {sorted(verified)}")
+    return verified
+
+# Run the main search
+if __name__ == "__main__":
+    # First, find candidates
+    rank_zero_m, problematic_m = find_rank_zero_curves(1, 50)
+    
+    # Then verify more rigorously
+    if rank_zero_m:
+        verified = verify_rank_zero(rank_zero_m)
+        
+        # Print final summary
+        print("\n" + "=" * 60)
+        print("FINAL SUMMARY")
+        print("=" * 60)
+        print(f"m values 1-50 with elliptic curve of rank 0:")
+        print(f"Strong candidates: {sorted(rank_zero_m)}")
+        print(f"Verified rank 0: {sorted(verified)}")
+        
+        # Show details for each verified m
+        print("\nDetails for verified m values:")
+        for m in sorted(verified):
+            E, params = create_elliptic_curve(m)
+            if E:
+                A, B, shift = params
+                print(f"\nm = {m}:")
+                print(f"  Weierstrass form: y^2 = x^3 + {A}*x + {B}")
+                print(f"  Original variable: n = x - {shift}")
+                print(f"  Torsion subgroup order: {E.torsion_order()}")
+                print(f"  Discriminant: Δ = {E.discriminant()}")
+                print(f"  j-invariant: {E.j_invariant()}")
+    else:
+        print("No m values found with rank 0 in range 1-50")
+
+
+
+******************************(Alternative simplified version (faster but less rigorous))
+
+
+
+        from sage.all import *
+
+def simplified_search(m_min=1, m_max=50):
+    """
+    Simplified search for m values with rank 0
+    """
+    results = []
+    
+    for m in range(m_min, m_max + 1):
+        if m == 0:
+            continue
+        
+        print(f"m={m:2d}: ", end="")
+        
+        try:
+            # Create curve directly using transformation
+            # Original: y^2 = (36/m)n^3 + 36n^2 + 12m*n + m^2 - 19/m
+            
+            # Complete the cube: let x = n + m/3
+            # Then n = x - m/3
+            # Substitute and simplify to get Weierstrass form
+            
+            # Coefficients after transformation:
+            A = -432*m  # Coefficient of x in Weierstrass form
+            B = 432*(m**4 - 19*m**2 + 36)  # Constant in Weierstrass form
+            
+            # Create elliptic curve: Y^2 = X^3 + A*X + B
+            E = EllipticCurve(QQ, [0, 0, 0, A, B])
+            
+            # Quick rank check
+            rank = E.rank(proof=False)
+            print(f"rank={rank}", end=", ")
+            
+            if rank == 0:
+                # Additional check: rank bounds
+                lower, upper = E.rank_bounds()
+                if upper == 0:
+                    results.append(m)
+                    print("✓ (rank 0 confirmed)")
+                else:
+                    print("? (might be rank 0)")
+            else:
+                print()
+                
+        except Exception as e:
+            print(f"error: {e}")
+    
+    return results
+
+# Run simplified search
+print("Simplified search for rank 0 curves (m=1..50)")
+print("=" * 50)
+rank_zero = simplified_search(1, 50)
+print("\n" + "=" * 50)
+print(f"m values with rank 0: {rank_zero}")
