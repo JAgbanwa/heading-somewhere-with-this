@@ -377,8 +377,12 @@ The resulting formulas for $r = 6 \cdot n $ and $m = 36n^3 - 100$. \cite{Wolfram
     z_1 = -\alpha - \sqrt{(6n  + \alpha)^2 + \frac{36n^3 - 100}{\alpha}} 
 \end{equation*}
 
+************************
 
+When $n = 69$, the resulting equation is:
 
-
+\begin{equation}\label{5.994}
+    P^2 = -Q^3 + 171396 \cdot Q^2 - 9792180540 \cdot Q + 139861489953025
+\end{equation}
 
 
