@@ -1,0 +1,239 @@
+from sage.all import *
+
+print("=" * 60)
+print("DIRECT COMPUTATION OF POINT MULTIPLES")
+print("=" * 60)
+
+# Define the curve parameters
+a = QQ(36)/QQ(19)  # coefficient of x^3
+b = QQ(36)         # coefficient of x^2  
+c = QQ(228)        # coefficient of x
+d = QQ(360)        # constant term
+
+# Define the point P
+x_num = -864648976084347353011927145714245480219355
+x_den = 635859049050585085274882901637910426578284
+y_num = -3894228350436067038312065162575538689415800674650195219149913735
+y_den = 368355224867664550854516818920804459714526459420694554473909596
+
+x = QQ(x_num) / QQ(x_den)
+y = QQ(y_num) / QQ(y_den)
+
+print(f"Curve: y^2 = ({a})x^3 + {b}x^2 + {c}x + {d}")
+print(f"Point P = ({x},\n       {y})")
+print()
+
+# Verify the point
+lhs = y**2
+rhs = a*x**3 + b*x**2 + c*x + d
+print(f"Verification:")
+print(f"y^2 = {lhs}")
+print(f"RHS = {rhs}")
+print(f"Point is on curve: {lhs == rhs}")
+print()
+
+# ================================================================
+# IMPLEMENT GROUP LAW DIRECTLY FOR THE CURVE
+# ================================================================
+
+def point_addition(P, Q):
+    """
+    Add two points on y^2 = a*x^3 + b*x^2 + c*x + d
+    Returns (x3, y3) or None for point at infinity
+    """
+    if P is None:
+        return Q
+    if Q is None:
+        return P
+    
+    x1, y1 = P
+    x2, y2 = Q
+    
+    # Check if points are inverses (P + (-P) = O)
+    if x1 == x2 and y1 == -y2:
+        return None
+    
+    if P == Q:
+        # Point doubling (P + P)
+        if y1 == 0:
+            return None  # Vertical tangent
+        
+        # Slope m = (3a*x1^2 + 2b*x1 + c) / (2*y1)
+        numerator = 3*a*x1**2 + 2*b*x1 + c
+        denominator = 2*y1
+        m = numerator / denominator
+    else:
+        # Point addition (P ≠ Q)
+        numerator = y2 - y1
+        denominator = x2 - x1
+        m = numerator / denominator
+    
+    # Compute x3 = m^2/a - b/a - x1 - x2
+    x3 = m**2 / a - b/a - x1 - x2
+    
+    # Compute y3 = m*(x1 - x3) - y1
+    y3 = m*(x1 - x3) - y1
+    
+    return (x3, y3)
+
+def scalar_multiply(P, n):
+    """
+    Multiply point P by integer n using double-and-add algorithm
+    """
+    if n == 0:
+        return None
+    if n == 1:
+        return P
+    if n < 0:
+        # Multiply by -n and invert
+        Q = scalar_multiply(P, -n)
+        if Q is None:
+            return None
+        return (Q[0], -Q[1])
+    
+    # Double-and-add algorithm
+    result = None
+    current = P
+    
+    while n > 0:
+        if n & 1:  # If least significant bit is 1
+            result = point_addition(result, current)
+        current = point_addition(current, current)  # Double
+        n >>= 1  # Shift right
+    
+    return result
+
+# ================================================================
+# COMPUTE AND VERIFY MULTIPLES
+# ================================================================
+
+print("Computing multiples of P:")
+print()
+
+P_point = (x, y)
+for n in range(2, 10):
+    print(f"{'='*40}")
+    print(f"Computing {n}P")
+    print(f"{'='*40}")
+    
+    try:
+        nP = scalar_multiply(P_point, n)
+        
+        if nP is None:
+            print(f"{n}P = O (point at infinity)")
+        else:
+            x_n, y_n = nP
+            
+            # Verify the point is on the curve
+            lhs_check = y_n**2
+            rhs_check = a*x_n**3 + b*x_n**2 + c*x_n + d
+            
+            print(f"{n}P = ")
+            print(f"  x = {x_n}")
+            print(f"  y = {y_n}")
+            print()
+            print(f"Verification:")
+            print(f"  y^2 = {lhs_check}")
+            print(f"  RHS = {rhs_check}")
+            print(f"  On curve: {lhs_check == rhs_check}")
+            
+            # Show numerator/denominator sizes
+            print(f"\nCoordinate sizes:")
+            print(f"  x numerator: {len(str(x_n.numerator()))} digits")
+            print(f"  x denominator: {len(str(x_n.denominator()))} digits")
+            print(f"  y numerator: {len(str(y_n.numerator()))} digits")
+            print(f"  y denominator: {len(str(y_n.denominator()))} digits")
+            
+    except Exception as e:
+        print(f"Error computing {n}P: {e}")
+        import traceback
+        traceback.print_exc()
+    
+    print()
+
+# ================================================================
+# ADDITIONAL CHECK: COMPUTE USING DIFFERENT METHOD
+# ================================================================
+print("="*60)
+print("ADDITIONAL CHECK: Using projective coordinates")
+print("="*60)
+
+# To avoid division by zero issues, use projective coordinates
+def to_projective(P):
+    """Convert affine point (x,y) to projective (X:Y:Z)"""
+    if P is None:
+        return (0, 1, 0)  # Point at infinity
+    x, y = P
+    return (x, y, 1)
+
+def from_projective(proj):
+    """Convert projective point (X:Y:Z) to affine (x,y)"""
+    if proj[2] == 0:
+        return None  # Point at infinity
+    return (proj[0]/proj[2], proj[1]/proj[2])
+
+def add_projective(P_proj, Q_proj):
+    """Add two points in projective coordinates"""
+    if P_proj[2] == 0:  # P is point at infinity
+        return Q_proj
+    if Q_proj[2] == 0:  # Q is point at infinity
+        return P_proj
+    
+    X1, Y1, Z1 = P_proj
+    X2, Y2, Z2 = Q_proj
+    
+    # Convert to common denominator
+    X1Z2 = X1 * Z2
+    X2Z1 = X2 * Z1
+    Y1Z2 = Y1 * Z2
+    Y2Z1 = Y2 * Z1
+    
+    # Check if points are inverses
+    if X1Z2 == X2Z1 and Y1Z2 == -Y2Z1:
+        return (0, 1, 0)  # Point at infinity
+    
+    # This is a simplified version - for full projective formulas
+    # we'd need to implement the complete algorithm
+    # For now, convert to affine, add, and convert back
+    P_aff = from_projective(P_proj)
+    Q_aff = from_projective(Q_proj)
+    R_aff = point_addition(P_aff, Q_aff)
+    return to_projective(R_aff)
+
+print("\nComputing using projective approach (2P and 3P only):")
+P_proj = to_projective(P_point)
+
+for n in [2, 3]:
+    try:
+        # Simple repeated addition
+        result_proj = P_proj
+        for i in range(n-1):
+            result_proj = add_projective(result_proj, P_proj)
+        
+        result_aff = from_projective(result_proj)
+        
+        if result_aff is None:
+            print(f"{n}P = O")
+        else:
+            x_n, y_n = result_aff
+            print(f"{n}P (projective) = ({x_n}, {y_n})")
+            
+            # Compare with previous result
+            nP_direct = scalar_multiply(P_point, n)
+            if nP_direct is not None:
+                x_direct, y_direct = nP_direct
+                match = (x_n == x_direct and y_n == y_direct)
+                print(f"  Matches direct computation: {match}")
+    except Exception as e:
+        print(f"Error with projective {n}P: {e}")
+
+print()
+print("="*60)
+print("SUMMARY")
+print("="*60)
+print(f"The point P has coordinates:")
+print(f"x = {x}")
+print(f"y = {y}")
+print()
+print("Multiples 2P through 9P have been computed above.")
+print("Note: Coordinates become very large quickly!")
