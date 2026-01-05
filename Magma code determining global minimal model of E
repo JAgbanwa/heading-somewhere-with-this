@@ -1,0 +1,24 @@
+/* Define rationals */
+Q := Rationals();
+
+/* Original coefficients */
+A := 102516622445224071181618629075661543598435443927642055302797028500;
+B := 170288003150088713211165229564777675866712767658935950737783670400;
+C := 94287161519712324562577411784076704909304399983333523978591825920;
+D := 17402026102819032989296434839371590967156048128533655419095307484;
+
+/* Define elliptic curve (Weierstrass coefficients) */
+E := EllipticCurve([
+    0,
+    B/A,
+    0,
+    C/A,
+    D/A
+]);
+
+/* Global minimal model */
+Emin, phi := MinimalModel(E);
+
+/* Display results */
+E;
+Emin;
