@@ -385,4 +385,71 @@ When $n = 69$, the resulting equation is:
     P^2 = -Q^3 + 171396 \cdot Q^2 - 9792180540 \cdot Q + 139861489953025
 \end{equation}
 
+************************
+
+\subsubsection{A possible approach to integer solutions}
+
+When $n = 3782234599225650235415 \cdot k_1 +  2094194294170672539119$ is substituted into equation \eqref{6.0}, with reference to the previous section on modular analysis, this equation is yielded:
+
+\begin{multline}\label{6.221}
+     Y^2 = 102516622445224071181618629075661543598435443927642055302797028500\cdot k_1 ^{3} + \\
+170288003150088713211165229564777675866712767658935950737783670400\cdot k_1 ^{2} + \\
+94287161519712324562577411784076704909304399983333523978591825920 \cdot k_1 + \\
+17402026102819032989296434839371590967156048128533655419095307484
+\end{multline}
+A question was posed on Math Overflow on finding rational points to equation \eqref{6.221} \cite{agbanwa-mathoverflow-2025}. A Math Overflow comment from Chris Wuthrich found the global minimal model to be:
+\begin{equation}\label{6.743}
+    y^2 = x^3 - 2525830172961041971790515187823418026564152076350226869064138887440125
+\end{equation}
+The variables, $(k_1, Y)$ was denoted by $(x,y)$ in the question posed on Math Overflow. The equation \eqref{6.743} describes a Mordell curve. 
+
+Another comment from Dmitry Ezhov provided Magma codes which found the rational points of $(k_1, Y)$ to be
+
+\begin{multline*}
+    (k_1, Y) = (-\dfrac{121055672038047734669843996898252274515845520064619127162373741}{218633463231803886802640917544016705655307973063108077956975260}, \\
+    \dfrac{3894228350436067038312065162575538689415800674650195219149913735}{368355224867664550854516818920804459714526459420694554473909596})
+\end{multline*}
+
+Two directions were explored in search of integer solutions for equation \eqref{6.743}.
+\begin{itemize}
+    \item Scaling
+    \item Gaussian integers
+\end{itemize}
+Both approaches did not return integer solutions.
+
+\subsubsubsection{Scaling}
+
+\begin{proposition}
+    Given equation \eqref{6.743}, to ensure integer outcomes are yielded for $(k_1, Y)$, let $k_1 = k_2 \cdot \left(11346703797676950706245\right)$ and $Y = 11346703797676950706245 \cdot Y_2$.
+\end{proposition}
+
+\begin{align*}
+    Y^2 &= k_1^3 - 1729 \cdot \left(11346703797676950706245\right)^3\\
+    Y^2 &=  \left(k_2 \cdot11346703797676950706245\right)^3 - 1729 \cdot \left(11346703797676950706245\right)^3 \\
+    \left(\dfrac{Y}{11346703797676950706245^{\frac{3}{2}}}\right)^2 &=  k_2 ^3 - 1729  \\
+    Y_2^2 &= k_2 ^3  - 1729 \\
+\end{align*}
+where $Y_2 = \dfrac{Y}{11346703797676950706245^{\frac{3}{2}}}$
+\begin{equation} \label{7.1}
+    k_2 ^3 - Y_2^2 = 1729
+\end{equation}
+Equation \eqref{7.1} has the two integer points below $10000$ are $(k_2, Y_2) = (2305, 110664) ,(2305, -110664)$
+
+
+\begin{align*}
+    Y &= \pm 110664 \cdot \sqrt{11346703797676950706245^3}\\
+    k_1 &= 2305 \cdot 11346703797676950706245\\
+        &= 26154152253645371377894725\\
+    n &= 3782234599225650235415 \cdot k_1 +  2094194294170672539119\\
+      &= 3782234599225650235415 \cdot \left(26154152253645371377894725\right) +  2094194294170672539119\\
+      &= 98921139567153038114792565612131616794009224994
+\end{align*}
+\begin{align*}
+    x &= - 19 - 110664 \cdot \sqrt{11346703797676950706245^3}\\
+      &= - 19 - 110664 \cdot \sqrt{1460861869844443014338065464328176996277705075968899288064857656125}\\
+  y  &= - 19 + 110664 \cdot \sqrt{11346703797676950706245^3} \\
+     &= - 19 + 110664 \cdot \sqrt{1460861869844443014338065464328176996277705075968899288064857656125}\\
+ z &= 2 \cdot (19) + 6 \cdot \left(98921139567153038114792565612131616794009224994\right)\\
+   &= 593526837402918228688755393672789700764055350002
+\end{align*}
 
