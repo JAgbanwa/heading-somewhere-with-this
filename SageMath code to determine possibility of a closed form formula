@@ -1,0 +1,120 @@
+from sage.all import *
+
+print("ELLIPTIC CURVE POINT MULTIPLICATION SEQUENCE")
+print("=" * 80)
+
+# Define elliptic curve and point
+E = EllipticCurve([0, 36, 0, 204, 289])  # y^2 = x^3 + 36*x^2 + 204*x + 289
+P = E(6, 55)
+
+print(f"Curve: y^2 = x^3 + 36*x^2 + 204*x + 289")
+print(f"Point P = ({P[0]}, {P[1]})")
+print()
+
+# Generate 20 terms (numerators of y-coordinates of nP)
+n_max = 20
+sequence = []
+
+print(f"Generating y-coordinate numerators for nP, n=1..{n_max}:")
+print("-" * 80)
+
+for n in range(1, n_max + 1):
+    Q = n * P
+    y_numerator = Q[1].numerator()
+    sequence.append(y_numerator)
+    
+    # Display (truncated)
+    y_str = str(y_numerator)
+    if len(y_str) > 40:
+        y_str = y_str[:20] + "..." + y_str[-20:]
+    
+    print(f"n={n:2d}: y-coordinate numerator = {y_str}")
+    print(f"     (digits: {len(str(y_numerator))})")
+
+print("\n" + "=" * 80)
+print("DIFFERENCE ANALYSIS")
+print("=" * 80)
+
+# Now analyze differences
+def analyze_differences(seq):
+    """Compute successive differences until constant"""
+    current = seq
+    level = 0
+    
+    while len(current) > 1:
+        print(f"\nLevel {level} differences:")
+        
+        # Compute differences
+        diffs = [current[i+1] - current[i] for i in range(len(current)-1)]
+        
+        # Display first few and last few
+        if len(diffs) <= 5:
+            for i, d in enumerate(diffs):
+                d_str = str(d)
+                if len(d_str) > 30:
+                    d_str = d_str[:15] + "..." + d_str[-15:]
+                print(f"  Δ[{i+1}] = {d_str}")
+        else:
+            for i in [0, 1, -2, -1]:
+                d_str = str(diffs[i])
+                if len(d_str) > 30:
+                    d_str = d_str[:15] + "..." + d_str[-15:]
+                if i == 0:
+                    print(f"  Δ[1] = {d_str}")
+                elif i == 1:
+                    print(f"  Δ[2] = {d_str}")
+                elif i == len(diffs)-2:
+                    print(f"  Δ[{len(diffs)-1}] = {d_str}")
+                else:
+                    print(f"  Δ[{len(diffs)}] = {d_str}")
+        
+        # Check if constant
+        if len(diffs) > 1:
+            is_constant = all(d == diffs[0] for d in diffs)
+            if is_constant:
+                print(f"\n✓ Found constant difference at level {level}: {diffs[0]}")
+                print(f"  This would imply polynomial of degree {level}")
+                return level
+        
+        # Move to next level
+        current = diffs
+        level += 1
+        
+        if len(current) <= 1:
+            print("\nNot enough terms to continue")
+            return None
+    
+    return None
+
+# Run difference analysis
+poly_degree = analyze_differences(sequence)
+
+print("\n" + "=" * 80)
+print("MATHEMATICAL ANALYSIS")
+print("=" * 80)
+print("For an elliptic curve, the coordinates of nP grow exponentially fast.")
+print("The x and y coordinates satisfy recurrence relations from the group law.")
+print("\nSpecifically, if nP = (x_n, y_n), then:")
+print("x_n = φ_n / ψ_n², y_n = ω_n / ψ_n³")
+print("where φ_n, ψ_n, ω_n are division polynomials.")
+print("\nThe growth is like exp(C*n²) due to the canonical height.")
+print("Thus, we do NOT expect polynomial behavior.")
+print("The differences will NOT become constant - they will grow super-exponentially.")
+
+# Let's also check the heights
+print("\n" + "=" * 80)
+print("HEIGHT ANALYSIS")
+print("=" * 80)
+print("The canonical height ĥ(P) controls the growth rate.")
+print("For large n, log|x_n| ≈ 2*ĥ(P)*n²")
+
+# Estimate growth from our data
+print("\nEstimating growth from computed terms:")
+for i, y_n in enumerate(sequence):
+    n = i + 1
+    if y_n > 0:
+        log_y = log(abs(y_n), 10)  # log base 10
+        print(f"n={n:2d}: log10(|y_n|) ≈ {float(log_y):.2f}")
+
+print("\nThe sequence grows roughly like exp(O(n²)), not polynomially.")
+print("Therefore, successive differences will NEVER become constant.")
