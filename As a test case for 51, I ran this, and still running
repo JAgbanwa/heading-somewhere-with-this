@@ -1,5 +1,5 @@
 A<x,y,z> := ProjectiveSpace(Rationals(),2);
-C := Curve(A, -y^2*z + 1*x^3+
+C := Curve(A, -y^2*z + (36/97)*x^3+
 (3546/97)*x^2*z+
  (116427/97)*x*z^2+
  (969996/97)*z^3);
