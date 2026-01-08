@@ -526,3 +526,12 @@ Multiples & \makecell{$P$} \\
              
 \end{align*}
 
+************************
+
+For the formulas below to hold for a given case;
+
+\begin{align*}
+    \boxed{x_1 =  \Phi + r} \\
+    \boxed{y_1 = 2 \cdot \alpha + r} \\
+    \boxed{z_{1}= \Phi + 2 \cdot \alpha - r} \\
+\end{align*}
