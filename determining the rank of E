@@ -1,0 +1,27 @@
+// Define the curve over Q
+E := EllipticCurve([
+    0,
+    36,
+    0,
+    204,
+    4894/17
+]);
+
+// Multiply both sides by 17 to clear denominators automatically handled by Magma
+
+// Display minimal model
+Em := MinimalModel(E);
+Em;
+
+// Compute rank (2-descent + analytic)
+RankBound(Em);
+Rank(Em);
+
+// Generators (if rank > 0)
+Generators(Em);
+
+// Regulator (optional)
+Regulator(Em);
+
+// Torsion subgroup
+TorsionSubgroup(Em);
