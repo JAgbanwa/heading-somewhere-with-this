@@ -1,0 +1,16 @@
+// Loop over z = 1..50
+for z in [1..50] do
+    N := 1729 * z^3;
+    E := EllipticCurve([0,0,0,0,-N]);  // Mordell curve y^2 = x^3 - N
+    pts := IntegralPoints(E);          // find all integer solutions
+    
+    printf "z = %o, N = %o:\n", z, N;
+    if #pts eq 0 then
+        print "  No integer solutions.";
+    else
+        for P in pts do
+            print "  (x,y) = ", P;
+        end for;
+    end if;
+    print "-----------------------------";
+end for;
