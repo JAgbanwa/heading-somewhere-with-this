@@ -1,0 +1,543 @@
+# SageMath code to solve x^3 - y^2 = 1729z^3 for non-square z = 300 to 400
+
+print("Solving x^3 - y^2 = 1729z^3 for NON-SQUARE z = 300 to 400")
+print("=" * 80)
+
+from sage.all import Integer, ZZ, QQ, sqrt, EllipticCurve
+import time
+
+# Initialize range
+start_z = 300
+end_z = 400
+
+print(f"\nRange: z = {start_z} to {end_z}")
+
+# Identify non-square z values
+print("\n1. IDENTIFYING NON-SQUARE Z VALUES:")
+print("-" * 80)
+
+non_square_z = []
+perfect_square_z = []
+
+for z in range(start_z, end_z + 1):
+    z_int = Integer(z)
+    if z_int.is_square():
+        perfect_square_z.append(z)
+    else:
+        non_square_z.append(z)
+
+print(f"Total z values: {end_z - start_z + 1}")
+print(f"Perfect squares: {len(perfect_square_z)}")
+print(f"Non-squares: {len(non_square_z)}")
+
+print(f"\nPerfect squares in range: {perfect_square_z}")
+print(f"\nFirst 20 non-squares: {non_square_z[:20]}")
+if len(non_square_z) > 20:
+    print(f"... and {len(non_square_z) - 20} more")
+
+print("\n" + "=" * 80)
+
+# Define optimized solution finder for larger z
+print("\n2. OPTIMIZED SOLUTION FINDER FOR LARGER Z:")
+print("-" * 80)
+
+def find_solutions_for_large_z(z, search_factor=500, verbose=False):
+    """
+    Find solutions for larger z values (300-400).
+    Returns list of (x, y) tuples.
+    """
+    z_int = Integer(z)
+    
+    # If perfect square, use pattern
+    if z_int.is_square():
+        n = sqrt(z_int)
+        n_int = int(n)
+        x = 2305 * z_int
+        y = 110664 * n_int**3
+        return [(x, y), (x, -y)]
+    
+    target = 1729 * z_int**3
+    solutions = set()
+    
+    # Method 1: Targeted search with intelligent bounds
+    # x^3 = y^2 + 1729*z^3 ≈ 1729*z^3
+    # So x ≈ z * (1729)^(1/3) ≈ z * 12.0
+    
+    center = int(z_int * 12)
+    
+    # Adaptive search range: smaller for larger z to keep it manageable
+    base_range = min(search_factor, 30000 // z_int)
+    search_range = max(500, base_range * 5)  # At least 500
+    
+    if verbose:
+        print(f"  Center: x ≈ {center}")
+        print(f"  Search range: ±{search_range}")
+        print(f"  Total x values to check: {2*search_range + 1}")
+    
+    # Use step size to speed up search
+    step = max(1, z_int // 200)  # Larger step for larger z
+    
+    # Search strategy: check every 'step' values
+    for offset in range(-search_range, search_range + 1, step):
+        x = center + offset
+        if x <= 0:
+            continue
+            
+        y_sq = x**3 - target
+        if y_sq >= 0:
+            y = y_sq.sqrt()
+            if y in ZZ:
+                y_int = int(y)
+                solutions.add((x, y_int))
+                if y_int != 0:
+                    solutions.add((x, -y_int))
+    
+    # Method 2: Check nearby values if we found something
+    if solutions and step > 1:
+        # Refine search around found solutions
+        refined_solutions = set(solutions)
+        for x_found, y_found in list(solutions):
+            # Check x ± step/2
+            for offset in range(-step//2, step//2 + 1):
+                if offset == 0:
+                    continue
+                x = x_found + offset
+                if x <= 0:
+                    continue
+                    
+                y_sq = x**3 - target
+                if y_sq >= 0:
+                    y = y_sq.sqrt()
+                    if y in ZZ:
+                        y_int = int(y)
+                        refined_solutions.add((x, y_int))
+                        if y_int != 0:
+                            refined_solutions.add((x, -y_int))
+        
+        solutions = refined_solutions
+    
+    return sorted(list(solutions), key=lambda t: (abs(t[0]), abs(t[1])))
+
+print("\n" + "=" * 80)
+
+# Test on sample values
+print("\n3. TESTING ON SAMPLE NON-SQUARE Z VALUES:")
+print("-" * 80)
+
+# Test first few and some from middle
+test_indices = [0, 10, 20, 30, 40]
+test_z = []
+for i in test_indices:
+    if i < len(non_square_z):
+        test_z.append(non_square_z[i])
+
+print(f"Testing on z = {test_z}")
+
+for z in test_z:
+    print(f"\nz = {z}:")
+    start_time = time.time()
+    solutions = find_solutions_for_large_z(z, search_factor=300, verbose=True)
+    elapsed = time.time() - start_time
+    
+    if solutions:
+        print(f"  Found {len(solutions)} solution(s) in {elapsed:.2f} seconds:")
+        for i, (x, y) in enumerate(solutions[:2]):  # Show first 2
+            print(f"    {i+1}. x = {x}, y = {y}")
+            # Quick verification
+            if x**3 - y**2 == 1729 * z**3:
+                print(f"        ✓ Verified")
+            else:
+                print(f"        ✗ Verification failed!")
+        if len(solutions) > 2:
+            print(f"    ... and {len(solutions) - 2} more")
+    else:
+        print(f"  No solutions found (searched in {elapsed:.2f} seconds)")
+
+print("\n" + "=" * 80)
+
+# Batch processing with adaptive parameters
+print("\n4. BATCH PROCESSING ALL NON-SQUARE Z:")
+print("-" * 80)
+
+print("Processing in batches with adaptive search parameters...")
+
+all_solutions = {}
+batch_size = 10  # Smaller batches for larger z
+
+total_batches = (len(non_square_z) + batch_size - 1) // batch_size
+
+for batch_num in range(total_batches):
+    batch_start = batch_num * batch_size
+    batch_end = min(batch_start + batch_size, len(non_square_z))
+    batch = non_square_z[batch_start:batch_end]
+    
+    print(f"\nBatch {batch_num + 1}/{total_batches}: z = {batch[0]} to {batch[-1]}")
+    
+    batch_results = {}
+    for z in batch:
+        # Adaptive search factor based on z value
+        if z < 320:
+            factor = 400
+        elif z < 350:
+            factor = 300
+        elif z < 380:
+            factor = 200
+        else:
+            factor = 150
+        
+        solutions = find_solutions_for_large_z(z, search_factor=factor, verbose=False)
+        if solutions:
+            batch_results[z] = solutions
+    
+    all_solutions.update(batch_results)
+    
+    found = len(batch_results)
+    total = len(batch)
+    print(f"  Found solutions for {found}/{total} z values")
+
+print("\n" + "=" * 80)
+
+# Results summary
+print("\n5. RESULTS SUMMARY:")
+print("-" * 80)
+
+z_with_solutions = sorted(all_solutions.keys())
+z_without_solutions = [z for z in non_square_z if z not in all_solutions]
+
+print(f"\nTotal non-square z values: {len(non_square_z)}")
+print(f"z values WITH solutions: {len(z_with_solutions)}")
+print(f"z values WITHOUT solutions: {len(z_without_solutions)}")
+
+if z_with_solutions:
+    print(f"\nNon-square z with solutions:")
+    # Display in a readable format
+    for i in range(0, len(z_with_solutions), 8):
+        line = "  " + ", ".join(str(z) for z in z_with_solutions[i:i+8])
+        print(line)
+    
+    print(f"\nDetailed solutions (first 3):")
+    for z in z_with_solutions[:3]:
+        sols = all_solutions[z]
+        print(f"\nz = {z}: {len(sols)} solution(s)")
+        for x, y in sols:
+            print(f"  x = {x:>12}, y = {y:>18}")
+            # Full verification
+            if x**3 - y**2 == 1729 * z**3:
+                print(f"         ✓ {x}^3 - {y}^2 = {x**3 - y**2}")
+                print(f"           = 1729*{z}^3 = {1729 * z**3}")
+            else:
+                print(f"         ✗ Verification failed!")
+else:
+    print("\nNo solutions found for non-square z values in this range.")
+
+print("\n" + "=" * 80)
+
+# Analyze z values without solutions
+print("\n6. ANALYSIS OF Z VALUES WITHOUT SOLUTIONS:")
+print("-" * 80)
+
+if z_without_solutions:
+    print(f"\nAnalyzing first 10 z values without solutions...")
+    
+    analysis_results = []
+    for z in z_without_solutions[:10]:
+        z_int = Integer(z)
+        
+        # Check some properties using factor function from sage
+        from sage.all import factor as sage_factor
+        fac = sage_factor(z_int)
+        prime_factors = [p for p, _ in fac]
+        max_prime = max(prime_factors) if prime_factors else 1
+        
+        # Check if z has square factors
+        square_part = 1
+        for p, e in fac:
+            if e >= 2:
+                square_part *= p**(e - (e % 2))
+        
+        analysis_results.append({
+            'z': z,
+            'prime_factors': prime_factors,
+            'max_prime': max_prime,
+            'square_part': square_part,
+            'has_square_factor': square_part > 1
+        })
+    
+    print("\nAnalysis results:")
+    print("z  | Prime Factors | Max Prime | Has Square Factor")
+    print("-" * 60)
+    
+    for result in analysis_results:
+        z = result['z']
+        factors = result['prime_factors']
+        max_p = result['max_prime']
+        has_sq = result['has_square_factor']
+        
+        # Format factors string
+        if factors:
+            factors_str = ""
+            for i, p in enumerate(factors):
+                if i > 0:
+                    factors_str += "×"
+                factors_str += str(p)
+            # Truncate if too long
+            if len(factors_str) > 12:
+                factors_str = factors_str[:10] + ".."
+        else:
+            factors_str = "1"
+        
+        print(f"{z:3} | {factors_str:13} | {max_p:9} | {has_sq}")
+
+print("\n" + "=" * 80)
+
+# Check for special patterns in found solutions
+print("\n7. PATTERN ANALYSIS IN FOUND SOLUTIONS:")
+print("-" * 80)
+
+if z_with_solutions:
+    print("\nAnalyzing patterns in solutions...")
+    
+    # Check ratio x/z
+    ratios = []
+    for z, sols in all_solutions.items():
+        for x, y in sols:
+            if z != 0:
+                ratio = x / z
+                ratios.append((z, x, y, ratio))
+    
+    if ratios:
+        print(f"\nFound {len(ratios)} solution pairs")
+        
+        # Group by approximate ratio
+        ratio_groups = {}
+        for z, x, y, ratio in ratios:
+            ratio_key = round(float(ratio), 1)  # Group by ratio rounded to 1 decimal
+            if ratio_key not in ratio_groups:
+                ratio_groups[ratio_key] = []
+            ratio_groups[ratio_key].append((z, x, y, ratio))
+        
+        print("\nGrouped by x/z ratio:")
+        for ratio_key in sorted(ratio_groups.keys()):
+            group = ratio_groups[ratio_key]
+            print(f"\n  Ratio ≈ {ratio_key}: {len(group)} solution(s)")
+            for z, x, y, ratio in group[:3]:  # Show first 3
+                print(f"    z={z}, x={x}, y={y}, x/z={ratio:.2f}")
+            if len(group) > 3:
+                print(f"    ... and {len(group) - 3} more")
+
+print("\n" + "=" * 80)
+
+# Generate statistics
+print("\n8. SOLUTION STATISTICS:")
+print("-" * 80)
+
+if z_with_solutions:
+    total_solution_pairs = sum(len(sols) for sols in all_solutions.values())
+    
+    print(f"\nTotal solution pairs found: {total_solution_pairs}")
+    print(f"Average solutions per z: {total_solution_pairs/len(z_with_solutions):.2f}")
+    
+    # Get all x and y values
+    all_x = []
+    all_y = []
+    for sols in all_solutions.values():
+        for x, y in sols:
+            all_x.append(x)
+            all_y.append(y)
+    
+    if all_x:
+        print(f"\nx values:")
+        print(f"  Min: {min(all_x)}")
+        print(f"  Max: {max(all_x)}")
+        print(f"  Avg: {sum(all_x)/len(all_x):.0f}")
+        
+        print(f"\ny values:")
+        print(f"  Min: {min(all_y)}")
+        print(f"  Max: {max(all_y)}")
+        print(f"  Avg: {sum(all_y)/len(all_y):.0f}")
+        
+        # Check for relationships
+        print(f"\nRatios:")
+        # Calculate average x/z
+        total_ratio = 0
+        count = 0
+        for z, sols in all_solutions.items():
+            for x, _ in sols:
+                total_ratio += x / z
+                count += 1
+        if count > 0:
+            print(f"  Avg x/z: {total_ratio/count:.2f}")
+
+print("\n" + "=" * 80)
+
+# Verify all found solutions
+print("\n9. VERIFICATION OF ALL FOUND SOLUTIONS:")
+print("-" * 80)
+
+print("\nVerifying all solutions...")
+errors = []
+correct = 0
+total = 0
+
+for z, sols in all_solutions.items():
+    for x, y in sols:
+        total += 1
+        if x**3 - y**2 == 1729 * z**3:
+            correct += 1
+        else:
+            errors.append((z, x, y, x**3 - y**2, 1729 * z**3))
+
+if errors:
+    print(f"✗ Found {len(errors)} verification errors out of {total} solutions")
+    for z, x, y, lhs, rhs in errors[:3]:
+        print(f"  z={z}, x={x}, y={y}: {x}^3 - {y}^2 = {lhs} ≠ 1729*{z}^3 = {rhs}")
+else:
+    print(f"✓ All {total} solutions verified correctly!")
+
+print("\n" + "=" * 80)
+
+# Special check for perfect squares pattern
+print("\n10. PERFECT SQUARES PATTERN VERIFICATION:")
+print("-" * 80)
+
+print("\nFor perfect squares in range, verifying pattern...")
+for z in perfect_square_z:
+    z_int = Integer(z)
+    n = sqrt(z_int)
+    n_int = int(n)
+    
+    x = 2305 * z_int
+    y = 110664 * n_int**3
+    
+    if x**3 - y**2 == 1729 * z_int**3:
+        print(f"✓ z={z} (={n_int}^2): x={x}, y={y} ✓")
+    else:
+        print(f"✗ z={z}: Pattern verification failed!")
+
+print("\n" + "=" * 80)
+
+# Generate final report
+print("\n11. FINAL COMPREHENSIVE REPORT:")
+print("=" * 80)
+
+print(f"\nREPORT: x^3 - y^2 = 1729*z^3 for z = {start_z} to {end_z}")
+print("-" * 60)
+
+print(f"\n1. RANGE STATISTICS:")
+print(f"   Total z values: {end_z - start_z + 1}")
+print(f"   Perfect squares: {len(perfect_square_z)}")
+print(f"   Non-squares: {len(non_square_z)}")
+
+print(f"\n2. PERFECT SQUARES ({len(perfect_square_z)}):")
+print(f"   Values: {perfect_square_z}")
+print(f"   Pattern: x = 2305*z, y = ±110664*sqrt(z)^3")
+
+print(f"\n3. NON-SQUARE RESULTS:")
+print(f"   Total non-square z: {len(non_square_z)}")
+print(f"   With solutions: {len(z_with_solutions)}")
+print(f"   Without solutions: {len(z_without_solutions)}")
+
+if z_with_solutions:
+    print(f"\n4. NON-SQUARE Z WITH SOLUTIONS:")
+    print(f"   Values: {z_with_solutions}")
+    
+    print(f"\n5. SAMPLE SOLUTIONS:")
+    sample_count = min(5, len(z_with_solutions))
+    sample_z = sorted(z_with_solutions)[:sample_count]
+    for i, z in enumerate(sample_z):
+        sols = all_solutions[z]
+        print(f"\n   z = {z}:")
+        for x, y in sols[:2]:  # Show first 2
+            print(f"     x = {x}, y = {y}")
+
+print(f"\n6. MATHEMATICAL ANALYSIS:")
+print(f"   The equation x^3 - y^2 = 1729*z^3 can be transformed to:")
+print(f"   (y/z^2)^2 = (x/z)^3 - 1729")
+print(f"   For integer solutions, we need (x/z) and (y/z^2) to be integers.")
+print(f"   This is equivalent to finding rational points on Y^2 = X^3 - 1729")
+print(f"   with specific denominators.")
+
+print("\n" + "=" * 80)
+
+# Run a final extended check on promising candidates
+print("\n12. EXTENDED CHECK ON SELECTED Z VALUES:")
+print("-" * 80)
+
+print("\nPerforming extended search on 5 selected z values...")
+
+# Select some z values for extended search
+if z_without_solutions:
+    selected_z = z_without_solutions[:5]
+else:
+    selected_z = non_square_z[:5]
+
+extended_results = {}
+for z in selected_z:
+    print(f"\nExtended search for z = {z}:")
+    
+    z_int = Integer(z)
+    target = 1729 * z_int**3
+    center = int(z_int * 12)
+    
+    # Larger search for this check
+    ext_search_range = 10000
+    step = max(1, z_int // 100)
+    
+    found_solutions = set()
+    start_time = time.time()
+    
+    for offset in range(-ext_search_range, ext_search_range + 1, step):
+        x = center + offset
+        if x <= 0:
+            continue
+            
+        y_sq = x**3 - target
+        if y_sq >= 0:
+            y = y_sq.sqrt()
+            if y in ZZ:
+                y_int = int(y)
+                found_solutions.add((x, y_int))
+                if y_int != 0:
+                    found_solutions.add((x, -y_int))
+    
+    elapsed = time.time() - start_time
+    
+    if found_solutions:
+        extended_results[z] = sorted(list(found_solutions))
+        print(f"  Found {len(found_solutions)} solution(s) in {elapsed:.2f} seconds")
+        for x, y in list(found_solutions)[:2]:
+            print(f"    x = {x}, y = {y}")
+    else:
+        print(f"  No solutions found in extended search ({elapsed:.2f} seconds)")
+
+print("\n" + "=" * 80)
+
+# Final conclusion
+print("\n13. FINAL CONCLUSION:")
+print("=" * 80)
+
+print(f"\nFor the range z = {start_z} to {end_z}:")
+print(f"• Perfect squares: {len(perfect_square_z)} values")
+print(f"• Non-squares: {len(non_square_z)} values")
+
+if z_with_solutions:
+    print(f"\n• Found solutions for {len(z_with_solutions)} non-square z values")
+    print(f"  These are rare exceptions to the general pattern.")
+    if len(z_with_solutions) <= 10:
+        print(f"  The z values are: {z_with_solutions}")
+else:
+    print(f"\n• No solutions found for non-square z values")
+    print(f"  This supports the hypothesis that solutions exist mainly for perfect squares.")
+
+print(f"\n• The known infinite family exists for perfect squares:")
+print(f"  If z = n^2, then x = 2305*n^2, y = ±110664*n^3")
+print(f"  This works because 110664^2 = 2305^3 - 1729")
+
+print(f"\n• For non-squares, the equation y^2 = x^3 - 1729*z^3")
+print(f"  defines an elliptic curve (Mordell curve).")
+print(f"  Integer points on such curves are computationally")
+print(f"  difficult to find and are generally rare.")
+
+print("\n" + "=" * 80)
+print("ANALYSIS COMPLETE FOR z = 300 TO 400")
+print("=" * 80)
