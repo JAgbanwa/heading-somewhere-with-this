@@ -1,0 +1,22 @@
+Q := Rationals();
+
+for dd in [1..100] do
+
+    Rxy<x,y> := PolynomialRing(Q,2);
+    Fd := 36*x^3 - 19 - dd^2*y - 2*dd*y^2 - 12*dd*x*y;
+
+    A2 := AffineSpace(Q,2);
+    Cd := Curve(A2, Fd);
+
+    g := Genus(Cd);
+
+    // search for rational points with bounded height
+    Pts := PointSearch(Cd, 100);
+
+    if #Pts gt 0 then
+        printf "d=%o | genus=%o | points=%o\n", dd, g, Pts;
+    else
+        printf "d=%o | genus=%o | no points found\n", dd, g;
+    end if;
+
+end for;
