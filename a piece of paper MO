@@ -535,3 +535,238 @@ For the formulas below to hold for a given case;
     \boxed{y_1 = 2 \cdot \alpha + r} \\
     \boxed{z_{1}= \Phi + 2 \cdot \alpha - r} \\
 \end{align*}
+
+
+************************
+
+
+\subsubsection{Possible approaches towards integer solutions}
+
+When $n = 3782234599225650235415 \cdot k_1 +  2094194294170672539119$ is substituted into equation \eqref{6.0}, with reference to the previous section on modular analysis, this equation is yielded:
+
+\begin{multline}\label{6.221}
+     Y^2 = 102516622445224071181618629075661543598435443927642055302797028500\cdot k_1 ^{3} + \\
+170288003150088713211165229564777675866712767658935950737783670400\cdot k_1 ^{2} + \\
+94287161519712324562577411784076704909304399983333523978591825920 \cdot k_1 + \\
+17402026102819032989296434839371590967156048128533655419095307484
+\end{multline}
+A question was posed on Math Overflow on finding rational points to equation \eqref{6.221} \cite{agbanwa-mathoverflow-2025}. A Math Overflow comment from Chris Wuthrich found the global minimal model to be:
+\begin{equation}\label{6.743}
+    y^{\prime 2} = x^{\prime 3} - 2525830172961041971790515187823418026564152076350226869064138887440125
+\end{equation}
+
+The equation \eqref{6.743} describes a Mordell curve. 
+
+
+Another comment from Dmitry Ezhov provided Magma codes which found the rational points of $(x^{\prime }, y^{\prime})$ to be
+
+\begin{multline*}
+    (k_1, Y) = (-\dfrac{121055672038047734669843996898252274515845520064619127162373741}{218633463231803886802640917544016705655307973063108077956975260}, \\
+    \dfrac{3894228350436067038312065162575538689415800674650195219149913735}{368355224867664550854516818920804459714526459420694554473909596})
+\end{multline*}
+
+Two directions were explored in search of integer solutions for equation \eqref{6.743}.
+\begin{itemize}
+    \item Scaling
+    \item Gaussian integers
+\end{itemize}
+Both approaches did not return integer solutions.
+
+\subsubsubsection{Scaling}
+
+\begin{proposition}
+    Given equation \eqref{6.743}, to ensure integer outcomes are yielded for $(x^{\prime }, y^{\prime})$, let $x^{\prime} = k_2 \cdot 11346703797676950706245$ and $y^{\prime} = \sqrt{11346703797676950706245^3} \cdot Y_2$.
+\end{proposition}
+
+\begin{align*}
+    y^{\prime 2} &= x^{\prime 3} - 1729 \cdot \left(11346703797676950706245\right)^3\\
+    y^{\prime 2} &=  \left(k_2 \cdot11346703797676950706245\right)^3 - 1729 \cdot \left(11346703797676950706245\right)^3 \\
+    \left(\dfrac{y^{\prime}}{11346703797676950706245^{\frac{3}{2}}}\right)^2 &=  k_2 ^3 - 1729  \\
+    Y_2^2 &= k_2 ^3  - 1729 \\
+\end{align*}
+where $Y_2 = \dfrac{y^{\prime}}{11346703797676950706245^{\frac{3}{2}}}$
+\begin{equation} \label{7.1}
+    k_2 ^3 - Y_2^2 = 1729
+\end{equation}
+Equation \eqref{7.1} has the two integer points below $10000$ are $(k_2, Y_2) = (2305, 110664) ,(2305, -110664)$
+
+
+\begin{align*}
+    y^{\prime} &= \pm 110664 \cdot \sqrt{11346703797676950706245^3}\\
+    k_1 &= 2305 \cdot 11346703797676950706245\\
+        &= 26154152253645371377894725\\
+    n &= 3782234599225650235415 \cdot k_1 +  2094194294170672539119\\
+      &= 3782234599225650235415 \cdot \left(26154152253645371377894725\right) +  2094194294170672539119\\
+      &= 98921139567153038114792565612131616794009224994
+\end{align*}
+
+\subsubsubsection{Gaussian integers}
+
+From page 139 of \cite{springer_book_2024}, we approach this problem using the properties of rings.
+\begin{multline*}
+    \mathbb{Z}\left[- 2525830172961041971790515187823418026564152076350226869064138887440125\right] = \\
+    \{a + b \cdot \sqrt{- 2525830172961041971790515187823418026564152076350226869064138887440125}, a, b \in \mathbb{Z}\}
+\end{multline*}
+
+\begin{multline}\label{6.81}
+    x^{\prime 3} = y^{\prime 2} + 2525830172961041971790515187823418026564152076350226869064138887440125
+\end{multline}
+\begin{multline}\label{6.82}
+    x^{\prime 3} = \left(y^{\prime} + 2525830172961041971790515187823418026564152076350226869064138887440125 \cdot \mathrm{i}\right)\\
+    \cdot \left(y^{\prime} - 2525830172961041971790515187823418026564152076350226869064138887440125 \cdot \mathrm{i}\right)
+\end{multline}
+Given that $y^{\prime}$ is an integer, $y^{\prime} + 2525830172961041971790515187823418026564152076350226869064138887440125 \cdot \mathrm{i}$ and $y^{\prime} - 2525830172961041971790515187823418026564152076350226869064138887440125 \cdot \mathrm{i}$ are integers.(refer to proposition 2.15 in \cite{springer_book_2024}).
+\begin{align*}
+    y^{\prime} + 2525830172961041971790515187823418026564152076350226869064138887440125 \cdot \mathrm{i} &= \left(a + b \cdot \mathrm{i}\right)^3
+\end{align*}
+\begin{multline*}
+    y^{\prime} + 2525830172961041971790515187823418026564152076350226869064138887440125 \cdot \mathrm{i} = \\
+    \left(a^3 - 3a \cdot b^2\right) + \left(3a^2 \cdot b - b^3\right) \cdot \mathrm{i}
+\end{multline*}
+Comparing coefficients,
+
+\begin{equation}\label{6.86}
+2525830172961041971790515187823418026564152076350226869064138887440125 = b \cdot \left(3a^2 - b^2\right)
+\end{equation}
+
+and 
+
+\begin{equation}\label{6.871}
+    y^{\prime} = a^3 - 3a \cdot b^2
+\end{equation}
+It is noteworthy that:
+\begin{multline*}
+2525830172961041971790515187823418026564152076350226869064138887440125 = \\
+1729 \cdot \left(11346703797676950706245\right)^3
+\end{multline*}
+
+\begin{equation}\label{6.86}
+ 1729 \cdot \left(11346703797676950706245\right)^3 = 3a^2 \cdot b- b^3
+\end{equation}
+\begin{equation}\label{6.87}
+ 1729 = 3 \cdot \left(\dfrac{a}{11346703797676950706245}\right)^2 \cdot \left(\dfrac{b}{11346703797676950706245}\right) - \left(\dfrac{b}{11346703797676950706245}\right)^3
+\end{equation}
+
+Let $X = \dfrac{a}{11346703797676950706245}$ and $\gamma = \dfrac{b}{11346703797676950706245}$.\\ 
+
+Equation \eqref{6.87} is expressible as:
+
+\begin{equation}\label{6.88}
+    3 X^2 \cdot \gamma - \gamma^3 = 1729 
+\end{equation}
+
+On solving equation \eqref{6.88} computationally with Magma, a rational point is $\left(X, \gamma\right) = \left(\dfrac{108}{11}, \dfrac{133}{11}\right)$. 
+
+\begin{align*}
+    a &= \dfrac{108}{11} \cdot 11346703797676950706245 \\
+      &= 111404000922646425115860\\
+    b &= \dfrac{133}{11} \cdot 11346703797676950706245\\
+      &= 137191964099184949448235
+\end{align*}
+
+From equation \eqref{6.871},
+
+\begin{align*}
+    y^{\prime} &= (111404000922646425115860)^3 - 3(111404000922646425115860)\cdot (137191964099184949448235)^2 \\
+     &= -4907797829973180469755825572738232393015528859591853057975149936849500
+\end{align*}
+
+On substituting $y^{\prime} = -4907797829973180469755825572738232393015528859591853057975149936849500$ into equation \eqref{6.81},
+
+\begin{multline*}
+     x^{\prime} = \\
+     1031518527061540973295 \cdot \sqrt[3]{ 21945335783872995826844448188312751862946369668357601153209274346221025939299}
+\end{multline*}
+
+An approach where partial progress was made in search of solutions to equation \eqref{6.743} is elaborated in the subsection below.
+
+\subsubsubsection{Recursive patterns}
+
+In this subsection, equation \eqref{6.743} would approached by observing its structure, based on which recursive patterns would be searched for.
+
+Recall
+\begin{equation*}
+    y^{\prime 2} = x^{\prime 3} - 1729 \cdot c^3
+\end{equation*}
+where $c = 11346703797676950706245$
+On running a computational script on Magma for the first $50$ values for $c$ \cite{agbanwa_diophantine_1729_2026}, these are the values in the table below:
+
+\begin{table}[h]
+\centering
+\caption{Solutions to $y^{\prime 2} = x^{\prime 3} - 1729 \cdot c^3$}
+\label{tab:solutions}
+\begin{tabular}{cccccc}
+\toprule
+$c$ &  $x^{\prime}$ & $y^{\prime}$ & $x^{\prime3} - y^{\prime 2}$\\
+\midrule
+1 & 2305 & 110664 & 1729\\
+4 & 9220 & 885312 & 110656\\
+9 & 20745 & 2987928 & 1260441\\
+16 & 36880 & 7082496 & 7081984 \\
+25 & 57625 & 13833000 & 27015625\\
+36 & 82980 & 23903424 & 80668224\\
+49 & 112945 & 37957752 & 203415121\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+let $c = n_1^2$
+\begin{align*}
+    x^{\prime} &= 2305 \cdot c \\
+               &= 2305 \cdot n_1^2\\
+    y^{\prime} &= 110664 \cdot c^{\frac{3}{2}}\\
+               &= 110664 \cdot n_1^3\\
+\end{align*}
+
+\begin{table}[h]
+\centering
+\caption{Solutions to $y^{\prime 2} = x^{\prime 3} - 1729 \cdot c^3$}
+\label{tab:solutions}
+\begin{tabular}{cccccc}
+\toprule
+$c$ &  $x^{\prime}$ & $y^{\prime}$ & $x^{\prime3} - y^{\prime 2}$\\
+\midrule
+4 & 233 & 3541 & 110656\\
+16 & 932 & 28328 & 7081984\\
+36 & 2097 & 95607 & 80668224\\
+64 & 3728 & 226624 & 453246976\\
+100 & 5825 & 442625 & 1729000000\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{align*}
+    x^{\prime} &= 233 \cdot c \\
+               &= 233 \cdot n_1^2\\
+    y^{\prime} &= 3541 \cdot c^{\frac{3}{2}}\\
+               &= 3541 \cdot n_1^3\\
+\end{align*}
+
+\subsubsection{\texorpdfstring{Divisor parametrization of equation \eqref{6.0}}{Divisor parametrization of equation 6.0}}
+
+Equation \eqref{6.0} 
+\begin{equation*}
+  Y^2  = (\alpha + 6n)^2 +  \dfrac{36n^3 - 19}{\alpha}
+\end{equation*}
+can be parametrized as follows:
+\begin{align*}
+    Y^2  &= (\alpha + 6n)^2 +  \dfrac{36n^3 - 19}{\alpha}\\
+    Y^2  - (\alpha + 6n)^2 &= \dfrac{36n^3 - 19}{\alpha} \\
+    \alpha + 6n &= \dfrac{\dfrac{36n^3 - 19}{\alpha} - d^2}{2d}\\
+   Y &= \dfrac{\dfrac{36n^3 - 19}{\alpha} + d^2}{2d}\\
+\end{align*}
+where $d$ is a divisor of $\dfrac{36n^3 - 19}{\alpha}$ for which $(\alpha + 6n), Y$ are integers.
+
+
+
+
+
+
+
+\section{Open questions}
+
+\begin{itemize}
+\item Does equation \eqref{6.221} admit rational values of $k_1$ for which integer solutions $Y\in\mathbb Z$ exist? In particular, can arithmetic or geometric obstructions to such solutions be characterized?
+\item Does equation \eqref{6.743} admit integer solutions $(k_1,Y)\in\mathbb Z^2$ beyond the trivial cases, and can its solvability be related to the Mordell-Weil structure of the associated elliptic curve?
+\end{itemize}
+
