@@ -14,7 +14,7 @@ X^2 - Y_2^2 = 1729
 Equations of the form $X^2 - Y^2 = a$ are solved as follows:
 \begin{align*}
     X &= \dfrac{a + d^2}{2\cdot d}\\
-     Y &= \dfrac{a - d^2}{2\cdot d}\\  
+    Y &= \dfrac{a - d^2}{2\cdot d}\\  
 \end{align*}
 where $d$ is a divisor of $a$ for which $X,Y$ are integers. Therefore with regard to equation \eqref{6.8},
 \begin{align*}
