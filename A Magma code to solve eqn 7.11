@@ -1,0 +1,15 @@
+// Base field: rational function field Q(m)
+K<m> := FunctionField(Rationals());
+
+// Define the elliptic curve
+E := EllipticCurve(
+    [ 36/m, 36, 12*m, 0, m^2 - 19/m ]
+);
+
+// Compute a global minimal model
+Emin, phi := MinimalModel(E);
+
+// Output results
+E;
+Emin;
+phi;
