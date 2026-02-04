@@ -1,0 +1,18 @@
+// Base field
+K<m> := FunctionField(Rationals());
+
+// Original curve
+E := EllipticCurve([36/m, 36, 12*m, 0, m^2 - 19/m]);
+
+// Global minimal model
+Emin := MinimalModel(E);
+
+// Minimal discriminant (element of K*)
+Delta := Discriminant(Emin);
+
+// Conductor divisor (sum of places with exponents)
+N := Conductor(Emin);
+
+// Output
+Delta;
+N;
