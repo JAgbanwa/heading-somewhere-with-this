@@ -1,0 +1,18 @@
+// Function field in parameter m
+K<m> := FunctionField(Rationals());
+P<x> := PolynomialRing(K);
+
+// Original polynomial
+f := (36/m)*x^3 + 36*x^2 + 12*m*x + m^2 - 19/m;
+
+// Make cubic monic:
+g := (m/36)*f;
+
+// Now construct curve
+E := EllipticCurve(g);
+
+// Global minimal model
+Emin, phi := MinimalModel(E);
+
+Emin;
+phi;
