@@ -1,0 +1,16 @@
+R<m> := FunctionField(Rationals());
+P<x> := PolynomialRing(R);
+
+// Define monic cubic
+f := x^3 
+     + ((36*m + 81)/36)*x^2 
+     + ((12*m^2 + 36*m)/36)*x 
+     + ((m^3 + 6*m^2 + 9*m - 4)/36);
+
+// Define elliptic curve
+E := EllipticCurve(f);
+
+// Compute global minimal model
+Emin := MinimalModel(E);
+
+Emin;
