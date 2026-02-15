@@ -1,0 +1,29 @@
+// Base field Q(m)
+Q := Rationals();
+K<m> := FunctionField(Q);
+
+// Define the elliptic curve in general Weierstrass form:
+// y^2 = a3*x^3 + a2*x^2 + a1*x + a0
+
+E := EllipticCurve([
+    0,                 // a1
+    0,                 // a2 (xy term)
+    0,                 // a3 (y term)
+    36,                // coefficient of x^2
+    12*m               // coefficient of x
+]);
+
+// Now adjust to include the x^3 and constant term correctly:
+
+E := EllipticCurve([
+    0,
+    36,
+    12*m,
+    (m^3 - 19)/m,
+    36/m
+]);
+
+// Compute global minimal model
+Emin, phi := MinimalModel(E);
+
+Emin;
