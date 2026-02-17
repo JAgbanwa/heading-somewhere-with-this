@@ -68,5 +68,30 @@ m = 55 has rank >= 1 (rank = 3)
 m = 58 has rank >= 1 (rank = 1)
 m = 60 has rank >= 1 (rank = 1)
 
+We pushed a bit further to the range between 60 to 70 and had these:
+
+m = 60 has rank >= 1 (rank = 1)
+m = 61 has rank >= 1 (rank = 1)
+m = 62 has rank >= 1 (rank = 2)
+m = 63 has rank >= 1 (rank = 1)
+m = 64 has rank >= 1 (rank = 1)
+
+WARNING
+Class group unconditional proof is expensive.
+Hint: to obtain class group proven under GRH, input
+> SetClassGroupBounds("GRH");
+before starting the current calculation.
+
+m = 66 has rank >= 1 (rank = 1)
+
+WARNING
+Class group unconditional proof is expensive.
+Hint: to obtain class group proven under GRH, input
+> SetClassGroupBounds("GRH");
+before starting the current calculation.
+
+m = 70 has rank >= 1 (rank = 1)
+
+
 
 (Note that the range 1 to 50 is tweakable to span any range as one would desire.)
