@@ -1,0 +1,61 @@
+for m in [1..50] do
+    
+    // Define elliptic curve in monic cubic form
+    E := EllipticCurve([0, m, 0, m^2/3, (m^3-19)/36]);
+
+    // Minimal model improves stability
+    Emin, phi := MinimalModel(E);
+
+    // Rank computation
+    r := Rank(Emin);
+
+    if r ge 1 then
+        printf "m = %o has rank >= 1 (rank = %o)\n", m, r;
+    end if;
+
+end for;
+
+
+***************************************************(Outcome)***************************************************
+
+m = 1 has rank >= 1 (rank = 1)
+m = 5 has rank >= 1 (rank = 2)
+m = 6 has rank >= 1 (rank = 1)
+m = 7 has rank >= 1 (rank = 1)
+m = 9 has rank >= 1 (rank = 1)
+m = 10 has rank >= 1 (rank = 1)
+m = 11 has rank >= 1 (rank = 2)
+m = 12 has rank >= 1 (rank = 1)
+m = 13 has rank >= 1 (rank = 1)
+m = 14 has rank >= 1 (rank = 2)
+m = 15 has rank >= 1 (rank = 1)
+m = 16 has rank >= 1 (rank = 1)
+m = 17 has rank >= 1 (rank = 2)
+m = 18 has rank >= 1 (rank = 1)
+m = 19 has rank >= 1 (rank = 2)
+m = 20 has rank >= 1 (rank = 2)
+m = 21 has rank >= 1 (rank = 1)
+m = 22 has rank >= 1 (rank = 1)
+m = 24 has rank >= 1 (rank = 1)
+m = 25 has rank >= 1 (rank = 1)
+m = 27 has rank >= 1 (rank = 1)
+m = 28 has rank >= 1 (rank = 1)
+m = 30 has rank >= 1 (rank = 1)
+m = 31 has rank >= 1 (rank = 1)
+m = 32 has rank >= 1 (rank = 1)
+m = 33 has rank >= 1 (rank = 1)
+m = 34 has rank >= 1 (rank = 1)
+m = 35 has rank >= 1 (rank = 1)
+m = 36 has rank >= 1 (rank = 1)
+m = 37 has rank >= 1 (rank = 1)
+m = 39 has rank >= 1 (rank = 1)
+m = 40 has rank >= 1 (rank = 1)
+m = 41 has rank >= 1 (rank = 2)
+m = 42 has rank >= 1 (rank = 1)
+m = 43 has rank >= 1 (rank = 1)
+m = 45 has rank >= 1 (rank = 1)
+m = 48 has rank >= 1 (rank = 1)
+m = 49 has rank >= 1 (rank = 1)
+m = 50 has rank >= 1 (rank = 2)
+
+(Note that the range 1 to 50 is tweakable to span any range as one would desire.)
