@@ -92,7 +92,7 @@ before starting the current calculation.
 
 m = 70 has rank >= 1 (rank = 1)
 
-The warning is now fixed in the Magma code below:
+***************************(The warning is now fixed in the Magma code below)***************************:
 
 SetClassGroupBounds("GRH");
 
@@ -135,6 +135,27 @@ m = 96 has rank >= 1 (rank = 1)
 m = 97 has rank >= 1 (rank = 1)
 m = 98 has rank >= 1 (rank = 2)
 m = 100 has rank >= 1 (rank = 1)
+
+For a range between 150 to 180,
+
+m = 150 has rank >= 1 (rank = 1)
+m = 151 has rank >= 1 (rank = 1)
+m = 154 has rank >= 1 (rank = 1)
+m = 156 has rank >= 1 (rank = 1)
+m = 157 has rank >= 1 (rank = 2)
+m = 158 has rank >= 1 (rank = 2)
+m = 159 has rank >= 1 (rank = 1)
+m = 160 has rank >= 1 (rank = 1)
+m = 166 has rank >= 1 (rank = 1)
+m = 167 has rank >= 1 (rank = 2)
+m = 168 has rank >= 1 (rank = 1)
+m = 170 has rank >= 1 (rank = 2)
+m = 171 has rank >= 1 (rank = 1)
+m = 172 has rank >= 1 (rank = 1)
+m = 174 has rank >= 1 (rank = 1)
+m = 175 has rank >= 1 (rank = 1)
+m = 178 has rank >= 1 (rank = 1)
+m = 180 has rank >= 1 (rank = 1)
 
 
 
