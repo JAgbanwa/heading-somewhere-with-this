@@ -58,4 +58,15 @@ m = 48 has rank >= 1 (rank = 1)
 m = 49 has rank >= 1 (rank = 1)
 m = 50 has rank >= 1 (rank = 2)
 
+On tweaking the above code to search within the range of 50 to 60, these were the outcomes:
+
+m = 50 has rank >= 1 (rank = 2)
+m = 52 has rank >= 1 (rank = 1)
+m = 53 has rank >= 1 (rank = 2)
+m = 54 has rank >= 1 (rank = 1)
+m = 55 has rank >= 1 (rank = 3)
+m = 58 has rank >= 1 (rank = 1)
+m = 60 has rank >= 1 (rank = 1)
+
+
 (Note that the range 1 to 50 is tweakable to span any range as one would desire.)
