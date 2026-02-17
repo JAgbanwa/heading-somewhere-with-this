@@ -96,7 +96,7 @@ The warning is now fixed in the Magma code below:
 
 SetClassGroupBounds("GRH");
 
-for m in [70..90] do
+for m in [70..100] do
     
     E := EllipticCurve([0, m, 0, m^2/3, (m^3-19)/36]);
     Emin, phi := MinimalModel(E);
@@ -129,6 +129,13 @@ m = 87 has rank >= 1 (rank = 1)
 m = 88 has rank >= 1 (rank = 1)
 m = 89 has rank >= 1 (rank = 2)
 m = 90 has rank >= 1 (rank = 3)
+m = 91 has rank >= 1 (rank = 1)
+m = 94 has rank >= 1 (rank = 1)
+m = 96 has rank >= 1 (rank = 1)
+m = 97 has rank >= 1 (rank = 1)
+m = 98 has rank >= 1 (rank = 2)
+m = 100 has rank >= 1 (rank = 1)
+
 
 
 
