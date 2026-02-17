@@ -92,6 +92,44 @@ before starting the current calculation.
 
 m = 70 has rank >= 1 (rank = 1)
 
+The warning is now fixed in the Magma code below:
+
+SetClassGroupBounds("GRH");
+
+for m in [70..90] do
+    
+    E := EllipticCurve([0, m, 0, m^2/3, (m^3-19)/36]);
+    Emin, phi := MinimalModel(E);
+
+    r := Rank(Emin);
+
+    if r ge 1 then
+        printf "m = %o has rank >= 1 (rank = %o)\n", m, r;
+    end if;
+
+end for;
+
+whose outcome is:
+
+m = 70 has rank >= 1 (rank = 1)
+m = 71 has rank >= 1 (rank = 1)
+m = 72 has rank >= 1 (rank = 1)
+m = 73 has rank >= 1 (rank = 1)
+m = 75 has rank >= 1 (rank = 1)
+m = 76 has rank >= 1 (rank = 1)
+m = 78 has rank >= 1 (rank = 1)
+m = 79 has rank >= 1 (rank = 3)
+m = 81 has rank >= 1 (rank = 1)
+m = 82 has rank >= 1 (rank = 2)
+m = 83 has rank >= 1 (rank = 1)
+m = 84 has rank >= 1 (rank = 1)
+m = 85 has rank >= 1 (rank = 1)
+m = 86 has rank >= 1 (rank = 2)
+m = 87 has rank >= 1 (rank = 1)
+m = 88 has rank >= 1 (rank = 1)
+m = 89 has rank >= 1 (rank = 2)
+m = 90 has rank >= 1 (rank = 3)
 
 
-(Note that the range 1 to 50 is tweakable to span any range as one would desire.)
+
+(Note that the ranges in the codes above is tweakable to span any range as one would desire.)
