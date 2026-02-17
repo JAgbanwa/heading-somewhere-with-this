@@ -157,7 +157,19 @@ m = 175 has rank >= 1 (rank = 1)
 m = 178 has rank >= 1 (rank = 1)
 m = 180 has rank >= 1 (rank = 1)
 
+For a range between 180 to 120,
 
+m = 180 has rank >= 1 (rank = 1)
+m = 181 has rank >= 1 (rank = 1)
+m = 183 has rank >= 1 (rank = 1)
+m = 184 has rank >= 1 (rank = 1)
+m = 187 has rank >= 1 (rank = 1)
+m = 188 has rank >= 1 (rank = 2)
+m = 190 has rank >= 1 (rank = 1)
+m = 192 has rank >= 1 (rank = 1)
+m = 196 has rank >= 1 (rank = 1)
+m = 199 has rank >= 1 (rank = 2)
+m = 200 has rank >= 1 (rank = 2)
 
 
 (Note that the ranges in the codes above is tweakable to span any range as one would desire.)
