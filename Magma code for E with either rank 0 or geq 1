@@ -171,5 +171,20 @@ m = 196 has rank >= 1 (rank = 1)
 m = 199 has rank >= 1 (rank = 2)
 m = 200 has rank >= 1 (rank = 2)
 
+For a range between 200 to 220,
+
+m = 200 has rank >= 1 (rank = 2)
+m = 202 has rank >= 1 (rank = 1)
+m = 203 has rank >= 1 (rank = 2)
+m = 206 has rank >= 1 (rank = 2)
+m = 208 has rank >= 1 (rank = 1)
+m = 210 has rank >= 1 (rank = 1)
+m = 211 has rank >= 1 (rank = 2)
+m = 213 has rank >= 1 (rank = 1)
+m = 214 has rank >= 1 (rank = 1)
+m = 216 has rank >= 1 (rank = 1)
+m = 220 has rank >= 1 (rank = 1)
+
+
 
 (Note that the ranges in the codes above is tweakable to span any range as one would desire.)
