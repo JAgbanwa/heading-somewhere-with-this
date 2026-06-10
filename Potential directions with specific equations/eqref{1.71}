@@ -1,0 +1,114 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{breqn}
+\usepackage{empheq}
+\usepackage{float}  
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{makecell}
+\usepackage{longtable}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\usepackage{pgfplots}
+\usepackage{multicol}
+\pgfplotsset{compat=1.18}
+\usepackage{siunitx}
+\usepackage{listings}
+\usepackage{tabularx}
+\usepackage{rotating}
+\usepackage{longtable}
+\usepackage{mathtools}
+\geometry{a4paper, margin=1in} 
+\newtheorem{proposition}{Proposition}[section]
+\usepackage{tocloft} % Required for \cft commands
+\usepackage{xcolor} % Required for colors
+\usepackage[numbers]{natbib}
+\bibliographystyle{plainnat} % or abbrvnat, unsrtnat, etc.
+\usepackage{titlesec} % For customizing section titles
+% Define a new 'subsubsubsection' level (level 4)
+\titleclass{\subsubsubsection}{straight}[\subsection]
+\newcounter{subsubsubsection}[subsubsection]
+\renewcommand{\thesubsubsubsection}{\thesubsubsection.\arabic{subsubsubsection}}
+\titleformat{\subsubsubsection}{\normalfont\normalsize\bfseries}{\thesubsubsubsection}{1em}{}
+\titlespacing*{\subsubsubsection}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\title{A Table of Nontrivial Integer Solutions}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+We consider the Diophantine equation
+\begin{equation*}
+y^{2}=(36n^{3}-19-12mn)^{2}-(2m)^{3}.
+\end{equation*}
+
+The trivial family is
+\begin{equation*}
+m=0,\qquad y=\pm(36n^{3}-19).
+\end{equation*}
+
+All solutions listed below are nontrivial, since \(m\neq 0\).
+
+Each row represents two signed solutions, namely
+\begin{equation*}
+(n,m,y)=(n,m,\pm |y|).
+\end{equation*}
+
+Thus the table below gives \(29\) nontrivial \((n,m,|y|)\)-triples, corresponding to \(58\) signed nontrivial integer solutions.
+
+\begin{table}[H]
+\centering
+\noindent
+\caption{Integer solution families to $y^{2}=(36n^{3}-19-12mn)^{2}-(2m)^{3}$}
+\label{tab:quartic_integer_solutions}
+\begin{tabular}{cccc}
+\toprule
+\(\#\) & \(n\) & \(m\) & \(|y|\) \\
+\midrule
+1  & \(-1641\) & \(-620850\)        & \(171316003825\) \\
+2  & \(-921\)  & \(1452425\)        & \(11010153735\) \\
+3  & \(-675\)  & \(-613606\)        & \(16099399767\) \\
+4  & \(-570\)  & \(-1931787\)       & \(21281482855\) \\
+5  & \(-367\)  & \(289374\)         & \(247553783\) \\
+6  & \(-147\)  & \(-166915\)        & \(452011593\) \\
+7  & \(-57\)   & \(-2926\)          & \(8679903\) \\
+8  & \(-54\)   & \(-10743\)         & \(13016935\) \\
+9  & \(-54\)   & \(4749\)           & \(2420407\) \\
+10 & \(-29\)   & \(-16716\)         & \(9066007\) \\
+11 & \(-4\)    & \(-1818\)          & \(236845\) \\
+12 & \(-4\)    & \(-1032\)          & \(107155\) \\
+13 & \(1\)     & \(-51\)            & \(1207\) \\
+14 & \(1\)     & \(-3\)             & \(55\) \\
+15 & \(15\)    & \(-1207\)          & \(358905\) \\
+16 & \(19\)    & \(-1197\)          & \(532855\) \\
+17 & \(46\)    & \(-21522\)         & \(17788355\) \\
+18 & \(75\)    & \(11523\)          & \(3310775\) \\
+19 & \(93\)    & \(-175921\)        & \(307097193\) \\
+20 & \(114\)   & \(27575\)          & \(8719215\) \\
+21 & \(309\)   & \(56375\)          & \(852251625\) \\
+22 & \(790\)   & \(1096893\)        & \(6593716025\) \\
+23 & \(798\)   & \(-5378466956142\) & \(35280376688536712227\) \\
+24 & \(798\)   & \(-5586\)          & \(18347596867\) \\
+25 & \(909\)   & \(-11607484\)      & \(190054724721\) \\
+26 & \(909\)   & \(1826300\)        & \(1390662225\) \\
+27 & \(1626\)  & \(-213292581\)     & \(9811228042657\) \\
+28 & \(1759\)  & \(6612585\)        & \(29364964345\) \\
+29 & \(5118\)  & \(-526254004\)     & \(50456015630061\) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\section*{Verification note}
+
+Each row was checked by direct substitution into
+\begin{equation*}
+y^{2}=(36n^{3}-19-12mn)^{2}-(2m)^{3}.
+\end{equation*}
+
+For every listed row, both signs \(y=|y|\) and \(y=-|y|\) give valid integer solutions because the equation only contains \(y^{2}\).
+
+\end{document}
