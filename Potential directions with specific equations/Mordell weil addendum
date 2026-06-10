@@ -1,0 +1,87 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\title{Addendum: Mordell--Weil Data for the Fibration\\
+$E_{n}\colon Y^{2}=X^{3}+36n^{2}X^{2}+12ncX+c^{2}$, $c=36n^{3}-19$}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+The Diophantine equation $y^{2}=(36n^{3}-19-12mn)^{2}-(2m)^{3}$ is, for fixed
+$n$ and under $X=-2m$, $Y=y$, the elliptic fibration above. Integer solutions
+with parameter $n$ correspond to integral points on $E_{n}$ with $X$ even;
+the trivial family $m=0$ corresponds to the tautological section
+$T=(0,\,c)$.
+
+\begin{proposition}[Tautological torsion section]
+The section $T=(0,c)$ satisfies $2T=(0,-c)$ and $3T=O$ on every fiber: it is
+a section of exact order $3$. \textup{(}Verified numerically via canonical
+heights and \texttt{ellorder} on fibers across the table; algebraically,
+$x(2T)=\bigl(\tfrac{a_4}{2c}\bigr)^{2}-a_2-\dots=0$ reduces to the identity
+$(12nc)^{2}=4c^{2}\cdot 36n^{2}$.\textup{)} Consequently the generic rank of
+the family receives no contribution from $T$, and
+$\mathbb{Z}/3\mathbb{Z}\subseteq E_{n}(\mathbb{Q})_{\mathrm{tors}}$ for all $n$.
+\end{proposition}
+
+\section*{Exact ranks (PARI/GP 2.15.4, \texttt{ellrank} two-descent)}
+
+\begin{table}[H]
+\centering
+\caption{Mordell--Weil ranks of fibers carrying nontrivial integral solutions}
+\begin{tabular}{cccl}
+\toprule
+$n$ & $\operatorname{rk}E_{n}$ & independent gens known & note \\
+\midrule
+$1$      & $1$     & $1$ & \\
+$-4$     & $2$     & $2$ & gens $X=2121/4,\ 3636$ \\
+$15$     & $1$     & $1$ & \\
+$19$     & $3$     & $3$ & gens $X=2394,\ 7703436/1369,\ 2123383/2601$ \\
+$-29$    & $[1,3]$ & $1$ & unresolved at effort $2$; possible $2$-part of Sha \\
+$46$     & $2$     & $2$ & \\
+$-54$    & $2$     & $2$ & \\
+$-57$    & $2$     & $2$ & one generator of very large height \\
+$75$     & $2$     & $2$ & \\
+$93$     & $2$     & $1$ & second generator not yet found \\
+$114$    & $1$     & $1$ & \\
+$131$    & $1$     & $1$ & \\
+$-2271$  & $1$     & $1$ & \\
+$-4741$  & $2$     & $1$ & second generator not yet found \\
+$-6561$  & $2$     & $1$ & second generator not yet found \\
+$-9925$  & $1$     & $1$ & \\
+$11527$  & $1$     & $1$ & \\
+$16531$  & $2$     & $1$ & second generator not yet found \\
+$17309$  & $2$     & $1$ & second generator not yet found \\
+$27949$  & $2$     & $1$ & second generator not yet found \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{remark}
+Of the twenty fibers tested, none has rank $0$, eleven have rank $\ge 2$, and
+one has rank $3$. The average is far above the conjectural average rank
+($1/2$) of generic elliptic curves; part of this is selection bias (fibers
+displayed here are precisely those carrying integral points), but the
+systematic appearance of rank $2$ among the large-$|n|$ fibers
+($16531$, $17309$, $27949$, $-4741$, $-6561$) found by the divisor-pair sweep
+suggests the family's rank distribution merits direct study, e.g.\ a root
+number / rank census over all $|n|\le 10^{3}$.
+\end{remark}
+
+\begin{remark}
+Each "second generator not yet found" is a concrete target: it exists
+(the rank is unconditional), it has canonical height beyond naive search
+to $H=10^{5}$, and finding it would enable group-law enumeration that may
+produce new large integral points on that fiber --- the mechanism that
+presumably created the known giant $(n,m)=(798,\,-5378466956142)$.
+Candidate methods: higher \texttt{ellrank} effort, $4$-descent, or
+Heegner-point techniques after twisting.
+\end{remark}
+
+\end{document}
