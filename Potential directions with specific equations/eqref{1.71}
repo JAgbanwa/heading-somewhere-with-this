@@ -86,6 +86,7 @@ Rows marked \(\star\) are new relative to the original \(29\)-row table.
 \bottomrule
 \end{tabular}
 \end{table}
+
 \section*{Verification note}
 
 Each row was checked by exact (arbitrary-precision) substitution. Both signs
