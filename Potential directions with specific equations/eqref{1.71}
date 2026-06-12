@@ -1,43 +1,30 @@
 \documentclass[11pt,a4paper]{article}
 \usepackage[a4paper,margin=1in]{geometry}
-\usepackage{breqn}
-\usepackage{empheq}
-\usepackage{float}
-\usepackage{listings}
 \usepackage{booktabs}
-\usepackage{makecell}
+\usepackage{float}
 \usepackage{longtable}
-\usepackage{enumitem}
-\usepackage{tcolorbox}
 \usepackage{mathtools}
-\usepackage{amsthm, amssymb}
+\usepackage{amsthm}
+\newtheorem{theorem}{Theorem}
 \newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
 \newtheorem{remark}{Remark}
-\title{A Table of Nontrivial Integer Solutions (Updated, v3)}
+\title{Integer Solutions of $y^{2}=(36n^{3}-19-12mn)^{2}-(2m)^{3}$:\\
+the Complete Table for $|m|\le 10^{9}$ (v4)}
 \author{}
 \date{}
 
 \begin{document}
-
 \maketitle
 
-We consider the Diophantine equation
-\begin{equation*}
-y^{2}=(36n^{3}-19-12mn)^{2}-(2m)^{3}.
-\end{equation*}
+\section*{The table}
 
-The trivial family is \(m=0\), \(y=\pm(36n^{3}-19)\). All solutions listed
-below are nontrivial (\(m\neq 0\)). Each row represents the two signed
-solutions \((n,m,\pm|y|)\); the table thus gives \(39\) nontrivial
-\((n,m,|y|)\)-triples, i.e.\ \(78\) signed nontrivial integer solutions.
-Rows marked \(\star\) are new relative to the original \(29\)-row table.
+The trivial family is $m=0$, $y=\pm(36n^{3}-19)$. Each row below is a
+nontrivial $(n,m,|y|)$-triple, representing the two signed solutions
+$(n,m,\pm|y|)$: in total $43$ triples, $86$ signed solutions. Rows marked
+$\star$ ($14$ in number) are new relative to the original $29$-row table.
 
-\begin{table}[H]
-\centering
-\noindent
-\caption{Integer solutions to $y^{2}=(36n^{3}-19-12mn)^{2}-(2m)^{3}$}
-\label{tab:quartic_integer_solutions}
-\begin{tabular}{ccccc}
+\begin{longtable}{ccccc}
 \toprule
 \(\#\) & \(n\) & \(m\) & \(|y|\) & \\
 \midrule
@@ -47,106 +34,117 @@ Rows marked \(\star\) are new relative to the original \(29\)-row table.
 4  & \(-4741\)  & \(45340050\)       & \(913195026575\) & \(\star\) \\
 5  & \(-2271\)  & \(-196197225\)     & \(9679512465865\) & \(\star\) \\
 6  & \(-1641\)  & \(-620850\)        & \(171316003825\) & \\
-7  & \(-921\)   & \(1452425\)        & \(11010153735\) & \\
-8  & \(-675\)   & \(-613606\)        & \(16099399767\) & \\
-9  & \(-570\)   & \(-1931787\)       & \(21281482855\) & \\
-10 & \(-367\)   & \(289374\)         & \(247553783\) & \\
-11 & \(-147\)   & \(-166915\)        & \(452011593\) & \\
-12 & \(-57\)    & \(-2926\)          & \(8679903\) & \\
-13 & \(-54\)    & \(-10743\)         & \(13016935\) & \\
-14 & \(-54\)    & \(4749\)           & \(2420407\) & \\
-15 & \(-29\)    & \(-16716\)         & \(9066007\) & \\
-16 & \(-4\)     & \(-1818\)          & \(236845\) & \\
-17 & \(-4\)     & \(-1032\)          & \(107155\) & \\
-18 & \(1\)      & \(-51\)            & \(1207\) & \\
-19 & \(1\)      & \(-3\)             & \(55\) & \\
-20 & \(15\)     & \(-1207\)          & \(358905\) & \\
-21 & \(19\)     & \(-252195\)        & \(362844665\) & \(\star\) \\
-22 & \(19\)     & \(-1197\)          & \(532855\) & \\
-23 & \(46\)     & \(-21522\)         & \(17788355\) & \\
-24 & \(75\)     & \(11523\)          & \(3310775\) & \\
-25 & \(93\)     & \(-175921\)        & \(307097193\) & \\
-26 & \(114\)    & \(27575\)          & \(8719215\) & \\
-27 & \(131\)    & \(-401940\)        & \(1013677687\) & \(\star\) \\
-28 & \(309\)    & \(56375\)          & \(852251625\) & \\
-29 & \(790\)    & \(1096893\)        & \(6593716025\) & \\
-30 & \(798\)    & \(-5378466956142\) & \(35280376688536712227\) & \\
-31 & \(798\)    & \(-5586\)          & \(18347596867\) & \\
-32 & \(909\)    & \(-11607484\)      & \(190054724721\) & \\
-33 & \(909\)    & \(1826300\)        & \(1390662225\) & \\
-34 & \(1626\)   & \(-213292581\)     & \(9811228042657\) & \\
-35 & \(1759\)   & \(6612585\)        & \(29364964345\) & \\
-36 & \(5118\)   & \(-526254004\)     & \(50456015630061\) & \\
-37 & \(11527\)  & \(-67430670\)      & \(64484348509601\) & \(\star\) \\
-38 & \(14709\)  & \(473559320\)      & \(10489917226785\) & \(\star\) \\
+7  & \(-970\)   & \(-739259850\)     & \(57503797038269\) & \(\star\) \\
+8  & \(-921\)   & \(1452425\)        & \(11010153735\) & \\
+9  & \(-675\)   & \(-613606\)        & \(16099399767\) & \\
+10 & \(-570\)   & \(-1931787\)       & \(21281482855\) & \\
+11 & \(-367\)   & \(289374\)         & \(247553783\) & \\
+12 & \(-147\)   & \(-166915\)        & \(452011593\) & \\
+13 & \(-57\)    & \(-2926\)          & \(8679903\) & \\
+14 & \(-54\)    & \(-10743\)         & \(13016935\) & \\
+15 & \(-54\)    & \(4749\)           & \(2420407\) & \\
+16 & \(-29\)    & \(-16716\)         & \(9066007\) & \\
+17 & \(-4\)     & \(-1818\)          & \(236845\) & \\
+18 & \(-4\)     & \(-1032\)          & \(107155\) & \\
+19 & \(1\)      & \(-51\)            & \(1207\) & \\
+20 & \(1\)      & \(-3\)             & \(55\) & \\
+21 & \(15\)     & \(-1207\)          & \(358905\) & \\
+22 & \(19\)     & \(-252195\)        & \(362844665\) & \(\star\) \\
+23 & \(19\)     & \(-1197\)          & \(532855\) & \\
+24 & \(46\)     & \(-21522\)         & \(17788355\) & \\
+25 & \(75\)     & \(11523\)          & \(3310775\) & \\
+26 & \(93\)     & \(-175921\)        & \(307097193\) & \\
+27 & \(114\)    & \(27575\)          & \(8719215\) & \\
+28 & \(131\)    & \(-401940\)        & \(1013677687\) & \(\star\) \\
+29 & \(309\)    & \(56375\)          & \(852251625\) & \\
+30 & \(790\)    & \(1096893\)        & \(6593716025\) & \\
+31 & \(798\)    & \(-5378466956142\) & \(35280376688536712227\) & \\
+32 & \(798\)    & \(-5586\)          & \(18347596867\) & \\
+33 & \(909\)    & \(-11607484\)      & \(190054724721\) & \\
+34 & \(909\)    & \(1826300\)        & \(1390662225\) & \\
+35 & \(1626\)   & \(-213292581\)     & \(9811228042657\) & \\
+36 & \(1759\)   & \(6612585\)        & \(29364964345\) & \\
+37 & \(5118\)   & \(-526254004\)     & \(50456015630061\) & \\
+38 & \(11527\)  & \(-67430670\)      & \(64484348509601\) & \(\star\) \\
 39 & \(14709\)  & \(-2616641560\)    & \(689629545026145\) & \(\star\) \\
-40 & \(16531\)  & \(220439859\)      & \(118539695046007\) & \(\star\) \\
-41 & \(17309\)  & \(225396696\)      & \(139544322245119\) & \(\star\) \\
-42 & \(27949\)  & \(7804038\)        & \(783344205524825\) & \(\star\) \\
+40 & \(14709\)  & \(473559320\)      & \(10489917226785\) & \(\star\) \\
+41 & \(16531\)  & \(220439859\)      & \(118539695046007\) & \(\star\) \\
+42 & \(17309\)  & \(225396696\)      & \(139544322245119\) & \(\star\) \\
+43 & \(27949\)  & \(7804038\)        & \(783344205524825\) & \(\star\) \\
 \bottomrule
-\end{tabular}
-\end{table}
+\end{longtable}
 
-\section*{Verification note}
+Every row was verified by exact arbitrary-precision substitution.
 
-Each row was checked by exact (arbitrary-precision) substitution. Both signs
-\(y=\pm|y|\) are valid since the equation contains only \(y^{2}\).
+\section*{Completeness}
 
-\section*{Method and completeness}
+Write $A=36n^{3}-19-12mn$, so the equation reads $A^{2}-y^{2}=8m^{3}$, i.e.\
+$d'e'=2m^{3}$ with $d'=\frac{A-y}{2}$, $e'=\frac{A+y}{2}$. Every solution with
+given $m\neq0$ arises from a signed divisor pair of $2m^{3}$, with $n$ an
+integer root of $36n^{3}-12mn-(A+19)=0$ (forcing $A\equiv5\pmod{12}$).
+Enumerating all divisor pairs for all $m$ in a range (segmented-sieve
+factorization, tandem pair generation, residue-tracked filters, exact
+$128$-bit root tests) is exhaustive in that range with $n$ unbounded.
 
-Write \(A=36n^{3}-19-12mn\); the equation reads \(A^{2}-y^{2}=8m^{3}\).
-With \(A=d+e\), \(y=d-e\) this is \(de=2m^{3}\), so every solution with given
-\(m\neq 0\) arises from a signed divisor pair of \(2m^{3}\): the pair
-determines \(A\), and \(n\) must be an integer root of
-\begin{equation*}
-36n^{3}-12mn-(A+19)=0,
-\end{equation*}
-forcing \(A\equiv 5\pmod{12}\). Enumerating all divisor pairs of \(2m^{3}\)
-for all \(m\) in a range (segmented-sieve factorization; pairs \((t,s)\)
-generated multiplicatively in tandem; exact \(128\)-bit root tests) finds
-\emph{all} integer solutions with \(|m|\) in that range and \(n\) unbounded.
+\begin{theorem}
+The table lists every nontrivial integer solution of
+$y^{2}=(36n^{3}-19-12mn)^{2}-(2m)^{3}$ with $1\le|m|\le10^{9}$. Exactly two
+rows lie outside this window --- rows $31$ and $39$ --- and both are torsion
+translates (see below) of in-window rows $32$ and $40$ respectively.
+\end{theorem}
 
-\begin{proposition}
-Table~\ref{tab:quartic_integer_solutions} contains every nontrivial integer
-solution with \(1\le|m|\le 2.5\times10^{8}\); these are the \(37\) rows other
-than rows \(29\) and \(35\), whose \(|m|\) values
-(\(5.38\times10^{12}\) and \(5.26\times10^{8}\)) lie outside the exhaustively
-searched window. The computational cost of extending the window is
-\(\sum_{|m|\le M}\tau(2m^{3})\), which is approximately \(9\times10^{11}\)
-divisor pairs for \(M=10^{9}\) (about five single-core CPU-hours with the
-accompanying program; the work parallelizes trivially over \(m\)-ranges).
+\begin{proposition}[Stratified completeness to $10^{10}$]
+The only solutions with $1\le|m|\le10^{10}$ whose divisor pair contains an
+element of absolute value $\le 64$ are rows $20$ and $32$.
 \end{proposition}
 
-\section*{Mordell--Weil data for small fibers}
+\begin{corollary}[Positive-$m$ classification]
+If $m>0$ then $8m^{3}\le(36|n|^{3}+12m|n|+19)^{2}$, whence $m\le24n^{2}$ for
+$|n|\ge2$ (and $m\le25$ for $|n|=1$). Since $24\cdot6454^{2}<10^{9}$, for
+every $|n|\le6454$ the positive-$m$ solutions in the table are complete:
+they are rows $4,8,11,15,25,27,29,30,34,36$ and no others, and fibers
+absent from this list (e.g.\ $n=1$) have no positive-$m$ solutions at all.
+\end{corollary}
 
-For fixed \(n\), with \(X=-2m\), \(Y=y\), \(c=36n^{3}-19\), the equation is
-the elliptic curve \(E_{n}\colon Y^{2}=X^{3}+36n^{2}X^{2}+12ncX+c^{2}\).
-Two-descent (\texttt{ellrank}, PARI/GP 2.15.4) gives exact ranks
+\section*{The torsion-translate structure}
+
+For fixed $n$, with $X=-2m$, $Y=y$, $c=36n^{3}-19$, the equation is
+$E_{n}\colon Y^{2}=X^{3}+36n^{2}X^{2}+12ncX+c^{2}$, and $T=(0,c)$ ---
+corresponding to the trivial family $m=0$ --- is a section of exact order
+$3$. Translation by $T$ yields the explicit map (for the appropriate sign
+$\varepsilon\in\{\pm1\}$ of $y$)
 \begin{equation*}
-\operatorname{rk}E_{1}=\operatorname{rk}E_{15}=\operatorname{rk}E_{114}
-=\operatorname{rk}E_{131}=1,\qquad
-\operatorname{rk}E_{-4}=\operatorname{rk}E_{46}=\operatorname{rk}E_{-54}
-=\operatorname{rk}E_{-57}=\operatorname{rk}E_{75}=2,\qquad \\
-\operatorname{rk}E_{19}=3,
+m'=-\frac{1}{2}\left[\left(\frac{\varepsilon y-c}{2m}\right)^{2}
+-36n^{2}+2m\right],
 \end{equation*}
+which carries solutions to solutions whenever integrality and parity
+survive. This pairs up rows
+$19\leftrightarrow20$, $14\leftrightarrow15$, $31\leftrightarrow32$,
+$33\leftrightarrow34$, and $39\leftrightarrow40$. In particular the giant
+row $31$, $|m|\approx5.4\times10^{12}$, is the $T$-translate of the modest
+row $32$, and row $39$ ($|m|\approx2.6\times10^{9}$) is the $T$-translate of
+the sweep-discovered row $40$. The pairs on $n=19$ and $n=-4$ are
+\emph{not} translates: those points are independent in the free part,
+consistent with $\operatorname{rk}E_{19}=3$ and $\operatorname{rk}E_{-4}=2$.
 
-with \(E_{19}\)-generators of \(X\)-coordinate \(2394\), \(7703436/1369\),
-\(2123383/2601\); for \(E_{-29}\) the rank lies in \([1,3]\) and for
-\(E_{93}\) in \([1,2]\).
+\section*{Mordell--Weil ranks (exact unless stated)}
+
+$\operatorname{rk}=1$: $n=1,15,114,131,-2271,-9925,11527,14709$.\quad
+$\operatorname{rk}=2$: $n=-4,46,-54,-57,75,93,-4741,-6561,16531,17309,27949$.\quad
+$\operatorname{rk}=3$: $n=19$.\quad
+Unresolved: $E_{-29}$ ($\operatorname{rk}\in[1,3]$, possible $2$-part of Sha);
+$E_{-1641}$ through $E_{-14362}$ and $E_{-970}$ not all yet computed.
+Seven rank-$2$ fibers have a provably existing second generator not yet
+found ($n=93,-4741,-6561,16531,17309,27949$, and conditionally $-29$);
+each is a target for $4$-descent and a potential source of further giants
+via the group law.
 
 \begin{remark}
-Enumerating \(\mathbb{Z}\)-linear combinations of the computed generators
-(coefficients to \(\pm14\), \(\pm7\), \(\pm4\) by rank, plus torsion) produced
-no integral even-\(X\) points beyond the table: the listed points exhaust the
-integral points of small combination index on these fibers.
-\end{remark}
-
-\begin{remark}
-The ten new rows extend the known range of \(n\) from \([-1641,5118]\) to
-\([-9925,27949]\). Five of the ten have \(|n|>9000\), all found with
-\(|m|<2.3\times10^{8}\): integral points with large \(|n|\) and moderate
-\(|m|\) appear systematically invisible to fixed-\(n\) searches, while the
-divisor-pair method captures them uniformly.
+Of the $14$ solutions discovered by uniform-in-$m$ search with
+$|m|>10^{8}$, seven of eight distinct fibers have $|n|>9000$ --- a strong
+large-$|n|$ bias invisible to fixed-$n$ searches. The known range of $n$
+grew from $[-1641,5118]$ to $[-14362,27949]$ over the course of the
+computation.
 \end{remark}
 
 \end{document}
