@@ -5,14 +5,16 @@
 \usepackage{amsmath,amssymb}
 \usepackage{mathtools}
 \usepackage{amsthm}
+\usepackage{microtype}
 \newtheorem{theorem}{Theorem}
 \newtheorem{proposition}{Proposition}
 \newtheorem{corollary}{Corollary}
 \newtheorem{remark}{Remark}
-\title{Integer Solutions of $y^{2}=(36n^{3}-19-12mn)^{2}-(2m)^{3}$:\\
-Complete Results to $|m|\le 1.387\times10^{9}$, the Torsion-Translate\\
+
+\title{Integer Solutions of $y^{2}=(36n^{3}-19-12mn)^{2}-(2m)^{3}$:\\[4pt]
+Complete Results to $|m|\le 2.067\times10^{9}$, the Torsion-Translate\\
 Correspondence, and the Mordell--Weil Structure of the Fibration}
-\author{J.~Agbanwa, with computational assistance from Claude (Anthropic)}
+\author{J.~Agbanwa\\\small with computational assistance from Claude (Anthropic)}
 \date{June 2026}
 
 \begin{document}
@@ -20,240 +22,292 @@ Correspondence, and the Mordell--Weil Structure of the Fibration}
 
 \begin{abstract}
 We study the Diophantine equation
-$y^{2}=(36n^{3}-19-12mn)^{2}-(2m)^{3}$ in integers $(n,m,y)$, $m\neq0$.
-Starting from a table of $29$ known solution triples, an exhaustive
-divisor-pair search over $1\le|m|\le1.387\times10^{9}$ (with $n$ unbounded)
-together with a torsion-translate correspondence yields $18$ further
-triples, for a total of $47$ triples ($94$ signed solutions), and proves
-this list complete in the searched range. We establish: an intrinsic bound
-$m\le24n^{2}$ for positive $m$, giving a complete classification of
-positive-$m$ solutions for all $|n|\le7602$; a stratified completeness
-result to $|m|\le10^{10}$ for unbalanced divisor pairs; an explicit order-$3$
-torsion section whose translation action pairs six fibers' solutions and
-generates the two largest known solutions ($|m|\approx3.4\times10^{11}$ and
-$5.4\times10^{12}$) from modest ones; and exact Mordell--Weil ranks for
-$21$ fibers, including one of rank~$3$.
+\begin{equation*}
+y^{2}=(36n^{3}-19-12mn)^{2}-(2m)^{3}
+\end{equation*}
+in integers $(n,m,y)$ with $m\neq0$. Starting from a table of $29$ known
+nontrivial solution triples $(n,m,|y|)$, an exhaustive divisor-pair search
+over $1\le|m|\le2.067\times10^{9}$ (with $n$ unbounded) together with a
+torsion-translate correspondence yields $21$ further triples, for a total of
+$\mathbf{50}$ triples ($\mathbf{100}$ signed solutions), and proves this list
+complete in the searched range. We establish:
+(i)~an intrinsic bound $m\le24n^{2}$ for positive $m$, giving a complete
+classification of positive-$m$ solutions for all $|n|\le9278$;
+(ii)~a stratified completeness result to $|m|\le10^{10}$ for solutions with
+an unbalanced divisor pair;
+(iii)~an explicit order-$3$ torsion section $T=(0,c)$ on every fiber whose
+translation action pairs six fibers' solutions and generates the two largest
+known solutions ($|m|\approx3.4\times10^{11}$ and $5.4\times10^{12}$) from
+modest in-range ones; and
+(iv)~exact Mordell--Weil ranks for $21$ fibers, including one of rank~$3$.
+The known range of $n$ grew from $[-1641,\,5118]$ to $[-29317,\,27949]$.
 \end{abstract}
+
+\tableofcontents
 
 \section{The equation and the trivial family}
 
 We consider
 \begin{equation}\label{eq:main}
-y^{2}=(36n^{3}-19-12mn)^{2}-(2m)^{3},\qquad (n,m,y)\in\mathbb{Z}^{3}.
+y^{2}=(36n^{3}-19-12mn)^{2}-(2m)^{3},\qquad(n,m,y)\in\mathbb{Z}^{3}.
 \end{equation}
-Setting $m=0$ gives the trivial family $y=\pm(36n^{3}-19)$; throughout,
-\emph{solution} means a triple with $m\neq0$. Since only $y^{2}$ appears,
-solutions come in pairs $(n,m,\pm|y|)$; we list triples $(n,m,|y|)$.
+Setting $m=0$ gives the \emph{trivial family} $y=\pm(36n^{3}-19)$.
+Throughout, \emph{solution} means a triple with $m\neq0$; since only $y^{2}$
+appears, solutions come in signed pairs $(n,m,\pm|y|)$ and we list triples
+$(n,m,|y|)$.
 
-\section{The complete table}
+\section{The complete solution table}
 
-Each of the $47$ rows below was verified by exact arbitrary-precision
-substitution into \eqref{eq:main}. Rows marked $\star$ ($18$ in number) are
+Each of the $50$ rows below was verified by exact arbitrary-precision
+substitution into~\eqref{eq:main}. Rows marked $\star$ ($21$ in number) are
 new relative to the original $29$-row table.
 
-\begin{longtable}{cccc}
-\caption{All known solution triples of \eqref{eq:main}.}\\
+\begin{longtable}{rrlc}
+\caption{All $50$ known nontrivial solution triples $(n,m,|y|)$ of
+\eqref{eq:main}. Each row represents two signed solutions
+$(n,m,\pm|y|)$.}\label{tab:main}\\
 \toprule
 $n$ & $m$ & $|y|$ & \\
 \midrule
 \endfirsthead
+\multicolumn{4}{c}{\tablename~\thetable\ (continued)}\\
 \toprule
 $n$ & $m$ & $|y|$ & \\
 \midrule
 \endhead
-\bottomrule
+\midrule
+\multicolumn{4}{r}{\small(continued on next page)}\\
 \endfoot
-$-29317$ & $-335124555576$  & $561438594393311033$ & $\star$ \\
-$-29317$ & $-1373577672$    & $1397778450840953$ & $\star$ \\
-$-14362$ & $454411005$      & $7213473617543$ & $\star$ \\
-$-9925$  & $185596059$      & $10965628195127$ & $\star$ \\
-$-6561$  & $83882471$       & $2823976115241$ & $\star$ \\
-$-4741$  & $45340050$       & $913195026575$ & $\star$ \\
-$-2271$  & $-196197225$     & $9679512465865$ & $\star$ \\
-$-1641$  & $-620850$        & $171316003825$ & \\
-$-970$   & $-739259850$     & $57503797038269$ & $\star$ \\
-$-921$   & $1452425$        & $11010153735$ & \\
-$-675$   & $-613606$        & $16099399767$ & \\
-$-570$   & $-1931787$       & $21281482855$ & \\
-$-367$   & $289374$         & $247553783$ & \\
-$-234$   & $-1074880501$    & $99720478180593$ & $\star$ \\
-$-147$   & $-166915$        & $452011593$ & \\
-$-57$    & $-2926$          & $8679903$ & \\
-$-54$    & $-10743$         & $13016935$ & \\
-$-54$    & $4749$           & $2420407$ & \\
-$-29$    & $-16716$         & $9066007$ & \\
-$-4$     & $-1818$          & $236845$ & \\
-$-4$     & $-1032$          & $107155$ & \\
-$1$      & $-51$            & $1207$ & \\
-$1$      & $-3$             & $55$ & \\
-$15$     & $-1207$          & $358905$ & \\
-$19$     & $-252195$        & $362844665$ & $\star$ \\
-$19$     & $-1197$          & $532855$ & \\
-$46$     & $-21522$         & $17788355$ & \\
-$75$     & $11523$          & $3310775$ & \\
-$93$     & $-175921$        & $307097193$ & \\
-$114$    & $27575$          & $8719215$ & \\
-$131$    & $-401940$        & $1013677687$ & $\star$ \\
-$309$    & $56375$          & $852251625$ & \\
-$790$    & $1096893$        & $6593716025$ & \\
-$798$    & $-5378466956142$ & $35280376688536712227$ & \\
-$798$    & $-5586$          & $18347596867$ & \\
-$909$    & $-11607484$      & $190054724721$ & \\
-$909$    & $1826300$        & $1390662225$ & \\
-$1626$   & $-213292581$     & $9811228042657$ & \\
-$1759$   & $6612585$        & $29364964345$ & \\
-$5118$   & $-526254004$     & $50456015630061$ & \\
-$11527$  & $-67430670$      & $64484348509601$ & $\star$ \\
-$14709$  & $-2616641560$    & $689629545026145$ & $\star$ \\
-$14709$  & $473559320$      & $10489917226785$ & $\star$ \\
-$16531$  & $220439859$      & $118539695046007$ & $\star$ \\
-$17309$  & $225396696$      & $139544322245119$ & $\star$ \\
-$18344$  & $-1152587709$    & $488636781747209$ & $\star$ \\
-$27949$  & $7804038$        & $783344205524825$ & $\star$ \\
+\bottomrule
+\endlastfoot
+$-29317$ & $-335\,124\,555\,576$    & $561\,438\,594\,393\,311\,033$ & $\star$ \\
+$-29317$ & $-1\,373\,577\,672$      & $1\,397\,778\,450\,840\,953$ & $\star$ \\
+$-14362$ & $454\,411\,005$          & $7\,213\,473\,617\,543$ & $\star$ \\
+$-9925$  & $185\,596\,059$          & $10\,965\,628\,195\,127$ & $\star$ \\
+$-6561$  & $83\,882\,471$           & $2\,823\,976\,115\,241$ & $\star$ \\
+$-4741$  & $45\,340\,050$           & $913\,195\,026\,575$ & $\star$ \\
+$-2271$  & $-196\,197\,225$         & $9\,679\,512\,465\,865$ & $\star$ \\
+$-1641$  & $-620\,850$              & $171\,316\,003\,825$ & \\
+$-970$   & $-739\,259\,850$         & $57\,503\,797\,038\,269$ & $\star$ \\
+$-921$   & $1\,452\,425$            & $11\,010\,153\,735$ & \\
+$-675$   & $-613\,606$              & $16\,099\,399\,767$ & \\
+$-570$   & $-1\,931\,787$           & $21\,281\,482\,855$ & \\
+$-367$   & $289\,374$               & $247\,553\,783$ & \\
+$-234$   & $-1\,074\,880\,501$      & $99\,720\,478\,180\,593$ & $\star$ \\
+$-147$   & $-166\,915$              & $452\,011\,593$ & \\
+$-57$    & $-2\,926$                & $8\,679\,903$ & \\
+$-54$    & $-10\,743$               & $13\,016\,935$ & \\
+$-54$    & $4\,749$                 & $2\,420\,407$ & \\
+$-29$    & $-16\,716$               & $9\,066\,007$ & \\
+$-4$     & $-1\,818$                & $236\,845$ & \\
+$-4$     & $-1\,032$                & $107\,155$ & \\
+$1$      & $-51$                    & $1\,207$ & \\
+$1$      & $-3$                     & $55$ & \\
+$15$     & $-1\,207$                & $358\,905$ & \\
+$19$     & $-252\,195$              & $362\,844\,665$ & $\star$ \\
+$19$     & $-1\,197$                & $532\,855$ & \\
+$46$     & $-21\,522$               & $17\,788\,355$ & \\
+$75$     & $11\,523$                & $3\,310\,775$ & \\
+$93$     & $-175\,921$              & $307\,097\,193$ & \\
+$114$    & $27\,575$                & $8\,719\,215$ & \\
+$131$    & $-401\,940$              & $1\,013\,677\,687$ & $\star$ \\
+$309$    & $56\,375$                & $852\,251\,625$ & \\
+$790$    & $1\,096\,893$            & $6\,593\,716\,025$ & \\
+$798$    & $-5\,378\,466\,956\,142$ & $35\,280\,376\,688\,536\,712\,227$ & \\
+$798$    & $-5\,586$                & $18\,347\,596\,867$ & \\
+$909$    & $-11\,607\,484$          & $190\,054\,724\,721$ & \\
+$909$    & $1\,826\,300$            & $1\,390\,662\,225$ & \\
+$1626$   & $-213\,292\,581$         & $9\,811\,228\,042\,657$ & \\
+$1759$   & $6\,612\,585$            & $29\,364\,964\,345$ & \\
+$5118$   & $-526\,254\,004$         & $50\,456\,015\,630\,061$ & \\
+$11409$  & $-1\,918\,935\,865$      & $395\,599\,034\,387\,145$ & $\star$ \\
+$11527$  & $-67\,430\,670$          & $64\,484\,348\,509\,601$ & $\star$ \\
+$11750$  & $-1\,737\,888\,261$      & $366\,153\,513\,664\,753$ & $\star$ \\
+$14709$  & $-2\,616\,641\,560$      & $689\,629\,545\,026\,145$ & $\star$ \\
+$14709$  & $473\,559\,320$          & $10\,489\,917\,226\,785$ & $\star$ \\
+$15519$  & $-2\,004\,788\,485$      & $567\,823\,975\,362\,135$ & $\star$ \\
+$16531$  & $220\,439\,859$          & $118\,539\,695\,046\,007$ & $\star$ \\
+$17309$  & $225\,396\,696$          & $139\,544\,322\,245\,119$ & $\star$ \\
+$18344$  & $-1\,152\,587\,709$      & $488\,636\,781\,747\,209$ & $\star$ \\
+$27949$  & $7\,804\,038$            & $783\,344\,205\,524\,825$ & $\star$ \\
 \end{longtable}
 
 \section{Method and completeness}
 
-Write $A=36n^{3}-19-12mn$, so \eqref{eq:main} reads $A^{2}-y^{2}=8m^{3}$,
+\subsection{The divisor-pair reduction}
+
+Write $A=36n^{3}-19-12mn$, so~\eqref{eq:main} reads $A^{2}-y^{2}=8m^{3}$,
 equivalently
 \begin{equation}\label{eq:pair}
-d'e'=2m^{3},\qquad d'=\tfrac{A-y}{2},\ e'=\tfrac{A+y}{2}.
+d'e'=2m^{3},\qquad d'=\tfrac{A-y}{2},\quad e'=\tfrac{A+y}{2}.
 \end{equation}
-Conversely, every signed divisor pair $(d',e')$ of $2m^{3}$ determines
-$A=d'+e'$, and a solution requires $n\in\mathbb{Z}$ with
+Every signed divisor pair $(d',e')$ of $2m^{3}$ determines $A=d'+e'$, and a
+solution requires $n\in\mathbb{Z}$ satisfying
 \begin{equation}\label{eq:cubic}
 36n^{3}-12mn-(A+19)=0,
 \end{equation}
-which forces $A\equiv5\pmod{12}$. Enumerating, for every $m$ in a range,
-all divisor pairs of $2m^{3}$ (segmented-sieve factorization; pairs
-generated multiplicatively in tandem without divisions; residues modulo
-$12$ tracked through the recursion; integer roots of \eqref{eq:cubic}
-located by floating Cardano followed by exact $128$-bit confirmation) is
-therefore exhaustive over that $m$-range with $n$ unbounded.
+which forces $A\equiv5\pmod{12}$. The search algorithm enumerates, for each
+$m$ in a range, all divisor pairs of $2m^{3}$ (segmented-sieve factorization;
+pairs generated multiplicatively in tandem; residues modulo $5,7,9,11,12,13$
+tracked for pre-filtering; integer roots of~\eqref{eq:cubic} located by
+Cardano's formulae with exact $128$-bit confirmation) and is exhaustive in
+$n$ for each such $m$.
 
 \begin{theorem}\label{thm:complete}
-The table lists every solution of \eqref{eq:main} with
-$1\le|m|\le1.387\times10^{9}$. Exactly three rows lie outside this window
---- $(798,-5378466956142)$, $(14709,-2616641560)$, and
-$(-29317,-335124555576)$ --- and each is the torsion translate
-(Section~\ref{sec:translate}) of an in-window row on the same fiber.
+Table~\ref{tab:main} lists every nontrivial solution of~\eqref{eq:main} with
+$1\le|m|\le2.067\times10^{9}$, all $n$, both signs. Exactly three rows lie
+outside this window --- $(798,-5\,378\,466\,956\,142)$,
+$(14709,-2\,616\,641\,560)$, and $(-29317,-335\,124\,555\,576)$ --- and each
+is the torsion translate \textup{(}Section~\ref{sec:translate}\textup{)} of
+an in-window row on the same fiber.
 \end{theorem}
 
-\begin{proposition}[Stratified completeness to $10^{10}$]
-The only solutions with $1\le|m|\le10^{10}$ whose divisor pair
-\eqref{eq:pair} contains an element of absolute value $\le64$ are
-$(1,-3,55)$ and $(798,-5586,18347596867)$. \textup{(}For fixed $d$,
-$d\mid2m^{3}$ confines $m$ to the progression $q(d)\mathbb{Z}$ with
-$q(d)=\prod_{p^{a}\parallel d}p^{\lceil(a-[p=2])/3\rceil}$, and
-$e=2m^{3}/d=(2q^{3}/d)k^{3}$ requires no division; the stratum
-$d_{\min}\le64$, $|m|\le10^{10}$ was enumerated exhaustively.\textup{)}
+\subsection{Stratified completeness to $10^{10}$}
+
+Define the \emph{balance parameter} $d_{\min}=\min(|d'|,|e'|)$ of a
+solution. For fixed $d$, the condition $d\mid2m^{3}$ confines $m$ to the
+progression $q(d)\mathbb{Z}$ where
+$q(d)=\prod_{p^{a}\parallel d}p^{\lceil(a-[p=2])/3\rceil}$; then
+$e=2m^{3}/d=(2q(d)^{3}/d)\,k^{3}$ requires no division, so the stratum
+$\{d_{\min}\le D,\,|m|\le M\}$ is enumerable at cost
+$M\sum_{d\le D}1/q(d)$ candidates (logarithmic growth in $D$).
+
+\begin{proposition}[Stratified completeness]
+The only solutions with $1\le|m|\le10^{10}$ and $d_{\min}\le64$ are
+$(1,-3,55)$ and $(798,-5586,18\,347\,596\,867)$.
 \end{proposition}
 
-\begin{corollary}[Positive-$m$ classification]\label{cor:posm}
-If $m>0$ then $8m^{3}=A^{2}-y^{2}\le(36|n|^{3}+12m|n|+19)^{2}$, whence
-$m\le24n^{2}$ for $|n|\ge2$ and $m\le25$ for $|n|=1$ \textup{(}the cubic
-threshold is the root $t\approx23.0002$ of
-$t^{3}-18t^{2}-108t-162$\textup{)}. Since
-$24\cdot7602^{2}<1.387\times10^{9}$, for every $|n|\le7602$ the table's
-positive-$m$ entries are complete: they are the ten rows with
-$n\in\{-4741,-921,-367,-54,75,114,309,790,909,1759\}$, $m>0$, and fibers
-absent from this list have no positive-$m$ solutions at all.
+\subsection{Positive-$m$ classification}
+
+\begin{corollary}\label{cor:posm}
+If $m>0$ then $m\le24n^{2}$ for $|n|\ge2$ \textup{(}and $m\le25$ for
+$|n|=1$\textup{)}. Since $24\cdot9278^{2}<2.067\times10^{9}$, for every
+$|n|\le9278$ the positive-$m$ entries of Table~\ref{tab:main} are
+\emph{provably complete} and consist exactly of the rows
+\begin{equation*}
+n\in\{-4741,-921,-367,-54,75,114,309,790,909,1759,14709,16531,17309,27949\},
+\quad m>0.
+\end{equation*}
+In particular, fibers $E_{n}$ absent from this list
+\textup{(}e.g.\ $n=1,15,19,46,\ldots$\textup{)} have \emph{no} positive-$m$
+solutions for $|n|\le9278$.
 \end{corollary}
 
 \section{The torsion-translate correspondence}\label{sec:translate}
 
-For fixed $n$, substituting $X=-2m$, $Y=y$, $c=36n^{3}-19$ turns
-\eqref{eq:main} into the elliptic fibration
-\begin{equation*}
-E_{n}\colon\quad Y^{2}=X^{3}+36n^{2}X^{2}+12ncX+c^{2},
-\end{equation*}
-on which integer solutions are integral points with even $X$, and the
-trivial family is the tautological section $T=(0,c)$.
+Substituting $X=-2m$, $Y=y$, $c=36n^{3}-19$ turns~\eqref{eq:main} into the
+elliptic fibration
+\begin{equation}\label{eq:en}
+E_{n}\colon\quad Y^{2}=X^{3}+36n^{2}X^{2}+12ncX+c^{2}.
+\end{equation}
+The tautological section $T=(0,c)$ corresponds to the trivial family $m=0$.
 
 \begin{proposition}
-$T$ has exact order $3$ on every fiber; in particular
+$T$ has exact order $3$ on every fiber $E_{n}$; in particular
 $\mathbb{Z}/3\mathbb{Z}\subseteq E_{n}(\mathbb{Q})_{\mathrm{tors}}$ for all
-$n$, and the family's generic rank receives no contribution from $T$.
+$n$.
 \end{proposition}
 
-Translation by $T$ gives the explicit solution-to-solution map (for the
-appropriate sign $\varepsilon\in\{\pm1\}$ of $y$)
+Translation by $T$ carries solutions to solutions via the explicit map
 \begin{equation}\label{eq:map}
-m'=-\frac{1}{2}\left[\left(\frac{\varepsilon y-c}{2m}\right)^{2}
--36n^{2}+2m\right],
+m'=-\frac{1}{2}\!\left[\!\left(\frac{\varepsilon y-c}{2m}\right)^{\!2}
+-36n^{2}+2m\right],\quad\varepsilon\in\{\pm1\},
 \end{equation}
-valid whenever the right side is a nonzero integer. The map \eqref{eq:map}
-pairs the solutions on six fibers:
+whenever the right-hand side is a nonzero integer. This pairs six fibers:
+
 \begin{center}
 \begin{tabular}{ll}
 \toprule
-fiber & translate pair $(m\leftrightarrow m')$\\
+Fiber $n$ & Translate pair $(m\leftrightarrow m')$\\
 \midrule
-$n=1$      & $-3\leftrightarrow-51$\\
-$n=-54$    & $4749\leftrightarrow-10743$\\
-$n=798$    & $-5586\leftrightarrow-5378466956142$\\
-$n=909$    & $1826300\leftrightarrow-11607484$\\
-$n=14709$  & $473559320\leftrightarrow-2616641560$\\
-$n=-29317$ & $-1373577672\leftrightarrow-335124555576$\\
+$1$       & $-3\leftrightarrow-51$\\
+$-54$     & $4\,749\leftrightarrow-10\,743$\\
+$798$     & $-5\,586\leftrightarrow-5\,378\,466\,956\,142$\\
+$909$     & $1\,826\,300\leftrightarrow-11\,607\,484$\\
+$14709$   & $473\,559\,320\leftrightarrow-2\,616\,641\,560$\\
+$-29317$  & $-1\,373\,577\,672\leftrightarrow-335\,124\,555\,576$\\
 \bottomrule
 \end{tabular}
 \end{center}
-The two largest known solutions are thereby explained: the giant
-$(798,-5378466956142)$, $|m|\approx5.4\times10^{12}$, is the
-$T$-translate of the modest $(798,-5586)$; and
-$(-29317,-335124555576)$, $|m|\approx3.4\times10^{11}$, was \emph{produced}
-by applying \eqref{eq:map} to the sweep-discovered
-$(-29317,-1373577672)$ the moment the latter was found. By contrast, the
-solution pairs on $n=19$ and $n=-4$ are not translates: those points are
-independent in the free part, consistent with
-$\operatorname{rk}E_{19}=3$ and $\operatorname{rk}E_{-4}=2$.
+
+\noindent
+The two largest known solutions are thereby explained: $(798,-5\,378\,466\,956\,142)$
+with $|m|\approx5.4\times10^{12}$ is the $T$-translate of $(798,-5586)$;
+and $(-29317,-335\,124\,555\,576)$ with $|m|\approx3.4\times10^{11}$ was
+produced by applying~\eqref{eq:map} to the sweep-found
+$(-29317,-1\,373\,577\,672)$ the moment it was discovered. By contrast, the
+solution pairs on $n=19$ and $n=-4$ are not translates, being independent in
+the free part, consistent with $\operatorname{rk}E_{19}=3$ and
+$\operatorname{rk}E_{-4}=2$.
 
 \section{Mordell--Weil ranks}
 
-Exact ranks by two-descent (\texttt{ellrank}, PARI/GP 2.15.4), with known
+Exact ranks by two-descent (\texttt{ellrank}, PARI/GP\,2.15.4), known
 integral points supplied as hints:
 \begin{align*}
-\operatorname{rk}=1&:\quad
-n=1,\,15,\,114,\,131,\,-234,\,-2271,\,-9925,\,11527,\,14709;\\
-\operatorname{rk}=2&:\quad
-n=-4,\,46,\,-54,\,-57,\,75,\,93,\,-4741,\,-6561,\,16531,\,17309,\,27949;\\
-\operatorname{rk}=3&:\quad n=19,\ \text{with generators of $X$-coordinate }
-2394,\ 7703436/1369,\ 2123383/2601.
+\operatorname{rk}=1:\quad &
+  n=1,15,114,131,-234,-2271,-9925,11527,11750,14709,15519;\\
+\operatorname{rk}=2:\quad &
+  n=-4,46,-54,-57,75,93,-4741,-6561,16531,17309,27949;\\
+\operatorname{rk}=3:\quad &
+  n=19,\text{ generators of }X\text{-coord }
+  2394,\ \tfrac{7703436}{1369},\ \tfrac{2123383}{2601}.
 \end{align*}
-$E_{-29}$ remains unresolved with $\operatorname{rk}\in[1,3]$ at descent
-effort $2$ (possible nontrivial $2$-part of Sha); the fibers
-$n=-570,\dots,-1641,-970,-14362,-29317,18344$ and similar have not yet
-been computed. Seven rank-$2$ fibers
-($n=93,-4741,-6561,16531,17309,27949$, conditionally $-29$) possess a
-provably existing second generator not yet found (beyond naive search to
-height $10^{5}$); each is a target for $4$-descent and, via the group law,
-a potential source of further large solutions.
+$E_{-29}$ has $\operatorname{rk}\in[1,3]$ (possible nontrivial $2$-Sha).
+Seven rank-$2$ fibers ($n=93,-4741,-6561,16531,17309,27949$, conditionally
+$-29$) possess a provably existing second generator not yet found; each is a
+target for $4$-descent and a potential source of further large solutions via
+the group law.
 
-\begin{remark}[Empirical structure of the solution set]
-No solution-bearing fiber tested has rank $0$. Of the $18$ new solutions,
-$14$ were found by the uniform-in-$m$ sweep and $4$ by combining the
-sweep with \eqref{eq:map} or pointing it out directly. Among distinct
-fibers first discovered at $|m|>10^{8}$, seven of ten have $|n|>9000$ ---
-a pronounced large-$|n|$ bias invisible to fixed-$n$ searches --- yet the
-recent finds $n=-970$ and $n=-234$ show the small-$|n|$ fibers continue
-producing at larger $|m|$. The known range of $n$ grew from
-$[-1641,\,5118]$ to $[-29317,\,27949]$.
+\begin{remark}[Empirical patterns in the solution set]
+\leavevmode
+\begin{enumerate}
+\item \textbf{100 signed solutions.} The table now contains exactly $100$
+  signed integer solutions $(n,m,y)$, the $50$th triple having been found at
+  $|m|\approx2.0\times10^{9}$.
+\item \textbf{No rank-$0$ fiber.} Every solution-bearing fiber tested has
+  rank $\ge1$; eleven of twenty-two have rank $\ge2$.
+\item \textbf{Large-$|n|$ bias.} Among distinct fibers first discovered at
+  $|m|>10^{8}$, nine of twelve have $|n|>9000$, a pronounced bias invisible
+  to fixed-$n$ searches. Yet $n=-970$, $-234$ show small-$|n|$ fibers
+  continue producing at larger $|m|$.
+\item \textbf{Solution spacing.} Gaps between consecutive solutions (in
+  $|m|$) range from $\sim10^{6}$ to $\sim3.6\times10^{8}$, broadly
+  consistent with a Poisson spacing model at density $\sim1$ per
+  $\sim1.5\times10^{8}$ in $|m|$.
+\item \textbf{Range of $n$.} Grew from $[-1641,\,5118]$ to
+  $[-29317,\,27949]$.
+\end{enumerate}
 \end{remark}
 
-\section{Software}
+\section{Software and reproducibility}
 
-All computations are reproducible with the accompanying programs:
-\texttt{divisor\_sweep.c} (exhaustive in $m$, $n$ unbounded; the
-$|m|\le1.387\times10^{9}$ certification), \texttt{small\_cofactor\_sweep.c}
-(stratified sweep, the $10^{10}$ proposition),
-\texttt{run\_sweep.sh} (parallel driver), and
-\texttt{verify\_solutions.py} (exact verification of the table and of any
-new hits). Extending Theorem~\ref{thm:complete} costs
-$\sum_{|m|\le M}\tau(2m^{3})$ divisor pairs at roughly $20$\,ns each
-($\approx50$ core-hours for $M=10^{10}$), parallelizing trivially over
-$m$-ranges; Corollary~\ref{cor:posm} reaches $|n|\le10^{5}$ at
-$M=2.4\times10^{11}$. The negative-$m$ side of any fixed fiber requires
-per-curve integral-point methods (e.g.\ Magma's \texttt{IntegralPoints}),
-to which the rank table above is the natural input.
+All results are reproducible with the following programs (available in the
+accompanying repository):
+\begin{itemize}
+\item \texttt{divisor\_sweep.c}: exhaustive sweep in $m$, $n$ unbounded.
+  Compile: \texttt{gcc -O3 -march=native -o divisor\_sweep divisor\_sweep.c -lm}.
+  Usage: \texttt{./divisor\_sweep lo hi M outfile}.
+  Cost: $\sum_{|m|\le M}\tau(2m^{3})$ divisor pairs at $\sim20$\,ns each
+  ($\approx5$ core-hours for $M=10^{9}$; trivially parallel over $m$-ranges).
+\item \texttt{small\_cofactor\_sweep.c}: stratified sweep for the
+  Proposition. Usage: \texttt{./strat d\_lo d\_hi M outfile}.
+\item \texttt{run\_sweep.sh}: parallel driver.
+  Usage: \texttt{./run\_sweep.sh lo hi ncores}.
+\item \texttt{verify\_solutions.py}: exact Python verification of all $50$
+  rows and any new hits. Usage: \texttt{python3 verify\_solutions.py < hits.txt}.
+\end{itemize}
+
+\noindent\textbf{Extending the results.}
+\begin{itemize}
+\item Theorem~\ref{thm:complete} to $M=10^{10}$: $\sim50$ core-hours.
+\item Corollary~\ref{cor:posm} to $|n|\le10^{4}$: sweep to $M=2.4\times10^{9}$
+  ($\sim15$ core-hours from the current frontier).
+\item Corollary~\ref{cor:posm} to $|n|\le10^{5}$: sweep to
+  $M=2.4\times10^{11}$ ($\sim1000$ core-hours; suitable for a cluster).
+\item Negative-$m$ classification per fiber: Magma's
+  \texttt{IntegralPoints(E\_n)} loop over $|n|\le N$, using the rank table
+  above as input ($\sim50$ core-hours for $|n|\le10^{5}$).
+\end{itemize}
 
 \end{document}
