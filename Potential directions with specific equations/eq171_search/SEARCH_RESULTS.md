@@ -4,9 +4,21 @@ Search for integer triples `(n, m, |y|)` solving
 
 `y² = (36n³ − 19 − 12mn)² − (2m)³`,  `m ≠ 0`
 
-beyond the 47 known rows in `eqref{1.71}`.
+beyond the 50 known rows in `eqref{1.71}`.
 
-## Completed searches (no new triples)
+## New solutions found by colleague (merged from `main`)
+
+Three further triples were discovered by continued divisor-pair sweep and are now in the paper table (rows marked $\star$):
+
+| $n$ | $m$ | $|y|$ |
+|-----|-----|-------|
+| $11\,409$ | $-1\,918\,935\,865$ | $395\,599\,034\,387\,145$ |
+| $11\,750$ | $-1\,737\,888\,261$ | $366\,153\,513\,664\,753$ |
+| $15\,519$ | $-2\,004\,788\,485$ | $567\,823\,975\,362\,135$ |
+
+All three verified exactly; certification extended to $|m|\le 2.067\times 10^9$. The 50th triple occurs at $|m|\approx 2.0\times 10^9$.
+
+## Completed searches on this branch (no additional triples beyond the 50)
 
 | Search | Range / method | New hits |
 |--------|----------------|----------|
@@ -52,7 +64,7 @@ python3 verify_solutions.py --file /tmp/merged_hits.json
 
 ## Interpretation
 
-No 48th row was found in any completed search. The most plausible remaining sources (per the paper’s remark) are:
+No 51st row was found in any completed search on this branch prior to merging the three colleague hits above. The most plausible remaining sources (per the paper’s remark) are:
 
 1. **Large `|m|` via divisor sweep** beyond `1.387×10⁹` (especially negative `m` on rank ≥ 1 fibers).
 2. **Second generators** on rank-2 fibers (`n = 93, −4741, −6561, 16531, 17309, 27949, …`) at heights beyond `|X| ≈ 5×10⁸`; these likely need PARI/Magma integral-point machinery rather than naive scanning.
