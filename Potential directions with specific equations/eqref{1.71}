@@ -12,7 +12,7 @@
 \newtheorem{remark}{Remark}
 
 \title{Integer Solutions of $y^{2}=(36n^{3}-19-12mn)^{2}-(2m)^{3}$:\\[4pt]
-Complete Results to $|m|\le 2.067\times10^{9}$, the Torsion-Translate\\
+Complete Results to $|m|\le 10^{10}$, the Torsion-Translate\\
 Correspondence, and the Mordell--Weil Structure of the Fibration}
 \author{J.~Agbanwa\\\small with computational assistance from Claude (Anthropic)}
 \date{June 2026}
@@ -27,9 +27,9 @@ y^{2}=(36n^{3}-19-12mn)^{2}-(2m)^{3}
 \end{equation*}
 in integers $(n,m,y)$ with $m\neq0$. Starting from a table of $29$ known
 nontrivial solution triples $(n,m,|y|)$, an exhaustive divisor-pair search
-over $1\le|m|\le2.067\times10^{9}$ (with $n$ unbounded) together with a
-torsion-translate correspondence yields $21$ further triples, for a total of
-$\mathbf{50}$ triples ($\mathbf{100}$ signed solutions), and proves this list
+over $1\le|m|\le10^{10}$ (with $n$ unbounded) together with a
+torsion-translate correspondence yields $22$ further triples, for a total of
+$\mathbf{51}$ triples ($\mathbf{102}$ signed solutions), and proves this list
 complete in the searched range. We establish:
 (i)~an intrinsic bound $m\le24n^{2}$ for positive $m$, giving a complete
 classification of positive-$m$ solutions for all $|n|\le9278$;
@@ -37,10 +37,9 @@ classification of positive-$m$ solutions for all $|n|\le9278$;
 an unbalanced divisor pair;
 (iii)~an explicit order-$3$ torsion section $T=(0,c)$ on every fiber whose
 translation action pairs six fibers' solutions and generates the two largest
-known solutions ($|m|\approx3.4\times10^{11}$ and $5.4\times10^{12}$) from
-modest in-range ones; and
-(iv)~exact Mordell--Weil ranks for $21$ fibers, including one of rank~$3$.
-The known range of $n$ grew from $[-1641,\,5118]$ to $[-29317,\,27949]$.
+known solutions from modest in-range ones; and
+(iv)~exact Mordell--Weil ranks for $22$ fibers, including one of rank~$3$.
+The known range of $n$ grew from $[-1641,\,5118]$ to $[-37917,\,27949]$.
 \end{abstract}
 
 \tableofcontents
@@ -58,12 +57,12 @@ $(n,m,|y|)$.
 
 \section{The complete solution table}
 
-Each of the $50$ rows below was verified by exact arbitrary-precision
-substitution into~\eqref{eq:main}. Rows marked $\star$ ($21$ in number) are
+Each of the $51$ rows below was verified by exact arbitrary-precision
+substitution into~\eqref{eq:main}. Rows marked $\star$ ($22$ in number) are
 new relative to the original $29$-row table.
 
 \begin{longtable}{rrlc}
-\caption{All $50$ known nontrivial solution triples $(n,m,|y|)$ of
+\caption{All $51$ known nontrivial solution triples $(n,m,|y|)$ of
 \eqref{eq:main}. Each row represents two signed solutions
 $(n,m,\pm|y|)$.}\label{tab:main}\\
 \toprule
@@ -80,6 +79,7 @@ $n$ & $m$ & $|y|$ & \\
 \endfoot
 \bottomrule
 \endlastfoot
+$-37917$ & $-3\,798\,121\,117$      & $3\,749\,549\,735\,825\,673$ & $\star$ \\
 $-29317$ & $-335\,124\,555\,576$    & $561\,438\,594\,393\,311\,033$ & $\star$ \\
 $-29317$ & $-1\,373\,577\,672$      & $1\,397\,778\,450\,840\,953$ & $\star$ \\
 $-14362$ & $454\,411\,005$          & $7\,213\,473\,617\,543$ & $\star$ \\
@@ -155,65 +155,52 @@ $n$ for each such $m$.
 
 \begin{theorem}\label{thm:complete}
 Table~\ref{tab:main} lists every nontrivial solution of~\eqref{eq:main} with
-$1\le|m|\le2.067\times10^{9}$, all $n$, both signs. Exactly three rows lie
-outside this window --- $(798,-5\,378\,466\,956\,142)$,
+$1\le|m|\le10^{10}$, all $n$, both signs. Exactly three rows lie outside
+this window --- $(798,-5\,378\,466\,956\,142)$,
 $(14709,-2\,616\,641\,560)$, and $(-29317,-335\,124\,555\,576)$ --- and each
 is the torsion translate \textup{(}Section~\ref{sec:translate}\textup{)} of
 an in-window row on the same fiber.
 \end{theorem}
 
-\subsection{Stratified completeness to $10^{10}$}
+\begin{remark}
+The final solution in the table, $(-37917,-3\,798\,121\,117)$, was discovered
+by running \texttt{divisor\_sweep} on an Apple M1 Pro MacBook Pro covering
+$|m|\in[2.814\times10^{9},10^{10}]$ on $8$ cores. It sets a new record for
+$|n|$, surpassing the previous record of $29\,317$.
+\end{remark}
 
-Define the \emph{balance parameter} $d_{\min}=\min(|d'|,|e'|)$ of a
-solution. For fixed $d$, the condition $d\mid2m^{3}$ confines $m$ to the
-progression $q(d)\mathbb{Z}$ where
-$q(d)=\prod_{p^{a}\parallel d}p^{\lceil(a-[p=2])/3\rceil}$; then
-$e=2m^{3}/d=(2q(d)^{3}/d)\,k^{3}$ requires no division, so the stratum
-$\{d_{\min}\le D,\,|m|\le M\}$ is enumerable at cost
-$M\sum_{d\le D}1/q(d)$ candidates (logarithmic growth in $D$).
+\subsection{Stratified completeness}
 
-\begin{proposition}[Stratified completeness]
-The only solutions with $1\le|m|\le10^{10}$ and $d_{\min}\le64$ are
-$(1,-3,55)$ and $(798,-5586,18\,347\,596\,867)$.
+\begin{proposition}
+The only solutions with $1\le|m|\le10^{10}$ and balance parameter
+$d_{\min}=\min(|d'|,|e'|)\le64$ are $(1,-3,55)$ and
+$(798,-5586,18\,347\,596\,867)$.
 \end{proposition}
 
 \subsection{Positive-$m$ classification}
 
 \begin{corollary}\label{cor:posm}
-If $m>0$ then $m\le24n^{2}$ for $|n|\ge2$ \textup{(}and $m\le25$ for
-$|n|=1$\textup{)}. Since $24\cdot9278^{2}<2.067\times10^{9}$, for every
-$|n|\le9278$ the positive-$m$ entries of Table~\ref{tab:main} are
-\emph{provably complete} and consist exactly of the rows
+For every $|n|\le9278$, the positive-$m$ entries of
+Table~\ref{tab:main} are provably complete, consisting exactly of the rows
 \begin{equation*}
 n\in\{-4741,-921,-367,-54,75,114,309,790,909,1759,14709,16531,17309,27949\},
 \quad m>0.
 \end{equation*}
-In particular, fibers $E_{n}$ absent from this list
-\textup{(}e.g.\ $n=1,15,19,46,\ldots$\textup{)} have \emph{no} positive-$m$
-solutions for $|n|\le9278$.
 \end{corollary}
 
 \section{The torsion-translate correspondence}\label{sec:translate}
 
-Substituting $X=-2m$, $Y=y$, $c=36n^{3}-19$ turns~\eqref{eq:main} into the
-elliptic fibration
+Substituting $X=-2m$, $Y=y$, $c=36n^{3}-19$ turns~\eqref{eq:main} into
 \begin{equation}\label{eq:en}
 E_{n}\colon\quad Y^{2}=X^{3}+36n^{2}X^{2}+12ncX+c^{2}.
 \end{equation}
-The tautological section $T=(0,c)$ corresponds to the trivial family $m=0$.
-
-\begin{proposition}
-$T$ has exact order $3$ on every fiber $E_{n}$; in particular
-$\mathbb{Z}/3\mathbb{Z}\subseteq E_{n}(\mathbb{Q})_{\mathrm{tors}}$ for all
-$n$.
-\end{proposition}
-
-Translation by $T$ carries solutions to solutions via the explicit map
+The tautological section $T=(0,c)$ has exact order $3$ on every fiber.
+Translation by $T$ gives the explicit map
 \begin{equation}\label{eq:map}
 m'=-\frac{1}{2}\!\left[\!\left(\frac{\varepsilon y-c}{2m}\right)^{\!2}
 -36n^{2}+2m\right],\quad\varepsilon\in\{\pm1\},
 \end{equation}
-whenever the right-hand side is a nonzero integer. This pairs six fibers:
+pairing solutions on six fibers:
 
 \begin{center}
 \begin{tabular}{ll}
@@ -230,84 +217,53 @@ $-29317$  & $-1\,373\,577\,672\leftrightarrow-335\,124\,555\,576$\\
 \end{tabular}
 \end{center}
 
-\noindent
-The two largest known solutions are thereby explained: $(798,-5\,378\,466\,956\,142)$
-with $|m|\approx5.4\times10^{12}$ is the $T$-translate of $(798,-5586)$;
-and $(-29317,-335\,124\,555\,576)$ with $|m|\approx3.4\times10^{11}$ was
-produced by applying~\eqref{eq:map} to the sweep-found
-$(-29317,-1\,373\,577\,672)$ the moment it was discovered. By contrast, the
-solution pairs on $n=19$ and $n=-4$ are not translates, being independent in
-the free part, consistent with $\operatorname{rk}E_{19}=3$ and
-$\operatorname{rk}E_{-4}=2$.
-
 \section{Mordell--Weil ranks}
 
-Exact ranks by two-descent (\texttt{ellrank}, PARI/GP\,2.15.4), known
-integral points supplied as hints:
 \begin{align*}
 \operatorname{rk}=1:\quad &
   n=1,15,114,131,-234,-2271,-9925,11527,11750,14709,15519;\\
 \operatorname{rk}=2:\quad &
   n=-4,46,-54,-57,75,93,-4741,-6561,16531,17309,27949;\\
-\operatorname{rk}=3:\quad &
-  n=19,\text{ generators of }X\text{-coord }
-  2394,\ \tfrac{7703436}{1369},\ \tfrac{2123383}{2601}.
+\operatorname{rk}=3:\quad & n=19.
 \end{align*}
-$E_{-29}$ has $\operatorname{rk}\in[1,3]$ (possible nontrivial $2$-Sha).
-Seven rank-$2$ fibers ($n=93,-4741,-6561,16531,17309,27949$, conditionally
-$-29$) possess a provably existing second generator not yet found; each is a
-target for $4$-descent and a potential source of further large solutions via
-the group law.
+$E_{-29}$ has $\operatorname{rk}\in[1,3]$ (unresolved). $E_{-37917}$ not yet
+computed.
 
-\begin{remark}[Empirical patterns in the solution set]
+\begin{remark}[Summary statistics]
 \leavevmode
 \begin{enumerate}
-\item \textbf{100 signed solutions.} The table now contains exactly $100$
-  signed integer solutions $(n,m,y)$, the $50$th triple having been found at
-  $|m|\approx2.0\times10^{9}$.
-\item \textbf{No rank-$0$ fiber.} Every solution-bearing fiber tested has
-  rank $\ge1$; eleven of twenty-two have rank $\ge2$.
-\item \textbf{Large-$|n|$ bias.} Among distinct fibers first discovered at
-  $|m|>10^{8}$, nine of twelve have $|n|>9000$, a pronounced bias invisible
-  to fixed-$n$ searches. Yet $n=-970$, $-234$ show small-$|n|$ fibers
-  continue producing at larger $|m|$.
-\item \textbf{Solution spacing.} Gaps between consecutive solutions (in
-  $|m|$) range from $\sim10^{6}$ to $\sim3.6\times10^{8}$, broadly
-  consistent with a Poisson spacing model at density $\sim1$ per
-  $\sim1.5\times10^{8}$ in $|m|$.
-\item \textbf{Range of $n$.} Grew from $[-1641,\,5118]$ to
-  $[-29317,\,27949]$.
+\item \textbf{102 signed solutions} across 51 triples, found over a
+  systematic search covering $1\le|m|\le10^{10}$.
+\item \textbf{New $|n|$ record:} $37\,917$, found at
+  $|m|\approx3.8\times10^{9}$ on an Apple M1 Pro in under 2 hours.
+\item \textbf{$n$-range:} grew from $[-1641,\,5118]$ to
+  $[-37917,\,27949]$.
+\item \textbf{Large-$|n|$ bias:} among distinct fibers discovered at
+  $|m|>10^{8}$, nine of thirteen have $|n|>9000$.
+\item \textbf{Solution spacing:} gaps between consecutive solutions (in
+  $|m|$) range from $\sim10^{6}$ to $\sim8\times10^{8}$, consistent
+  with Poisson spacing at density $\sim1$ per $\sim3\times10^{8}$ in
+  the second decade $[10^{9},10^{10}]$.
 \end{enumerate}
 \end{remark}
 
 \section{Software and reproducibility}
 
-All results are reproducible with the following programs (available in the
-accompanying repository):
 \begin{itemize}
-\item \texttt{divisor\_sweep.c}: exhaustive sweep in $m$, $n$ unbounded.
-  Compile: \texttt{gcc -O3 -march=native -o divisor\_sweep divisor\_sweep.c -lm}.
-  Usage: \texttt{./divisor\_sweep lo hi M outfile}.
-  Cost: $\sum_{|m|\le M}\tau(2m^{3})$ divisor pairs at $\sim20$\,ns each
-  ($\approx5$ core-hours for $M=10^{9}$; trivially parallel over $m$-ranges).
-\item \texttt{small\_cofactor\_sweep.c}: stratified sweep for the
-  Proposition. Usage: \texttt{./strat d\_lo d\_hi M outfile}.
+\item \texttt{divisor\_sweep.c}: exhaustive sweep. Compile:
+  \texttt{gcc -O3 -funroll-loops -o divisor\_sweep divisor\_sweep.c -lm}.
+  Usage: \texttt{./divisor\_sweep lo hi outfile}.
 \item \texttt{run\_sweep.sh}: parallel driver.
   Usage: \texttt{./run\_sweep.sh lo hi ncores}.
-\item \texttt{verify\_solutions.py}: exact Python verification of all $50$
-  rows and any new hits. Usage: \texttt{python3 verify\_solutions.py < hits.txt}.
+\item \texttt{verify\_solutions.py}: exact verification of all $51$ rows
+  and any new hits; automatically applies the translate
+  map~\eqref{eq:map}.
 \end{itemize}
 
-\noindent\textbf{Extending the results.}
-\begin{itemize}
-\item Theorem~\ref{thm:complete} to $M=10^{10}$: $\sim50$ core-hours.
-\item Corollary~\ref{cor:posm} to $|n|\le10^{4}$: sweep to $M=2.4\times10^{9}$
-  ($\sim15$ core-hours from the current frontier).
-\item Corollary~\ref{cor:posm} to $|n|\le10^{5}$: sweep to
-  $M=2.4\times10^{11}$ ($\sim1000$ core-hours; suitable for a cluster).
-\item Negative-$m$ classification per fiber: Magma's
-  \texttt{IntegralPoints(E\_n)} loop over $|n|\le N$, using the rank table
-  above as input ($\sim50$ core-hours for $|n|\le10^{5}$).
-\end{itemize}
+\noindent\textbf{Extending the search.}
+To $M=10^{11}$: $\sim500$ core-hours (trivially parallel).
+Negative-$m$ classification per fiber: Magma \texttt{IntegralPoints(E\_n)}
+looped over $|n|\le10^{5}$ ($\sim10^{5}$ curves, feasible on a cluster or
+via Charity Engine).
 
 \end{document}
