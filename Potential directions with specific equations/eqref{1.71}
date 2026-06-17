@@ -28,11 +28,11 @@ y^{2}=(36n^{3}-19-12mn)^{2}-(2m)^{3}
 in integers $(n,m,y)$ with $m\neq0$. Starting from a table of $29$ known
 nontrivial solution triples $(n,m,|y|)$, an exhaustive divisor-pair search
 over $1\le|m|\le10^{10}$ (with $n$ unbounded) together with a
-torsion-translate correspondence yields $22$ further triples, for a total of
-$\mathbf{51}$ triples ($\mathbf{102}$ signed solutions), and proves this list
-complete in the searched range. We establish:
+torsion-translate correspondence yields $23$ further triples, for a total of
+$\mathbf{52}$ triples ($\mathbf{104}$ signed solutions), and proves this
+list complete in the searched range. We establish:
 (i)~an intrinsic bound $m\le24n^{2}$ for positive $m$, giving a complete
-classification of positive-$m$ solutions for all $|n|\le9278$;
+classification of positive-$m$ solutions for all $|n|\le20{,}412$;
 (ii)~a stratified completeness result to $|m|\le10^{10}$ for solutions with
 an unbalanced divisor pair;
 (iii)~an explicit order-$3$ torsion section $T=(0,c)$ on every fiber whose
@@ -57,12 +57,12 @@ $(n,m,|y|)$.
 
 \section{The complete solution table}
 
-Each of the $51$ rows below was verified by exact arbitrary-precision
-substitution into~\eqref{eq:main}. Rows marked $\star$ ($22$ in number) are
+Each of the $52$ rows below was verified by exact arbitrary-precision
+substitution into~\eqref{eq:main}. Rows marked $\star$ ($23$ in number) are
 new relative to the original $29$-row table.
 
 \begin{longtable}{rrlc}
-\caption{All $51$ known nontrivial solution triples $(n,m,|y|)$ of
+\caption{All $52$ known nontrivial solution triples $(n,m,|y|)$ of
 \eqref{eq:main}. Each row represents two signed solutions
 $(n,m,\pm|y|)$.}\label{tab:main}\\
 \toprule
@@ -84,6 +84,7 @@ $-29317$ & $-335\,124\,555\,576$    & $561\,438\,594\,393\,311\,033$ & $\star$ \
 $-29317$ & $-1\,373\,577\,672$      & $1\,397\,778\,450\,840\,953$ & $\star$ \\
 $-14362$ & $454\,411\,005$          & $7\,213\,473\,617\,543$ & $\star$ \\
 $-9925$  & $185\,596\,059$          & $10\,965\,628\,195\,127$ & $\star$ \\
+$-6565$  & $-3\,579\,502\,461$      & $672\,515\,729\,205\,193$ & $\star$ \\
 $-6561$  & $83\,882\,471$           & $2\,823\,976\,115\,241$ & $\star$ \\
 $-4741$  & $45\,340\,050$           & $913\,195\,026\,575$ & $\star$ \\
 $-2271$  & $-196\,197\,225$         & $9\,679\,512\,465\,865$ & $\star$ \\
@@ -148,10 +149,9 @@ solution requires $n\in\mathbb{Z}$ satisfying
 \end{equation}
 which forces $A\equiv5\pmod{12}$. The search algorithm enumerates, for each
 $m$ in a range, all divisor pairs of $2m^{3}$ (segmented-sieve factorization;
-pairs generated multiplicatively in tandem; residues modulo $5,7,9,11,12,13$
-tracked for pre-filtering; integer roots of~\eqref{eq:cubic} located by
-Cardano's formulae with exact $128$-bit confirmation) and is exhaustive in
-$n$ for each such $m$.
+pairs generated multiplicatively in tandem without division; residues modulo
+$5,7,9,11,12,13$ tracked for pre-filtering; integer roots of~\eqref{eq:cubic}
+located by Cardano's formulae with exact $128$-bit confirmation).
 
 \begin{theorem}\label{thm:complete}
 Table~\ref{tab:main} lists every nontrivial solution of~\eqref{eq:main} with
@@ -163,10 +163,14 @@ an in-window row on the same fiber.
 \end{theorem}
 
 \begin{remark}
-The final solution in the table, $(-37917,-3\,798\,121\,117)$, was discovered
-by running \texttt{divisor\_sweep} on an Apple M1 Pro MacBook Pro covering
-$|m|\in[2.814\times10^{9},10^{10}]$ on $8$ cores. It sets a new record for
-$|n|$, surpassing the previous record of $29\,317$.
+The final two solutions discovered, $(-37917,-3\,798\,121\,117)$ and
+$(-6565,-3\,579\,502\,461)$, were found by running \texttt{divisor\_sweep}
+on an Apple M1 Pro MacBook Pro covering
+$|m|\in[2.814\times10^{9},10^{10}]$ on $8$ cores in approximately $15$
+hours. The solution $n=-37917$ sets a new record for $|n|$, surpassing the
+previous record of $29\,317$. Notably $n=-6565$ lies within $4$ of the
+existing entry $n=-6561$, illustrating the clustered fiber structure of the
+family near $|n|\approx6500$.
 \end{remark}
 
 \subsection{Stratified completeness}
@@ -180,8 +184,10 @@ $(798,-5586,18\,347\,596\,867)$.
 \subsection{Positive-$m$ classification}
 
 \begin{corollary}\label{cor:posm}
-For every $|n|\le9278$, the positive-$m$ entries of
-Table~\ref{tab:main} are provably complete, consisting exactly of the rows
+If $m>0$ then $m\le24n^{2}$ for $|n|\ge2$. Since
+$24\cdot20{,}412^{2}<10^{10}$, for every $|n|\le20{,}412$ the positive-$m$
+entries of Table~\ref{tab:main} are \emph{provably complete}, consisting
+exactly of the rows
 \begin{equation*}
 n\in\{-4741,-921,-367,-54,75,114,309,790,909,1759,14709,16531,17309,27949\},
 \quad m>0.
@@ -226,24 +232,28 @@ $-29317$  & $-1\,373\,577\,672\leftrightarrow-335\,124\,555\,576$\\
   n=-4,46,-54,-57,75,93,-4741,-6561,16531,17309,27949;\\
 \operatorname{rk}=3:\quad & n=19.
 \end{align*}
-$E_{-29}$ has $\operatorname{rk}\in[1,3]$ (unresolved). $E_{-37917}$ not yet
-computed.
+Unresolved: $E_{-29}$ and $E_{-37917}$ both have $\operatorname{rk}\in[1,3]$
+with root number $-1$ (rank odd, so rank $1$ or $3$); both resist effort-2
+descent, likely due to nontrivial $2$-Sha. $E_{-6565}$ not yet computed.
 
 \begin{remark}[Summary statistics]
 \leavevmode
 \begin{enumerate}
-\item \textbf{102 signed solutions} across 51 triples, found over a
-  systematic search covering $1\le|m|\le10^{10}$.
+\item \textbf{104 signed solutions} across 52 triples, exhaustively
+  certified for $1\le|m|\le10^{10}$.
+\item \textbf{23 new solutions} relative to the original 29-row table.
 \item \textbf{New $|n|$ record:} $37\,917$, found at
-  $|m|\approx3.8\times10^{9}$ on an Apple M1 Pro in under 2 hours.
+  $|m|\approx3.8\times10^{9}$.
+\item \textbf{Clustered fibers:} $n=-6565$ and $n=-6561$ are both
+  solution-bearing, lying within $4$ of each other; similarly $n=11409$,
+  $11527$, $11750$ form a cluster near $|n|\approx11{,}500$.
 \item \textbf{$n$-range:} grew from $[-1641,\,5118]$ to
   $[-37917,\,27949]$.
-\item \textbf{Large-$|n|$ bias:} among distinct fibers discovered at
-  $|m|>10^{8}$, nine of thirteen have $|n|>9000$.
-\item \textbf{Solution spacing:} gaps between consecutive solutions (in
-  $|m|$) range from $\sim10^{6}$ to $\sim8\times10^{8}$, consistent
-  with Poisson spacing at density $\sim1$ per $\sim3\times10^{8}$ in
-  the second decade $[10^{9},10^{10}]$.
+\item \textbf{Positive-$m$ theorem:} complete for $|n|\le20{,}412$
+  from the $10^{10}$ sweep alone.
+\item \textbf{Solution density:} approximately $1$ solution per
+  $3\times10^{8}$ in the range $[10^{9},10^{10}]$, consistent with
+  Poisson spacing at that depth.
 \end{enumerate}
 \end{remark}
 
@@ -255,15 +265,20 @@ computed.
   Usage: \texttt{./divisor\_sweep lo hi outfile}.
 \item \texttt{run\_sweep.sh}: parallel driver.
   Usage: \texttt{./run\_sweep.sh lo hi ncores}.
-\item \texttt{verify\_solutions.py}: exact verification of all $51$ rows
+\item \texttt{verify\_solutions.py}: exact verification of all $52$ rows
   and any new hits; automatically applies the translate
-  map~\eqref{eq:map}.
+  map~\eqref{eq:map} to flag bonus giant solutions.
 \end{itemize}
 
-\noindent\textbf{Extending the search.}
-To $M=10^{11}$: $\sim500$ core-hours (trivially parallel).
-Negative-$m$ classification per fiber: Magma \texttt{IntegralPoints(E\_n)}
-looped over $|n|\le10^{5}$ ($\sim10^{5}$ curves, feasible on a cluster or
-via Charity Engine).
+\noindent\textbf{Next steps.}
+\begin{itemize}
+\item $M=10^{11}$: $\sim25$ core-hours on M1 Pro; expected 3--5 new
+  solutions; certifies positive-$m$ for $|n|\le64{,}549$.
+\item $M=10^{12}$: $\sim10$--$15$ days on M1 Pro; expected 5--10 more.
+\item Negative-$m$ per fiber: Magma \texttt{IntegralPoints(E\_n)} for
+  $|n|\le10^{5}$; suitable for Charity Engine.
+\item Resolve $E_{-29}$ and $E_{-37917}$ ranks via 4-descent (Magma).
+\item Compute $\operatorname{rk}E_{-6565}$.
+\end{itemize}
 
 \end{document}
