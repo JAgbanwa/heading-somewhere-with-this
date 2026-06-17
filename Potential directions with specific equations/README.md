@@ -24,3 +24,11 @@ After 12+ hours of running [these](https://github.com/JAgbanwa/heading-somewhere
 -rw-r--r--  1 jamalmac  staff     0B 16 Jun 20:53 /Users/jamalmac/s3c_sweep/sweep_8203500000_9101749999.txt
 -rw-r--r--  1 jamalmac  staff     0B 16 Jun 20:53 /Users/jamalmac/s3c_sweep/sweep_9101750000_9999999999.txt
 ```
+This first sweep 
+
+```bash
+cat ~/s3c_sweep/sweep_3712250000_4610499999.txt
+```
+yielded
+
+```-37917 -3798121117 3749549735825673```
