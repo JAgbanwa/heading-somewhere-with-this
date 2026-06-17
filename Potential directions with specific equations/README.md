@@ -29,11 +29,7 @@ This first sweep
 ```bash
 cat ~/s3c_sweep/sweep_3712250000_4610499999.txt
 ```
-yielded
-
-```-37917 -3798121117 3749549735825673```
-
-and 
+yielded ```-37917 -3798121117 3749549735825673``` and 
 
 ```bash
 cat ~/s3c_sweep/sweep_2814000000_3712249999.txt
