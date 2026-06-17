@@ -1,4 +1,4 @@
-After 12+ hours of running computations on all 8 cores of my M1 Pro, this was the outcome:
+After 12+ hours of running computations on all 8 cores of my M1 Pro on Terminal, this was the outcome:
 
 ```bash
 -rw-r--r--  1 jamalmac  staff    34B 17 Jun 00:16 /Users/jamalmac/s3c_sweep/sweep_2814000000_3712249999.txt
@@ -10,3 +10,4 @@ After 12+ hours of running computations on all 8 cores of my M1 Pro, this was th
 -rw-r--r--  1 jamalmac  staff     0B 16 Jun 20:53 /Users/jamalmac/s3c_sweep/sweep_8203500000_9101749999.txt
 -rw-r--r--  1 jamalmac  staff     0B 16 Jun 20:53 /Users/jamalmac/s3c_sweep/sweep_9101750000_9999999999.txt
 ```
+[see here](https://github.com/JAgbanwa/heading-somewhere-with-this/tree/main/Potential%20directions%20with%20specific%20equations/s3c_sweep)
