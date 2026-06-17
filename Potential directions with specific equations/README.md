@@ -1,3 +1,16 @@
+```bash
+Started: Tue 16 Jun 2026 20:53:46 CEST
+  Core 0: [2814000000,3712249999] -> sweep_2814000000_3712249999.txt
+  Core 1: [3712250000,4610499999] -> sweep_3712250000_4610499999.txt
+  Core 2: [4610500000,5508749999] -> sweep_4610500000_5508749999.txt
+  Core 3: [5508750000,6406999999] -> sweep_5508750000_6406999999.txt
+  Core 4: [6407000000,7305249999] -> sweep_6407000000_7305249999.txt
+  Core 5: [7305250000,8203499999] -> sweep_7305250000_8203499999.txt
+  Core 6: [8203500000,9101749999] -> sweep_8203500000_9101749999.txt
+  Core 7: [9101750000,9999999999] -> sweep_9101750000_9999999999.txt
+Running... do not close terminal
+```
+
 After 12+ hours of running computations on all 8 cores of my M1 Pro on Terminal, this was the outcome:
 
 ```bash
