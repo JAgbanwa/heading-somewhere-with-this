@@ -14,6 +14,8 @@ Running... do not close terminal
 After 12+ hours of running [these](https://github.com/JAgbanwa/heading-somewhere-with-this/tree/main/Potential%20directions%20with%20specific%20equations/s3c_sweep)
  computations on all 8 cores of my M1 Pro on Terminal, this was the outcome:
 
+ ```ls -lh ~/s3c_sweep/sweep_*.txt```
+
 ```bash
 -rw-r--r--  1 jamalmac  staff    34B 17 Jun 00:16 /Users/jamalmac/s3c_sweep/sweep_2814000000_3712249999.txt
 -rw-r--r--  1 jamalmac  staff    36B 16 Jun 21:19 /Users/jamalmac/s3c_sweep/sweep_3712250000_4610499999.txt
