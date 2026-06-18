@@ -59,3 +59,8 @@ Started: Wed 17 Jun 2026 17:03:28 CEST
   Core 7: [88750000000,99999999999] -> sweep_88750000000_99999999999.txt
 Running... do not close terminal
 ```
+Running this command
+```bash
+cat ~/s3c_sweep/sweep_32500000000_43749999999.txt
+```
+returned ```167163 -33373801909 235738065125780169```
