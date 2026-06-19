@@ -75,7 +75,7 @@ Thus far:
 -rw-r--r--  1 jamalmac  staff    37B 19 Jun 04:42 /Users/jamalmac/s3c_sweep/sweep_10000000000_21249999999.txt
 -rw-r--r--@ 1 jamalmac  staff    34B 17 Jun 00:16 /Users/jamalmac/s3c_sweep/sweep_2814000000_3712249999.txt
 -rw-r--r--  1 jamalmac  staff    39B 18 Jun 22:29 /Users/jamalmac/s3c_sweep/sweep_32500000000_43749999999.txt
--rw-r--r--@  1 jamalmac staff   76B 19 Jun 14:55 /Users/jamalmac/s3c_sweep/sweep_32500000000_43749999999.txt
+-rw-r--r--@ 1 jamalmac staff   76B 19 Jun 14:55 /Users/jamalmac/s3c_sweep/sweep_32500000000_43749999999.txt
 -rw-r--r--@ 1 jamalmac  staff    36B 16 Jun 21:19 /Users/jamalmac/s3c_sweep/sweep_3712250000_4610499999.txt
 ```
 This also
