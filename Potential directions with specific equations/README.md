@@ -80,7 +80,7 @@ This also
 ```bash
 cat ~/s3c_sweep/sweep_32500000000_43749999999.txt
 ```
-just yielded ```138693 36415956444 29484467972297713```
+just yielded ```138693 36415956444 29484467972297713```.
 
 Some new results!
 
@@ -93,3 +93,10 @@ jamalmac@MacBook-Pro ~ % ls -lh ~/s3c_sweep/sweep_*.txt | grep -v " 0B "
 See:
 
 ```cat ~/s3c_sweep/sweep_66250000000_77499999999.txt``` yielded ```-53316 -70703779450 73465979324839725```.
+
+Another hit!
+
+```bash
+cat ~/s3c_sweep/sweep_21250000000_32499999999.txt
+```
+returned ```64808 -26459053782 32724676849633037```.
