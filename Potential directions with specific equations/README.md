@@ -68,7 +68,7 @@ This command
 ```bash
 cat ~/s3c_sweep/sweep_10000000000_21249999999.txt
 ```
-after another 8 hours yields  ```57534 -12272261400 15803899374762125```.
+after another 8 hours yields  ```57534 -12272261400 15803899374762125```. Another hit returned ```-34655 -15409838367 9580663199142935```
 
 Thus far:
 ```bash
@@ -89,3 +89,4 @@ jamalmac@MacBook-Pro ~ % ls -lh ~/s3c_sweep/sweep_*.txt | grep -v " 0B "
 -rw-r--r--  1 jamalmac  staff    74B 19 Jun 20:27 /Users/jamalmac/s3c_sweep/sweep_10000000000_21249999999.txt
 -rw-r--r--  1 jamalmac  staff    37B 19 Jun 21:05 /Users/jamalmac/s3c_sweep/sweep_21250000000_32499999999.txt
 -rw-r--r--  1 jamalmac  staff    38B 19 Jun 19:29 /Users/jamalmac/s3c_sweep/sweep_66250000000_77499999999.txt
+
