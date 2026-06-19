@@ -14,7 +14,7 @@ typedef unsigned __int128 u128;
 #define MAXPF 12
 
 static uint32_t *primes; static int nprimes;
-static uint32_t rem_[WIN];
+static uint64_t rem_[WIN];
 static uint32_t pf[WIN][MAXPF];
 static uint8_t  pe[WIN][MAXPF];
 static uint8_t  npf[WIN];
@@ -70,11 +70,11 @@ static void try_cubic(int64_t m, i128 A, i128 y){
 
 // divisor-pair recursion state; prime 2 is always the LAST level (bit shifts)
 static int g_np; static uint32_t g_p[MAXPF+1]; static int g_E[MAXPF+1];
-static u128 g_pw[MAXPF+1][96];
-static int g_pw12[MAXPF+1][96];
+static u128 g_pw[MAXPF+1][110];
+static int g_pw12[MAXPF+1][110];
 static int g_E2;            // exponent of 2 in 2m^3
 static int64_t g_m;
-static int sh12[92];        // 2^e mod 12
+static int sh12[110];        // 2^e mod 12
 
 static inline void leaf_pair(u128 t, u128 s, int t12, int s12){
     int r1=(t12+s12)%12, r2=(t12+12-s12)%12;
@@ -103,11 +103,11 @@ static void rec(int i, u128 t, u128 s, int t12, int s12){
 int main(int argc,char**argv){
     int64_t lo=atoll(argv[1]), hi=atoll(argv[2]);
     out=fopen(argv[3],"w");
-    sh12[0]=1; for(int e=1;e<92;e++) sh12[e]=(sh12[e-1]*2)%12;
+    sh12[0]=1; for(int e=1;e<110;e++) sh12[e]=(sh12[e-1]*2)%12;
     // primes up to sqrt(hi)
     uint32_t lim=(uint32_t)(sqrt((double)hi))+2;
     char *comp=calloc(lim+1,1);
-    primes=malloc(8000*sizeof(uint32_t)); nprimes=0;
+    primes=malloc(12000*sizeof(uint32_t)); nprimes=0;
     for(uint32_t i=2;i<=lim;i++) if(!comp[i]){
         primes[nprimes++]=i;
         for(uint64_t j=(uint64_t)i*i;j<=lim;j+=i) comp[j]=1;
@@ -115,14 +115,14 @@ int main(int argc,char**argv){
     for(int64_t wlo=lo; wlo<=hi; wlo+=WIN){
         int64_t whi=wlo+WIN-1; if(whi>hi) whi=hi;
         int W=(int)(whi-wlo+1);
-        for(int i=0;i<W;i++){ rem_[i]=(uint32_t)(wlo+i); npf[i]=0; }
+        for(int i=0;i<W;i++){ rem_[i]=(uint64_t)(wlo+i); npf[i]=0; }
         for(int k=0;k<nprimes;k++){
             uint32_t p=primes[k];
             if((uint64_t)p*p > (uint64_t)whi) break;
             int64_t start=((wlo+p-1)/p)*p;
             for(int64_t mlt=start; mlt<=whi; mlt+=p){
                 int i=(int)(mlt-wlo);
-                uint32_t r=rem_[i]; int e=0;
+                uint64_t r=rem_[i]; int e=0;
                 while(r%p==0){ r/=p; e++; }
                 if(e){ pf[i][npf[i]]=p; pe[i][npf[i]]=(uint8_t)e; npf[i]++; rem_[i]=r; }
             }
@@ -136,7 +136,10 @@ int main(int argc,char**argv){
                 g_E[g_np]=3*pe[i][j];
                 g_np++;
             }
-            if(rem_[i]>1){ g_p[g_np]=rem_[i]; g_E[g_np]=3; g_np++; }
+            if(rem_[i]>1){ g_p[g_np]=(uint32_t)rem_[i]; g_E[g_np]=3; g_np++; }
+            long ndivs=g_E2+1;
+            for(int j=0;j<g_np;j++) ndivs*=(g_E[j]+1);
+            if(ndivs>2000000) continue;
             for(int j=0;j<g_np;j++){
                 g_pw[j][0]=1; g_pw12[j][0]=1;
                 for(int e=1;e<=g_E[j];e++){
