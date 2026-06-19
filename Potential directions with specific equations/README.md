@@ -77,3 +77,8 @@ Thus far:
 -rw-r--r--  1 jamalmac  staff    39B 18 Jun 22:29 /Users/jamalmac/s3c_sweep/sweep_32500000000_43749999999.txt
 -rw-r--r--@ 1 jamalmac  staff    36B 16 Jun 21:19 /Users/jamalmac/s3c_sweep/sweep_3712250000_4610499999.txt
 ```
+This also
+```bash
+cat ~/s3c_sweep/sweep_32500000000_43749999999.txt
+```
+just yielded ```138693 36415956444 29484467972297713```
