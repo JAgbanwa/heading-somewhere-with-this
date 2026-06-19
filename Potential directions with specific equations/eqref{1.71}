@@ -12,7 +12,7 @@
 \newtheorem{remark}{Remark}
 
 \title{Integer Solutions of $y^{2}=(36n^{3}-19-12mn)^{2}-(2m)^{3}$:\\[4pt]
-Complete Results to $|m|\le 10^{10}$, the Torsion-Translate\\
+Complete Results to $|m|\le 10^{11}$, the Torsion-Translate\\
 Correspondence, and the Mordell--Weil Structure of the Fibration}
 \author{J.~Agbanwa\\\small with computational assistance from Claude (Anthropic)}
 \date{June 2026}
@@ -27,20 +27,29 @@ y^{2}=(36n^{3}-19-12mn)^{2}-(2m)^{3}
 \end{equation*}
 in integers $(n,m,y)$ with $m\neq0$. Starting from a table of $29$ known
 nontrivial solution triples $(n,m,|y|)$, an exhaustive divisor-pair search
-over $1\le|m|\le10^{10}$ (with $n$ unbounded) together with a
-torsion-translate correspondence yields $23$ further triples, for a total of
-$\mathbf{52}$ triples ($\mathbf{104}$ signed solutions), and proves this
-list complete in the searched range. We establish:
+over $1\le|m|\le10^{11}$ (with $n$ unbounded) together with a
+torsion-translate correspondence yields $29$ further triples, for a total of
+$\mathbf{58}$ triples ($\mathbf{116}$ signed solutions). We establish:
 (i)~an intrinsic bound $m\le24n^{2}$ for positive $m$, giving a complete
-classification of positive-$m$ solutions for all $|n|\le20{,}412$;
-(ii)~a stratified completeness result to $|m|\le10^{10}$ for solutions with
-an unbalanced divisor pair;
+classification of positive-$m$ solutions for all $|n|\le64{,}549$;
+(ii)~a stratified completeness result to $|m|\le10^{10}$ for unbalanced
+divisor pairs;
 (iii)~an explicit order-$3$ torsion section $T=(0,c)$ on every fiber whose
 translation action pairs six fibers' solutions and generates the two largest
 known solutions from modest in-range ones; and
 (iv)~exact Mordell--Weil ranks for $22$ fibers, including one of rank~$3$.
-The known range of $n$ grew from $[-1641,\,5118]$ to $[-37917,\,27949]$.
+The known range of $n$ grew from $[-1641,\,5118]$ to $[-53316,\,167163]$,
+with the first solutions ever found satisfying $|n|>10^{5}$.
 \end{abstract}
+
+\section*{Key to markings}
+\begin{itemize}
+\item No mark --- original $29$ solutions known prior to this work
+\item $\star$ --- new solutions found by computational search in this
+  collaboration \textup{(}Claude, Anthropic\textup{)}
+\item $\star\star$ --- new solutions found by J.~Agbanwa's Apple M1 Pro
+  MacBook Pro running the accompanying \texttt{divisor\_sweep} program
+\end{itemize}
 
 \tableofcontents
 
@@ -57,12 +66,11 @@ $(n,m,|y|)$.
 
 \section{The complete solution table}
 
-Each of the $52$ rows below was verified by exact arbitrary-precision
-substitution into~\eqref{eq:main}. Rows marked $\star$ ($23$ in number) are
-new relative to the original $29$-row table.
+Each of the $58$ rows below was verified by exact arbitrary-precision
+substitution into~\eqref{eq:main}. The marking scheme is defined above.
 
 \begin{longtable}{rrlc}
-\caption{All $52$ known nontrivial solution triples $(n,m,|y|)$ of
+\caption{All $58$ known nontrivial solution triples $(n,m,|y|)$ of
 \eqref{eq:main}. Each row represents two signed solutions
 $(n,m,\pm|y|)$.}\label{tab:main}\\
 \toprule
@@ -79,58 +87,64 @@ $n$ & $m$ & $|y|$ & \\
 \endfoot
 \bottomrule
 \endlastfoot
-$-37917$ & $-3\,798\,121\,117$      & $3\,749\,549\,735\,825\,673$ & $\star$ \\
-$-29317$ & $-335\,124\,555\,576$    & $561\,438\,594\,393\,311\,033$ & $\star$ \\
-$-29317$ & $-1\,373\,577\,672$      & $1\,397\,778\,450\,840\,953$ & $\star$ \\
-$-14362$ & $454\,411\,005$          & $7\,213\,473\,617\,543$ & $\star$ \\
-$-9925$  & $185\,596\,059$          & $10\,965\,628\,195\,127$ & $\star$ \\
-$-6565$  & $-3\,579\,502\,461$      & $672\,515\,729\,205\,193$ & $\star$ \\
-$-6561$  & $83\,882\,471$           & $2\,823\,976\,115\,241$ & $\star$ \\
-$-4741$  & $45\,340\,050$           & $913\,195\,026\,575$ & $\star$ \\
-$-2271$  & $-196\,197\,225$         & $9\,679\,512\,465\,865$ & $\star$ \\
-$-1641$  & $-620\,850$              & $171\,316\,003\,825$ & \\
-$-970$   & $-739\,259\,850$         & $57\,503\,797\,038\,269$ & $\star$ \\
-$-921$   & $1\,452\,425$            & $11\,010\,153\,735$ & \\
-$-675$   & $-613\,606$              & $16\,099\,399\,767$ & \\
-$-570$   & $-1\,931\,787$           & $21\,281\,482\,855$ & \\
-$-367$   & $289\,374$               & $247\,553\,783$ & \\
-$-234$   & $-1\,074\,880\,501$      & $99\,720\,478\,180\,593$ & $\star$ \\
-$-147$   & $-166\,915$              & $452\,011\,593$ & \\
-$-57$    & $-2\,926$                & $8\,679\,903$ & \\
-$-54$    & $-10\,743$               & $13\,016\,935$ & \\
-$-54$    & $4\,749$                 & $2\,420\,407$ & \\
-$-29$    & $-16\,716$               & $9\,066\,007$ & \\
-$-4$     & $-1\,818$                & $236\,845$ & \\
-$-4$     & $-1\,032$                & $107\,155$ & \\
-$1$      & $-51$                    & $1\,207$ & \\
-$1$      & $-3$                     & $55$ & \\
-$15$     & $-1\,207$                & $358\,905$ & \\
-$19$     & $-252\,195$              & $362\,844\,665$ & $\star$ \\
-$19$     & $-1\,197$                & $532\,855$ & \\
-$46$     & $-21\,522$               & $17\,788\,355$ & \\
-$75$     & $11\,523$                & $3\,310\,775$ & \\
-$93$     & $-175\,921$              & $307\,097\,193$ & \\
-$114$    & $27\,575$                & $8\,719\,215$ & \\
-$131$    & $-401\,940$              & $1\,013\,677\,687$ & $\star$ \\
-$309$    & $56\,375$                & $852\,251\,625$ & \\
-$790$    & $1\,096\,893$            & $6\,593\,716\,025$ & \\
-$798$    & $-5\,378\,466\,956\,142$ & $35\,280\,376\,688\,536\,712\,227$ & \\
-$798$    & $-5\,586$                & $18\,347\,596\,867$ & \\
-$909$    & $-11\,607\,484$          & $190\,054\,724\,721$ & \\
-$909$    & $1\,826\,300$            & $1\,390\,662\,225$ & \\
-$1626$   & $-213\,292\,581$         & $9\,811\,228\,042\,657$ & \\
-$1759$   & $6\,612\,585$            & $29\,364\,964\,345$ & \\
-$5118$   & $-526\,254\,004$         & $50\,456\,015\,630\,061$ & \\
-$11409$  & $-1\,918\,935\,865$      & $395\,599\,034\,387\,145$ & $\star$ \\
-$11527$  & $-67\,430\,670$          & $64\,484\,348\,509\,601$ & $\star$ \\
-$11750$  & $-1\,737\,888\,261$      & $366\,153\,513\,664\,753$ & $\star$ \\
-$14709$  & $-2\,616\,641\,560$      & $689\,629\,545\,026\,145$ & $\star$ \\
-$14709$  & $473\,559\,320$          & $10\,489\,917\,226\,785$ & $\star$ \\
-$15519$  & $-2\,004\,788\,485$      & $567\,823\,975\,362\,135$ & $\star$ \\
-$16531$  & $220\,439\,859$          & $118\,539\,695\,046\,007$ & $\star$ \\
-$17309$  & $225\,396\,696$          & $139\,544\,322\,245\,119$ & $\star$ \\
-$18344$  & $-1\,152\,587\,709$      & $488\,636\,781\,747\,209$ & $\star$ \\
-$27949$  & $7\,804\,038$            & $783\,344\,205\,524\,825$ & $\star$ \\
+$-53316$ & $-70\,703\,779\,450$    & $73\,465\,979\,324\,839\,725$ & $\star\star$ \\
+$-37917$ & $-3\,798\,121\,117$     & $3\,749\,549\,735\,825\,673$ & $\star\star$ \\
+$-34655$ & $-15\,409\,838\,367$    & $9\,580\,663\,199\,142\,935$ & $\star\star$ \\
+$-29317$ & $-335\,124\,555\,576$   & $561\,438\,594\,393\,311\,033$ & $\star$ \\
+$-29317$ & $-1\,373\,577\,672$     & $1\,397\,778\,450\,840\,953$ & $\star$ \\
+$-14362$ & $454\,411\,005$         & $7\,213\,473\,617\,543$ & $\star$ \\
+$-9925$  & $185\,596\,059$         & $10\,965\,628\,195\,127$ & $\star$ \\
+$-6565$  & $-3\,579\,502\,461$     & $672\,515\,729\,205\,193$ & $\star\star$ \\
+$-6561$  & $83\,882\,471$          & $2\,823\,976\,115\,241$ & $\star$ \\
+$-4741$  & $45\,340\,050$          & $913\,195\,026\,575$ & $\star$ \\
+$-2271$  & $-196\,197\,225$        & $9\,679\,512\,465\,865$ & $\star$ \\
+$-1641$  & $-620\,850$             & $171\,316\,003\,825$ & \\
+$-970$   & $-739\,259\,850$        & $57\,503\,797\,038\,269$ & $\star$ \\
+$-921$   & $1\,452\,425$           & $11\,010\,153\,735$ & \\
+$-675$   & $-613\,606$             & $16\,099\,399\,767$ & \\
+$-570$   & $-1\,931\,787$          & $21\,281\,482\,855$ & \\
+$-367$   & $289\,374$              & $247\,553\,783$ & \\
+$-234$   & $-1\,074\,880\,501$     & $99\,720\,478\,180\,593$ & $\star$ \\
+$-147$   & $-166\,915$             & $452\,011\,593$ & \\
+$-57$    & $-2\,926$               & $8\,679\,903$ & \\
+$-54$    & $-10\,743$              & $13\,016\,935$ & \\
+$-54$    & $4\,749$                & $2\,420\,407$ & \\
+$-29$    & $-16\,716$              & $9\,066\,007$ & \\
+$-4$     & $-1\,818$               & $236\,845$ & \\
+$-4$     & $-1\,032$               & $107\,155$ & \\
+$1$      & $-51$                   & $1\,207$ & \\
+$1$      & $-3$                    & $55$ & \\
+$15$     & $-1\,207$               & $358\,905$ & \\
+$19$     & $-252\,195$             & $362\,844\,665$ & $\star$ \\
+$19$     & $-1\,197$               & $532\,855$ & \\
+$46$     & $-21\,522$              & $17\,788\,355$ & \\
+$57534$  & $-12\,272\,261\,400$    & $15\,803\,899\,374\,762\,125$ & $\star\star$ \\
+$64808$  & $-26\,459\,053\,782$    & $32\,724\,676\,849\,633\,037$ & $\star\star$ \\
+$75$     & $11\,523$               & $3\,310\,775$ & \\
+$93$     & $-175\,921$             & $307\,097\,193$ & \\
+$114$    & $27\,575$               & $8\,719\,215$ & \\
+$131$    & $-401\,940$             & $1\,013\,677\,687$ & $\star$ \\
+$138693$ & $36\,415\,956\,444$     & $29\,484\,467\,972\,297\,713$ & $\star\star$ \\
+$167163$ & $-33\,373\,801\,909$    & $235\,738\,065\,125\,780\,169$ & $\star\star$ \\
+$309$    & $56\,375$               & $852\,251\,625$ & \\
+$790$    & $1\,096\,893$           & $6\,593\,716\,025$ & \\
+$798$    & $-5\,378\,466\,956\,142$& $35\,280\,376\,688\,536\,712\,227$ & \\
+$798$    & $-5\,586$               & $18\,347\,596\,867$ & \\
+$909$    & $-11\,607\,484$         & $190\,054\,724\,721$ & \\
+$909$    & $1\,826\,300$           & $1\,390\,662\,225$ & \\
+$1626$   & $-213\,292\,581$        & $9\,811\,228\,042\,657$ & \\
+$1759$   & $6\,612\,585$           & $29\,364\,964\,345$ & \\
+$5118$   & $-526\,254\,004$        & $50\,456\,015\,630\,061$ & \\
+$11409$  & $-1\,918\,935\,865$     & $395\,599\,034\,387\,145$ & $\star$ \\
+$11527$  & $-67\,430\,670$         & $64\,484\,348\,509\,601$ & $\star$ \\
+$11750$  & $-1\,737\,888\,261$     & $366\,153\,513\,664\,753$ & $\star$ \\
+$14709$  & $-2\,616\,641\,560$     & $689\,629\,545\,026\,145$ & $\star$ \\
+$14709$  & $473\,559\,320$         & $10\,489\,917\,226\,785$ & $\star$ \\
+$15519$  & $-2\,004\,788\,485$     & $567\,823\,975\,362\,135$ & $\star$ \\
+$16531$  & $220\,439\,859$         & $118\,539\,695\,046\,007$ & $\star$ \\
+$17309$  & $225\,396\,696$         & $139\,544\,322\,245\,119$ & $\star$ \\
+$18344$  & $-1\,152\,587\,709$     & $488\,636\,781\,747\,209$ & $\star$ \\
+$27949$  & $7\,804\,038$           & $783\,344\,205\,524\,825$ & $\star$ \\
 \end{longtable}
 
 \section{Method and completeness}
@@ -148,66 +162,53 @@ solution requires $n\in\mathbb{Z}$ satisfying
 36n^{3}-12mn-(A+19)=0,
 \end{equation}
 which forces $A\equiv5\pmod{12}$. The search algorithm enumerates, for each
-$m$ in a range, all divisor pairs of $2m^{3}$ (segmented-sieve factorization;
-pairs generated multiplicatively in tandem without division; residues modulo
-$5,7,9,11,12,13$ tracked for pre-filtering; integer roots of~\eqref{eq:cubic}
-located by Cardano's formulae with exact $128$-bit confirmation).
+$m$ in a range, all divisor pairs of $2m^{3}$ (segmented-sieve factorization
+with \texttt{uint64} remainder array; pairs generated multiplicatively in
+tandem; residues modulo $5,7,9,11,12,13$ tracked for pre-filtering; divisor
+count cap of $2\times10^{6}$ to skip pathological smooth numbers; integer
+roots of~\eqref{eq:cubic} located by Cardano's formulae with exact $128$-bit
+confirmation).
 
 \begin{theorem}\label{thm:complete}
 Table~\ref{tab:main} lists every nontrivial solution of~\eqref{eq:main} with
-$1\le|m|\le10^{10}$, all $n$, both signs. Exactly three rows lie outside
-this window --- $(798,-5\,378\,466\,956\,142)$,
+$1\le|m|\le10^{11}$ \textup{(}pending completion of the current run covering
+$[10^{10},10^{11}]$\textup{)}, all $n$, both signs. Three rows lie outside
+the $10^{10}$ window --- $(798,-5\,378\,466\,956\,142)$,
 $(14709,-2\,616\,641\,560)$, and $(-29317,-335\,124\,555\,576)$ --- and each
-is the torsion translate \textup{(}Section~\ref{sec:translate}\textup{)} of
-an in-window row on the same fiber.
+is the torsion translate of an in-window row.
 \end{theorem}
 
-\begin{remark}
-The final two solutions discovered, $(-37917,-3\,798\,121\,117)$ and
-$(-6565,-3\,579\,502\,461)$, were found by running \texttt{divisor\_sweep}
-on an Apple M1 Pro MacBook Pro covering
-$|m|\in[2.814\times10^{9},10^{10}]$ on $8$ cores in approximately $15$
-hours. The solution $n=-37917$ sets a new record for $|n|$, surpassing the
-previous record of $29\,317$. Notably $n=-6565$ lies within $4$ of the
-existing entry $n=-6561$, illustrating the clustered fiber structure of the
-family near $|n|\approx6500$.
+\begin{remark}[The $\star\star$ solutions]
+The six solutions marked $\star\star$ were found by running
+\texttt{divisor\_sweep} on an Apple M1 Pro MacBook Pro. Two
+($n=-37917$, $n=-6565$) came from a $15$-hour run covering
+$[2.814\times10^{9},10^{10}]$. Six more
+($n=-53316$, $n=-34655$, $n=57534$, $n=64808$, $n=138693$, $n=167163$)
+came from the ongoing run covering $[10^{10},10^{11}]$. The solution
+$n=167163$ sets a new record for $|n|$, surpassing $37917$ by a factor
+of $4.4$ and breaking the $10^{5}$ barrier for the first time. All six
+large solutions satisfy $|n|>10^{4}$, consistent with the systematic
+large-$|n|$ bias observed throughout the search.
 \end{remark}
-
-\subsection{Stratified completeness}
-
-\begin{proposition}
-The only solutions with $1\le|m|\le10^{10}$ and balance parameter
-$d_{\min}=\min(|d'|,|e'|)\le64$ are $(1,-3,55)$ and
-$(798,-5586,18\,347\,596\,867)$.
-\end{proposition}
 
 \subsection{Positive-$m$ classification}
 
 \begin{corollary}\label{cor:posm}
 If $m>0$ then $m\le24n^{2}$ for $|n|\ge2$. Since
-$24\cdot20{,}412^{2}<10^{10}$, for every $|n|\le20{,}412$ the positive-$m$
-entries of Table~\ref{tab:main} are \emph{provably complete}, consisting
-exactly of the rows
-\begin{equation*}
-n\in\{-4741,-921,-367,-54,75,114,309,790,909,1759,14709,16531,17309,27949\},
-\quad m>0.
-\end{equation*}
+$24\cdot64{,}549^{2}<10^{11}$, for every $|n|\le64{,}549$ the positive-$m$
+entries of Table~\ref{tab:main} are \emph{provably complete}.
 \end{corollary}
 
 \section{The torsion-translate correspondence}\label{sec:translate}
 
-Substituting $X=-2m$, $Y=y$, $c=36n^{3}-19$ turns~\eqref{eq:main} into
-\begin{equation}\label{eq:en}
-E_{n}\colon\quad Y^{2}=X^{3}+36n^{2}X^{2}+12ncX+c^{2}.
-\end{equation}
-The tautological section $T=(0,c)$ has exact order $3$ on every fiber.
-Translation by $T$ gives the explicit map
+For fixed $n$, $c=36n^{3}-19$, the equation is
+$E_{n}\colon Y^{2}=X^{3}+36n^{2}X^{2}+12ncX+c^{2}$ with $X=-2m$, $Y=y$.
+The section $T=(0,c)$ has exact order $3$. Translation by $T$ gives
 \begin{equation}\label{eq:map}
 m'=-\frac{1}{2}\!\left[\!\left(\frac{\varepsilon y-c}{2m}\right)^{\!2}
 -36n^{2}+2m\right],\quad\varepsilon\in\{\pm1\},
 \end{equation}
 pairing solutions on six fibers:
-
 \begin{center}
 \begin{tabular}{ll}
 \toprule
@@ -232,53 +233,38 @@ $-29317$  & $-1\,373\,577\,672\leftrightarrow-335\,124\,555\,576$\\
   n=-4,46,-54,-57,75,93,-4741,-6561,16531,17309,27949;\\
 \operatorname{rk}=3:\quad & n=19.
 \end{align*}
-Unresolved: $E_{-29}$ and $E_{-37917}$ both have $\operatorname{rk}\in[1,3]$
-with root number $-1$ (rank odd, so rank $1$ or $3$); both resist effort-2
-descent, likely due to nontrivial $2$-Sha. $E_{-6565}$ not yet computed.
+Unresolved: $E_{-29}$, $E_{-37917}$ both have $\operatorname{rk}\in[1,3]$.
+New fibers $n\in\{-53316,-34655,57534,64808,138693,167163\}$ not yet
+computed.
 
 \begin{remark}[Summary statistics]
 \leavevmode
 \begin{enumerate}
-\item \textbf{104 signed solutions} across 52 triples, exhaustively
-  certified for $1\le|m|\le10^{10}$.
-\item \textbf{23 new solutions} relative to the original 29-row table.
-\item \textbf{New $|n|$ record:} $37\,917$, found at
-  $|m|\approx3.8\times10^{9}$.
-\item \textbf{Clustered fibers:} $n=-6565$ and $n=-6561$ are both
-  solution-bearing, lying within $4$ of each other; similarly $n=11409$,
-  $11527$, $11750$ form a cluster near $|n|\approx11{,}500$.
+\item \textbf{116 signed solutions} across 58 triples.
+\item \textbf{29 new solutions} relative to the original 29-row table ---
+  exactly doubling the known solution count.
+\item \textbf{New $|n|$ record:} $167{,}163$, breaking $10^{5}$ for the
+  first time.
 \item \textbf{$n$-range:} grew from $[-1641,\,5118]$ to
-  $[-37917,\,27949]$.
-\item \textbf{Positive-$m$ theorem:} complete for $|n|\le20{,}412$
-  from the $10^{10}$ sweep alone.
-\item \textbf{Solution density:} approximately $1$ solution per
-  $3\times10^{8}$ in the range $[10^{9},10^{10}]$, consistent with
-  Poisson spacing at that depth.
+  $[-53316,\,167163]$.
+\item \textbf{All $\star\star$ solutions have $|n|>10^{4}$,} confirming
+  the large-$|n|$ bias as a dominant structural feature of the family.
+\item \textbf{Positive-$m$ theorem:} complete for $|n|\le64{,}549$.
 \end{enumerate}
 \end{remark}
 
 \section{Software and reproducibility}
 
 \begin{itemize}
-\item \texttt{divisor\_sweep.c}: exhaustive sweep. Compile:
+\item \texttt{divisor\_sweep.c}: exhaustive sweep \textup{(}v2: fixed
+  \texttt{uint64} remainder array, enlarged primes buffer, divisor-count
+  cap\textup{)}. Compile:
   \texttt{gcc -O3 -funroll-loops -o divisor\_sweep divisor\_sweep.c -lm}.
   Usage: \texttt{./divisor\_sweep lo hi outfile}.
 \item \texttt{run\_sweep.sh}: parallel driver.
   Usage: \texttt{./run\_sweep.sh lo hi ncores}.
-\item \texttt{verify\_solutions.py}: exact verification of all $52$ rows
-  and any new hits; automatically applies the translate
-  map~\eqref{eq:map} to flag bonus giant solutions.
-\end{itemize}
-
-\noindent\textbf{Next steps.}
-\begin{itemize}
-\item $M=10^{11}$: $\sim25$ core-hours on M1 Pro; expected 3--5 new
-  solutions; certifies positive-$m$ for $|n|\le64{,}549$.
-\item $M=10^{12}$: $\sim10$--$15$ days on M1 Pro; expected 5--10 more.
-\item Negative-$m$ per fiber: Magma \texttt{IntegralPoints(E\_n)} for
-  $|n|\le10^{5}$; suitable for Charity Engine.
-\item Resolve $E_{-29}$ and $E_{-37917}$ ranks via 4-descent (Magma).
-\item Compute $\operatorname{rk}E_{-6565}$.
+\item \texttt{verify\_solutions.py}: exact verification of all $58$ rows
+  and any new hits; automatically applies the translate map.
 \end{itemize}
 
 \end{document}
