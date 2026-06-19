@@ -63,3 +63,9 @@ Running this command
 cat ~/s3c_sweep/sweep_32500000000_43749999999.txt
 ```
 after 8+ hours returned ```167163 -33373801909 235738065125780169```.
+
+This command
+```bash
+cat ~/s3c_sweep/sweep_10000000000_21249999999.txt
+```
+after another 8 hours yields  ```57534 -12272261400 15803899374762125```
