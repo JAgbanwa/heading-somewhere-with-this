@@ -100,3 +100,10 @@ Another hit!
 cat ~/s3c_sweep/sweep_21250000000_32499999999.txt
 ```
 returned ```64808 -26459053782 32724676849633037```.
+
+Late night hit!
+
+```bash
+cat ~/s3c_sweep/sweep_43750000000_54999999999.txt
+```
+
