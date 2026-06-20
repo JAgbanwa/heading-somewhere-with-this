@@ -92,7 +92,10 @@ jamalmac@MacBook-Pro ~ % ls -lh ~/s3c_sweep/sweep_*.txt | grep -v " 0B "
 ```
 See:
 
-```cat ~/s3c_sweep/sweep_66250000000_77499999999.txt``` yielded ```-53316 -70703779450 73465979324839725```.
+```bash
+cat ~/s3c_sweep/sweep_66250000000_77499999999.txt
+``` 
+yielded ```-53316 -70703779450 73465979324839725```.
 
 Another hit!
 
