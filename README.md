@@ -1,4 +1,4 @@
-
+## Approach 1
 
 This project [\[1\]](https://github.com/JAgbanwa/heading-somewhere-with-this/tree/main/Potential%20directions%20with%20specific%20equations) involves running computational searches 
 for solutions to a diophantine equation, which after a substitution returns rational solutions to $x^3 + y^3 + z^3 = 114$. These computational searches were run over all 8 cores of my 
@@ -10,3 +10,9 @@ believed to astronomically large if any.
 
 With access to advanced computational resources, we could target our searches for solutions of $|n|$ within ranges of $10^{20}$ to $10^{30}$ and $10^{30}$ and beyond depending on
 what is the most feasible.
+
+## Approach 2
+
+Another approach was that, a criteria for $y^2 = (\alpha + 6n)^2 + \dfrac{36n^3 - 19}{\alpha}$ to be integer, this term $\dfrac{36n^3 - 19}{\alpha}$ has to be integer itself.
+This raises the question of which congruences of $\alpha, n$ make this possible.This question is answered by running this SageMath [code](https://github.com/JAgbanwa/heading-somewhere-with-this/blob/main/code%20which%20yielded%20promising%20n%20%5Cequiv%20a%20mod%20p). This [conversation](https://claude.ai/chat/1ff2b9c1-189c-4e00-b6cb-eef422bbb169) with Claude suggests new 
+congruences of $n$. The idea is to take one such congruence for $n = a(modp)=pk+a$ and we search for non-zero, integer/non-integer rational value of $k$ for which $n,\alpha,y$ from this equation $y^2 = (\alpha + 6n)^2 + \dfrac{36n^3 - 19}{\alpha}$ yields integer solutions. 
