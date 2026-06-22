@@ -21,3 +21,6 @@ Section 7 — Structural results:
 - `moduli_unbounded` (Proposition 7.1): for any bound B there is a pair (M, n) with M > B and M ∣ 36n³−19 (via Dirichlet's theorem for primes ≡ 2 (mod 3)).
 - `hard_obstruction` (Proposition 7.2): 2, 3, 361 never divide 36n³−19.
 Every result is machine-checked.
+
+
+Credits to Aristotle.
