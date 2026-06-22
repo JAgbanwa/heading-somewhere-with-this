@@ -1,0 +1,16 @@
+Z := Integers();
+R<k> := PolynomialRing(Z);
+
+A := 5103243448423190660018404944928000789930010683701564743465*k
+     + 1820733127217158956577191662349053768348092988705876831189;
+
+P := 36*A^3 - 19;
+
+// Print the fully expanded polynomial
+print P;
+
+// Optional: print coefficients separately
+printf "Coefficient of k^3:\n%o\n\n", Coefficient(P, 3);
+printf "Coefficient of k^2:\n%o\n\n", Coefficient(P, 2);
+printf "Coefficient of k:\n%o\n\n", Coefficient(P, 1);
+printf "Constant term:\n%o\n\n", Coefficient(P, 0);
