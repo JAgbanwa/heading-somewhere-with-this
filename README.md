@@ -16,3 +16,10 @@ what is the most feasible.
 Another approach was that, a criteria for $y^2 = (\alpha + 6n)^2 + \dfrac{36n^3 - 19}{\alpha}$ to be integer, this term $\dfrac{36n^3 - 19}{\alpha}$ has to be integer itself.
 This raises the question of which congruences of $\alpha, n$ make this possible.This question is answered by running this SageMath [code](https://github.com/JAgbanwa/heading-somewhere-with-this/blob/main/code%20which%20yielded%20promising%20n%20%5Cequiv%20a%20mod%20p). This [conversation](https://claude.ai/chat/1ff2b9c1-189c-4e00-b6cb-eef422bbb169) with Claude suggests new 
 congruences of $n$. The idea is to take one such congruence for $n = a(modp)=pk+a$ and we search for non-zero, integer/non-integer rational value of $k$ for which $n,\alpha,y$ from this equation $y^2 = (\alpha + 6n)^2 + \dfrac{36n^3 - 19}{\alpha}$ yields integer solutions. 
+
+From equation 9 of this [document](https://github.com/JAgbanwa/heading-somewhere-with-this/blob/main/Efforts%20towards%20solving%20Y%5E2%20%20%3D%2036%20%5Ccdot%20x%5E3%20%2B%2036m%5E2%20%5Ccdot%20x%5E2%20%2B%2012%20m%5E3%20%5Ccdot%20x%20%2B%20m%5E4%20-%2019m%20/s3c.folder/.tex%20file),
+\begin{align}
+  n = 5103243448423190660018404944928000789930010683701564743465k + 1820733127217158956577191662349053768348092988705876831189
+  \label{eq:30prime}
+\end{align}
+we substitute it into $y^2 = (\alpha + 6n)^2 + \dfrac{36n^3 - 19}{\alpha}$ to yield:
