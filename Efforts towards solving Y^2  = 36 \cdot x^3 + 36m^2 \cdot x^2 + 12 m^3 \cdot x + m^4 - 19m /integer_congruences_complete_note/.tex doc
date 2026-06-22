@@ -1,0 +1,384 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{seqsplit}
+\usepackage{enumitem}
+\usepackage{booktabs}
+
+\hypersetup{colorlinks=true, linkcolor=blue, urlcolor=blue, citecolor=blue}
+\setlist[itemize]{leftmargin=2em}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{remark}{Remark}
+
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Aconst}{5103243448423190660018404944928000789930010683701564743465}
+\newcommand{\Bconst}{1820733127217158956577191662349053768348092988705876831189}
+
+\title{Necessary and Sufficient Integer Conditions for the Congruence-Filtered Equation}
+\author{}
+\date{June 22, 2026}
+
+\begin{document}
+\maketitle
+
+\section*{1. Reduction of the given equation}
+
+Assume throughout that $k\in\Z$ and that $x,y\in\Z$, with $x\neq 0$. Define
+\[
+\begin{aligned}
+A&=\text{\seqsplit{5103243448423190660018404944928000789930010683701564743465}},\\
+B&=\text{\seqsplit{1820733127217158956577191662349053768348092988705876831189}},
+\end{aligned}
+\]
+and put
+\[
+ n=Ak+B.
+\]
+The linear term in the original equation is exactly $6n$, since
+\[
+6A=\text{\seqsplit{30619460690539143960110429669568004739580064102209388460790}}
+\]
+and
+\[
+6B=\text{\seqsplit{10924398763302953739463149974094322610088557932235260987134}}.
+\]
+Also, the huge cubic numerator in the original question is precisely
+\[
+36n^3-19.
+\]
+Therefore the original equation is equivalent to the short equation
+\begin{equation}\label{eq:main}
+ y^2=(x+6n)^2+\frac{36n^3-19}{x}.
+\end{equation}
+For convenience write
+\begin{equation}\label{eq:Ndef}
+ N=36n^3-19.
+\end{equation}
+Then \eqref{eq:main} becomes
+\begin{equation}\label{eq:short}
+ y^2=(x+6n)^2+\frac{N}{x}.
+\end{equation}
+
+\section*{2. Exact necessary and sufficient conditions}
+
+The congruences alone do not solve the integer problem. They are only filters. The exact integer criterion is the following divisor-square condition.
+
+\begin{theorem}[Divisor-square criterion]\label{thm:divisor-square}
+Fix $k\in\Z$, set $n=Ak+B$, and set $N=36n^3-19$. For $x,y\in\Z$ with $x\neq 0$, equation \eqref{eq:short} holds if and only if
+\begin{equation}\label{eq:divcond}
+ x\mid N
+\end{equation}
+and
+\begin{equation}\label{eq:squarecond}
+ (x+6n)^2+\frac{N}{x}
+\end{equation}
+is a perfect square in $\Z$, with
+\[
+ y=\pm\sqrt{(x+6n)^2+\frac{N}{x}}.
+\]
+\end{theorem}
+
+\begin{proof}
+If $x,y$ solve \eqref{eq:short}, then the right-hand side is an integer, so $N/x$ is an integer and hence $x\mid N$. The same equation then says exactly that the integer
+\[
+(x+6n)^2+\frac{N}{x}
+\]
+is equal to $y^2$, hence is a perfect square.
+
+Conversely, if $x\mid N$ and the displayed integer is a perfect square, define
+\[
+ y=\pm\sqrt{(x+6n)^2+\frac{N}{x}}.
+\]
+Then $y\in\Z$ and \eqref{eq:short} holds. This proves the equivalence.
+\end{proof}
+
+There is also an equivalent factorization form, which is often better for search.
+
+\begin{theorem}[Difference-of-squares factorization]\label{thm:factor}
+Fix $k\in\Z$, set $n=Ak+B$, and set $N=36n^3-19$. Integer solutions $x,y\in\Z$, $x\neq 0$, to \eqref{eq:short} are equivalent to integer triples $(x,r,s)$ satisfying
+\begin{equation}\label{eq:factor1}
+ xrs=N,
+\end{equation}
+\begin{equation}\label{eq:factor2}
+ s-r=2(x+6n),
+\end{equation}
+and then
+\begin{equation}\label{eq:factor3}
+ y=\frac{r+s}{2}.
+\end{equation}
+Since $N=36n^3-19$ is always odd, any factorization $xrs=N$ automatically has $x,r,s$ odd, so $y=(r+s)/2$ is integral.
+\end{theorem}
+
+\begin{proof}
+Suppose $x,y$ solve \eqref{eq:short}. Put
+\[
+ r=y-(x+6n),\qquad s=y+(x+6n).
+\]
+Then
+\[
+rs=y^2-(x+6n)^2=\frac{N}{x},
+\]
+so $xrs=N$. Also
+\[
+s-r=2(x+6n),
+\]
+and
+\[
+y=\frac{r+s}{2}.
+\]
+This gives \eqref{eq:factor1}--\eqref{eq:factor3}.
+
+Conversely, suppose integers $(x,r,s)$ satisfy \eqref{eq:factor1} and \eqref{eq:factor2}, with $x\neq 0$, and define $y=(r+s)/2$. Because $N$ is odd, $r,s$ are odd, so $y\in\Z$. Now
+\[
+y^2-(x+6n)^2
+=\left(\frac{r+s}{2}\right)^2-\left(\frac{s-r}{2}\right)^2
+=rs.
+\]
+Since $xrs=N$, one has $rs=N/x$. Therefore
+\[
+y^2=(x+6n)^2+\frac{N}{x},
+\]
+which is \eqref{eq:short}.
+\end{proof}
+
+\section*{3. Necessary congruence conditions}
+
+The exact criteria above imply strong congruence filters.
+
+\begin{theorem}[Necessary congruence filter]\label{thm:congruence}
+If \eqref{eq:short} has an integer solution with $k,x,y\in\Z$ and $x\neq 0$, then
+\[
+\boxed{k\equiv 2\pmod 3,\qquad x\equiv 7\pmod {12},\qquad y\equiv 0\pmod 6.}
+\]
+Equivalently, every integer solution must be of the form
+\[
+\boxed{k=3K+2,\qquad x=12X+7,\qquad y=6Y}
+\]
+for some $K,X,Y\in\Z$.
+\end{theorem}
+
+\begin{proof}
+First, by Theorem \ref{thm:divisor-square}, one must have
+\[
+x\mid N=36n^3-19.
+\]
+Modulo $3$,
+\[
+N=36n^3-19\equiv -1\equiv 2\pmod 3.
+\]
+Thus $3\nmid x$. Put $q=N/x$. Since $6n\equiv 0\pmod 3$, equation \eqref{eq:short} gives
+\[
+y^2\equiv x^2+q\pmod 3.
+\]
+If $x\equiv 1\pmod 3$, then $q\equiv 2\pmod 3$, and hence
+\[
+y^2\equiv 1+2\equiv 0\pmod 3.
+\]
+So $y\equiv 0\pmod 3$.
+
+If instead $x\equiv -1\pmod 3$, then $q\equiv 2(-1)^{-1}\equiv 1\pmod 3$, giving
+\[
+y^2\equiv 1+1\equiv 2\pmod 3,
+\]
+which is impossible. Therefore
+\begin{equation}\label{eq:xymod3}
+ x\equiv 1\pmod 3,\qquad y\equiv 0\pmod 3.
+\end{equation}
+
+Next work modulo $4$. Since
+\[
+N=36n^3-19\equiv 1\pmod 4,
+\]
+the divisor $x$ is odd. Hence $x+6n$ is also odd, and
+\[
+(x+6n)^2\equiv 1\pmod 4.
+\]
+Again writing $q=N/x$, one has
+\[
+q\equiv x^{-1}\pmod 4.
+\]
+If $x\equiv 1\pmod 4$, then
+\[
+y^2\equiv 1+1\equiv 2\pmod 4,
+\]
+impossible. Hence
+\[
+x\equiv 3\pmod 4.
+\]
+For this remaining case $q\equiv 3\pmod 4$, so
+\[
+y^2\equiv 1+3\equiv 0\pmod 4,
+\]
+and therefore $y$ is even. Combining this with \eqref{eq:xymod3} gives
+\begin{equation}\label{eq:xycong}
+ x\equiv 7\pmod {12},\qquad y\equiv 0\pmod 6.
+\end{equation}
+
+It remains to extract the congruence of $k$. Since $y\equiv 0\pmod 3$, we have $y^2\equiv 0\pmod 9$. Also
+\[
+N=36n^3-19\equiv -1\equiv 8\pmod 9.
+\]
+Because $x\equiv 1\pmod 3$, the possible residues of $x$ modulo $9$ are $1,4,7$. The following table gives $q=N/x\equiv 8x^{-1}\pmod 9$:
+\[
+\begin{array}{c|c|c}
+ x\pmod 9 & x^{-1}\pmod 9 & q\pmod 9 \\
+\hline
+ 1 & 1 & 8\\
+ 4 & 7 & 2\\
+ 7 & 4 & 5
+\end{array}
+\]
+The value of $6n$ modulo $9$ is $0,6,3$ according as $n\equiv 0,1,2\pmod 3$. Checking the three possible classes $x\equiv 1,4,7\pmod 9$ in
+\[
+0\equiv y^2\equiv (x+6n)^2+8x^{-1}\pmod 9
+\]
+shows that this congruence is possible exactly when
+\[
+n\equiv 0\pmod 3.
+\]
+Finally,
+\[
+A\equiv 2\pmod 3,
+\qquad
+B\equiv 2\pmod 3.
+\]
+Therefore
+\[
+n=Ak+B\equiv 2k+2\pmod 3.
+\]
+The condition $n\equiv 0\pmod 3$ is equivalent to
+\[
+2k+2\equiv 0\pmod 3,
+\]
+which gives
+\[
+k\equiv 2\pmod 3.
+\]
+The theorem follows.
+\end{proof}
+
+\section*{4. Combined necessary and sufficient search form}
+
+The complete integer search can now be stated without ambiguity.
+
+\begin{corollary}[Complete filtered criterion]\label{cor:filtered}
+The original equation has an integer solution $k,x,y\in\Z$, $x\neq 0$, if and only if there exist integers $K,X,Y$ such that
+\[
+k=3K+2,
+\qquad
+x=12X+7,
+\qquad
+ y=6Y,
+\]
+where
+\[
+n=A(3K+2)+B,
+\qquad
+N=36n^3-19,
+\]
+and
+\begin{equation}\label{eq:filtered1}
+12X+7\mid N,
+\end{equation}
+with
+\begin{equation}\label{eq:filtered2}
+36Y^2=(12X+7+6n)^2+\frac{N}{12X+7}.
+\end{equation}
+Equivalently, for fixed $K$ and $X$, the sufficient and necessary final test is that
+\[
+(12X+7+6n)^2+\frac{N}{12X+7}
+\]
+is a perfect square divisible by $36$.
+\end{corollary}
+
+\begin{proof}
+If the original equation has an integer solution, Theorem \ref{thm:congruence} gives
+\[
+k=3K+2,
+\qquad
+x=12X+7,
+\qquad
+ y=6Y
+\]
+for some integers $K,X,Y$. The divisor condition and equation \eqref{eq:filtered2} are just Theorem \ref{thm:divisor-square} after substituting these values.
+
+Conversely, if integers $K,X,Y$ satisfy \eqref{eq:filtered1} and \eqref{eq:filtered2}, then setting
+\[
+k=3K+2,
+\qquad
+x=12X+7,
+\qquad
+ y=6Y
+\]
+gives an integer solution to the original equation. This proves both necessity and sufficiency.
+\end{proof}
+
+\section*{5. Practical search algorithm}
+
+For an integer search, the clean procedure is:
+\begin{enumerate}
+\item Only search
+\[
+k\equiv 2\pmod 3.
+\]
+
+define $n=Ak+B$ and $N=36n^3-19$.
+\item Enumerate divisors $x$ of $N$ satisfying
+\[
+x\equiv 7\pmod {12}.
+\]
+\item For each such $x$, compute
+\[
+S=(x+6n)^2+\frac{N}{x}.
+\]
+\item Keep the candidate exactly when $S$ is a perfect square. Then
+\[
+y=\pm\sqrt S,
+\]
+and automatically
+\[
+y\equiv 0\pmod 6.
+\]
+\end{enumerate}
+
+Equivalently, use the factorization criterion: find odd integers $r,s$ such that
+\[
+xrs=N,
+\qquad
+s-r=2(x+6n),
+\]
+and then set
+\[
+y=\frac{r+s}{2}.
+\]
+
+\section*{6. Important conclusion}
+
+The congruences
+\[
+\boxed{k\equiv 2\pmod 3,
+\qquad
+x\equiv 7\pmod {12},
+\qquad
+ y\equiv 0\pmod 6}
+\]
+are necessary, but not sufficient by themselves. They become part of a necessary-and-sufficient answer only after adding the divisor-square condition
+\[
+\boxed{x\mid 36n^3-19
+\quad\text{and}\quad
+(x+6n)^2+\frac{36n^3-19}{x}\text{ is a perfect square}.}
+\]
+That boxed condition is the actual final sufficiency test.
+
+\begin{remark}
+If $k$ is allowed to be rational rather than integral, then the congruence $k\equiv 2\pmod 3$ is not directly meaningful until denominators are cleared. The results above are stated for the integer problem $k,x,y\in\Z$.
+\end{remark}
+
+\end{document}
