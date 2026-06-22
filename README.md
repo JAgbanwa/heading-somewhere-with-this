@@ -33,3 +33,6 @@ y^2 = (\alpha + 30619460690539143960110429669568004739580064102209388460790k + 1
 ```
 Given the suggestions from this [interaction](https://chatgpt.com/c/6a39771a-7d1c-83eb-9adc-6fcf0fc6ad1d), I formalized its results with the assistance of Aristotle as is found in this
 [folder](https://github.com/JAgbanwa/heading-somewhere-with-this/tree/main/Efforts%20towards%20solving%20Y%5E2%20%20%3D%2036%20%5Ccdot%20x%5E3%20%2B%2036m%5E2%20%5Ccdot%20x%5E2%20%2B%2012%20m%5E3%20%5Ccdot%20x%20%2B%20m%5E4%20-%2019m%20/integer_congruences_complete_note).
+
+Based on this suggestions, I intend to make due substitutions into the above equation and double things down in pursuits of congruences which significantly reduce the search space of this 
+problem.
