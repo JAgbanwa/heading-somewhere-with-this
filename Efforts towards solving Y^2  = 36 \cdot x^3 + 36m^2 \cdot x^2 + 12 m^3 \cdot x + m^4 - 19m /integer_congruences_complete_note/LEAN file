@@ -1,0 +1,121 @@
+import Mathlib
+open scoped BigOperators
+open scoped Classical
+set_option maxHeartbeats 8000000
+set_option maxRecDepth 4000
+/-!
+# Necessary and Sufficient Integer Conditions for the Congruence-Filtered Equation
+This file formalises the note *"Necessary and Sufficient Integer Conditions for the
+Congruence-Filtered Equation"*.
+The original equation, after the reduction described in §1 of the note, is
+$$ y^2 = (x + 6n)^2 + \frac{N}{x}, \qquad N = 36 n^3 - 19, \qquad n = A k + B, $$
+with `k, x, y ∈ ℤ` and `x ≠ 0`.
+Since the equation involves the term `N / x`, we work throughout with the equivalent
+*integer* form obtained by multiplying through by `x` (this is equivalent to the
+original whenever `x ≠ 0`):
+$$ x \, y^2 = x \, (x + 6n)^2 + N. $$
+This is `CFE.CFEq` below.
+We formalise:
+* `CFE.divisor_square_criterion` — Theorem 1 (divisor-square criterion);
+* `CFE.difference_of_squares` — Theorem 2 (difference-of-squares factorization);
+* `CFE.necessary_congruences` — Theorem 3 (necessary congruence filter);
+* `CFE.complete_filtered_criterion` — Corollary 1 (complete filtered criterion).
+-/
+namespace CFE
+/-- The constant `A` of the note. -/
+def A : ℤ := 5103243448423190660018404944928000789930010683701564743465
+/-- The constant `B` of the note. -/
+def B : ℤ := 1820733127217158956577191662349053768348092988705876831189
+/-- The linear quantity `n = A k + B`. -/
+def n (k : ℤ) : ℤ := A * k + B
+/-- The cubic numerator `N = 36 n^3 - 19`. -/
+def N (k : ℤ) : ℤ := 36 * (n k) ^ 3 - 19
+/-- The integer form of equation (3): multiply `y^2 = (x+6n)^2 + N/x` through by `x`.
+For `x ≠ 0` this is equivalent to the original equation. -/
+def CFEq (k x y : ℤ) : Prop := x * y ^ 2 = x * (x + 6 * n k) ^ 2 + N k
+/--
+**Theorem 1 (Divisor-square criterion).**
+For `x ≠ 0`, the equation holds iff `x ∣ N` and `(x + 6n)^2 + N/x` is a perfect
+square equal to `y^2` (here `N / x` is exact integer division since `x ∣ N`).
+-/
+theorem divisor_square_criterion (k x y : ℤ) (hx : x ≠ 0) :
+    CFEq k x y ↔ (x ∣ N k ∧ y ^ 2 = (x + 6 * n k) ^ 2 + N k / x) := by
+  constructor <;> intro h;
+  · constructor;
+    · exact ⟨ y ^ 2 - ( x + 6 * n k ) ^ 2, by linarith [ h.symm ] ⟩;
+    · exact eq_add_of_sub_eq' ( by rw [ Int.ediv_eq_of_eq_mul_left hx ] ; linarith [ h.symm ] );
+  · exact Eq.symm ( by cases lt_or_gt_of_ne hx <;> nlinarith [ Int.ediv_mul_cancel h.1 ] )
+/-- **Theorem 2 (Difference-of-squares factorization).**
+For `x ≠ 0`, solutions correspond to integer triples `(x, r, s)` with `x r s = N`,
+`s - r = 2 (x + 6n)`, and `y = (r + s)/2` (i.e. `r + s = 2 y`).
+(The hypothesis `x ≠ 0` is stated in the note but turns out to be unnecessary for the
+integer form of the equation; it is kept here only for faithfulness.) -/
+theorem difference_of_squares (k x y : ℤ) (_hx : x ≠ 0) :
+    CFEq k x y ↔
+      ∃ r s : ℤ, x * r * s = N k ∧ s - r = 2 * (x + 6 * n k) ∧ r + s = 2 * y := by
+  constructor;
+  · intro h;
+    exact ⟨ y - ( x + 6 * n k ), y + ( x + 6 * n k ), by linarith [ h.symm ], by ring, by ring ⟩;
+  · simp +decide [ mul_assoc, CFEq ];
+    grind
+/--
+`x ≡ 7 (mod 12)` is necessary.
+-/
+theorem necessary_x (k x y : ℤ) (h : CFEq k x y) : x ≡ 7 [ZMOD 12] := by
+  revert h;
+  intro h
+  unfold CFEq at h
+  ring_nf at h;
+  unfold n N at h; replace h := congr_arg ( ( · % 12 ) ) h ; norm_num [ Int.add_emod, Int.sub_emod, Int.mul_emod, pow_succ ] at h ⊢;
+  norm_num [ Int.ModEq, pow_three, pow_two, Int.mul_emod ] at h ⊢; have := Int.emod_nonneg x ( by decide : ( 12 : ℤ ) ≠ 0 ) ; have := Int.emod_nonneg y ( by decide : ( 12 : ℤ ) ≠ 0 ) ; have := Int.emod_lt_of_pos x ( by decide : ( 0 : ℤ ) < 12 ) ; have := Int.emod_lt_of_pos y ( by decide : ( 0 : ℤ ) < 12 ) ; interval_cases x % 12 <;> interval_cases y % 12 <;> trivial;
+/--
+`y ≡ 0 (mod 6)` is necessary.
+-/
+theorem necessary_y (k x y : ℤ) (h : CFEq k x y) : y ≡ 0 [ZMOD 6] := by
+  unfold CFEq at h; have := congr_arg ( ( ↑ ) : ℤ → ZMod 6 ) h; norm_num [ Int.ModEq ] at *;
+  unfold N n at *; norm_cast at *; simp_all +decide ;
+  apply_fun fun z => z % 6 at h ; norm_num [ Int.add_emod, Int.sub_emod, Int.mul_emod, pow_succ ] at h;
+  rw [ Int.dvd_iff_emod_eq_zero ] ; have := Int.emod_nonneg x ( by decide : ( 6 : ℤ ) ≠ 0 ) ; have := Int.emod_nonneg y ( by decide : ( 6 : ℤ ) ≠ 0 ) ; have := Int.emod_lt_of_pos x ( by decide : ( 6 : ℤ ) > 0 ) ; have := Int.emod_lt_of_pos y ( by decide : ( 6 : ℤ ) > 0 ) ; interval_cases x % 6 <;> interval_cases y % 6 <;> trivial;
+/--
+`k ≡ 2 (mod 3)` is necessary.
+-/
+theorem necessary_k (k x y : ℤ) (h : CFEq k x y) : k ≡ 2 [ZMOD 3] := by
+  -- By assumption, $k \equiv 2 \pmod{9}$.
+  have h_k_mod_9 : (k : ℤ) % 9 = 2 ∨ (k : ℤ) % 9 = 5 ∨ (k : ℤ) % 9 = 8 := by
+    unfold CFEq at h;
+    unfold n N at h;
+    unfold A B at h; replace h := congr_arg ( ( · % 9 ) ) h; norm_num [ Int.add_emod, Int.sub_emod, Int.mul_emod, pow_succ ] at h; have := Int.emod_nonneg k ( by decide : ( 9 : ℤ ) ≠ 0 ) ; have := Int.emod_nonneg x ( by decide : ( 9 : ℤ ) ≠ 0 ) ; have := Int.emod_nonneg y ( by decide : ( 9 : ℤ ) ≠ 0 ) ; have := Int.emod_lt_of_pos k ( by decide : ( 9 : ℤ ) > 0 ) ; have := Int.emod_lt_of_pos x ( by decide : ( 9 : ℤ ) > 0 ) ; have := Int.emod_lt_of_pos y ( by decide : ( 9 : ℤ ) > 0 ) ; interval_cases k % 9 <;> interval_cases x % 9 <;> interval_cases y % 9 <;> simp +decide at h ⊢;
+  rcases h_k_mod_9 with ( h | h | h ) <;> rw [ Int.ModEq ] <;> omega
+/-- **Theorem 3 (Necessary congruence filter).**
+Every integer solution satisfies `k ≡ 2 (mod 3)`, `x ≡ 7 (mod 12)`, `y ≡ 0 (mod 6)`. -/
+theorem necessary_congruences (k x y : ℤ) (h : CFEq k x y) :
+    k ≡ 2 [ZMOD 3] ∧ x ≡ 7 [ZMOD 12] ∧ y ≡ 0 [ZMOD 6] :=
+  ⟨necessary_k k x y h, necessary_x k x y h, necessary_y k x y h⟩
+/--
+**Corollary 1 (Complete filtered criterion).**
+The original equation has an integer solution with `x ≠ 0` if and only if there exist
+integers `K, X, Y` such that, writing `k = 3K+2`, `x = 12X+7`, `y = 6Y`, the divisor
+condition `(12X+7) ∣ N` holds together with the perfect-square equation
+`36 Y^2 = (12X+7+6n)^2 + N/(12X+7)`.
+-/
+theorem complete_filtered_criterion :
+    (∃ k x y : ℤ, x ≠ 0 ∧ CFEq k x y) ↔
+      (∃ K X Y : ℤ,
+        (12 * X + 7) ∣ N (3 * K + 2) ∧
+          36 * Y ^ 2 =
+            (12 * X + 7 + 6 * n (3 * K + 2)) ^ 2 + N (3 * K + 2) / (12 * X + 7)) := by
+  constructor;
+  · rintro ⟨ k, x, y, hx, h ⟩;
+    obtain ⟨K, hK⟩ : ∃ K : ℤ, k = 3 * K + 2 := by
+      exact ⟨ k / 3, by linarith [ Int.emod_add_mul_ediv k 3, show k % 3 = 2 from necessary_k k x y h ] ⟩
+    obtain ⟨X, hX⟩ : ∃ X : ℤ, x = 12 * X + 7 := by
+      exact ⟨ x / 12, by linarith [ Int.emod_add_mul_ediv x 12, show x % 12 = 7 from necessary_x k x y h ] ⟩
+    obtain ⟨Y, hY⟩ : ∃ Y : ℤ, y = 6 * Y := by
+      exact Int.dvd_of_emod_eq_zero ( necessary_y k x y h );
+    simp_all +decide [ CFEq ];
+    exact ⟨ K, X, ⟨ ( 6 * Y ) ^ 2 - ( 12 * X + 7 + 6 * n ( 3 * K + 2 ) ) ^ 2, by linarith ⟩, Y, by cases lt_or_gt_of_ne hx <;> nlinarith [ Int.ediv_mul_cancel ( show 12 * X + 7 ∣ N ( 3 * K + 2 ) from ⟨ ( 6 * Y ) ^ 2 - ( 12 * X + 7 + 6 * n ( 3 * K + 2 ) ) ^ 2, by linarith ⟩ ) ] ⟩;
+  · rintro ⟨ K, X, Y, h₁, h₂ ⟩
+    use 3 * K + 2, 12 * X + 7, 6 * Y
+    simp;
+    exact ⟨ by omega, divisor_square_criterion _ _ _ ( by omega ) |>.2 ⟨ h₁, by linarith ⟩ ⟩
+end CFE
