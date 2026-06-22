@@ -1,0 +1,288 @@
+import Mathlib
+open scoped BigOperators
+open scoped Classical
+set_option maxHeartbeats 8000000
+set_option maxRecDepth 4000
+/-!
+# Congruences for the integrality of `(36 n^3 - 19) / m`
+Formalization of the paper *Congruences for the integrality of `(36 n^3 - 19)/m`*
+by Jamal Agbanwa.
+We characterise all pairs `(m, n)` for which `m ∣ 36 n^3 - 19`.  The condition reduces
+prime-by-prime to the solvability of `36 n^3 ≡ 19 (mod p)`, a cubic-residue problem
+governed by the splitting of `p` modulo `3`.
+-/
+namespace Congruences36n3
+/-! ## Section 1. Setup and necessary conditions (Proposition 1.1) -/
+/-
+Proposition 1.1(1): `2` never divides `36 n^3 - 19` (the value is always odd).
+-/
+theorem not_two_dvd (n : ℤ) : ¬ (2 ∣ 36 * n ^ 3 - 19) := by
+  norm_num [ ← even_iff_two_dvd, parity_simps ]
+/-
+Proposition 1.1(2): `3` never divides `36 n^3 - 19` (the value is `≡ 2 mod 3`).
+-/
+theorem not_three_dvd (n : ℤ) : ¬ (3 ∣ 36 * n ^ 3 - 19) := by
+  rw [ Int.dvd_iff_emod_eq_zero ] ; norm_num [ Int.sub_emod, Int.mul_emod ]
+/-
+Proposition 1.1(2), refined: in fact `36 n^3 - 19 ≡ 8 (mod 9)`, so `9` never divides it.
+-/
+theorem not_nine_dvd (n : ℤ) : ¬ (9 ∣ 36 * n ^ 3 - 19) := by
+  grind +qlia
+/-! ## Section 1. The prime `19` is special (Proposition 1.2) -/
+/-
+Proposition 1.2: `19 ∣ 36 n^3 - 19` if and only if `19 ∣ n`.
+-/
+theorem nineteen_dvd_iff (n : ℤ) : (19 ∣ 36 * n ^ 3 - 19) ↔ 19 ∣ n := by
+  norm_num [ Int.ModEq, Int.sub_emod, Int.mul_emod, pow_three ];
+  rw [ ← Int.emod_add_mul_ediv n 19 ] ; have := Int.emod_nonneg n ( by decide : ( 19 : ℤ ) ≠ 0 ) ; have := Int.emod_lt_of_pos n ( by decide : ( 0 : ℤ ) < 19 ) ; interval_cases n % 19 <;> norm_num [ Int.dvd_iff_emod_eq_zero, Int.add_emod, Int.mul_emod ] ;
+/-
+Proposition 1.2: `19^2 = 361` never divides `36 n^3 - 19`; the `19`-adic valuation is at
+most `1`.
+-/
+theorem not_threesixtyone_dvd (n : ℤ) : ¬ (361 ∣ 36 * n ^ 3 - 19) := by
+  by_contra h_contra
+  obtain ⟨k, hk⟩ := h_contra
+  have : 19 ∣ n := by
+    grind +suggestions
+  obtain ⟨k', rfl⟩ := this
+  have h_eq : 361 ∣ 19 * (36 * 19 ^ 2 * k' ^ 3 - 1) := by
+    exact ⟨ k, by linarith ⟩
+  have h_eq' : 19 ∣ 36 * 19 ^ 2 * k' ^ 3 - 1 := by
+    exact Exists.elim h_eq fun x hx => ⟨ x, by linarith ⟩
+  norm_num [ Int.dvd_iff_emod_eq_zero, Int.add_emod, Int.sub_emod, Int.mul_emod ] at h_eq'
+/-! ## Section 2. The cubic residue criterion (Theorem 2.1) -/
+/-
+Theorem 2.1(1): for a prime `p ≡ 2 (mod 3)` the cubing map is a bijection on `ZMod p`.
+-/
+theorem cube_bijective_of_two_mod_three {p : ℕ} [Fact p.Prime] (hp : p % 3 = 2) :
+    Function.Bijective (fun x : ZMod p => x ^ 3) := by
+  convert Finite.injective_iff_bijective.mp _ using 1;
+  · infer_instance;
+  · -- If $x^3 = y^3$, then $(x/y)^3 = 1$.
+    intro x y hxy
+    by_cases hy : y = 0;
+    · aesop;
+    · -- Since $p \equiv 2 \pmod{3}$, we have that $3 \nmid p-1$, thus $x^3 = y^3$ implies $x = y$.
+      have h_order : ∀ x : ZMod p, x^3 = 1 → x = 1 := by
+        intro x hx
+        have h_order : orderOf x ∣ 3 := by
+          exact orderOf_dvd_of_pow_eq_one hx
+        have h_order_div : orderOf x ∣ p - 1 := by
+          exact orderOf_dvd_iff_pow_eq_one.mpr ( by rw [ ZMod.pow_card_sub_one_eq_one ] ; aesop )
+        have h_order_eq : orderOf x = 1 := by
+          have := Nat.le_of_dvd ( by decide ) h_order; interval_cases _ : orderOf x <;> simp_all +decide ; omega;
+        exact (by
+        aesop);
+      specialize h_order ( x / y ) ; simp_all +decide [ div_pow, div_eq_iff ] ;
+/-
+Theorem 2.1(1): explicit cube root.  When `p ≡ 2 (mod 3)`, every element `c : ZMod p`
+is the cube of `c ^ ((2 p - 1)/3)`.
+-/
+theorem cube_root_formula {p : ℕ} [Fact p.Prime] (hp : p % 3 = 2) (c : ZMod p) :
+    (c ^ ((2 * p - 1) / 3)) ^ 3 = c := by
+  by_cases hc : c = 0 <;> simp_all +decide [ ← pow_mul ];
+  · exact le_tsub_of_add_le_left ( by linarith [ show p > 1 from Fact.out ] );
+  · rw [ Nat.div_mul_cancel ( show 3 ∣ 2 * p - 1 from Nat.dvd_of_mod_eq_zero ( by omega ) ) ];
+    rw [ show 2 * p - 1 = p - 1 + p by omega, pow_add, ZMod.pow_card_sub_one_eq_one hc ] ; norm_num
+/-
+Theorem 2.1(1): for a prime `p ≥ 5`, `p ≡ 2 (mod 3)`, the equation `36 n^3 = 19` has a
+unique solution in `ZMod p`.
+-/
+theorem exists_unique_of_two_mod_three {p : ℕ} [Fact p.Prime] (hp5 : 5 ≤ p)
+    (hp : p % 3 = 2) : ∃! n : ZMod p, 36 * n ^ 3 = 19 := by
+  -- We want a unique n : ZMod p with 36 * n^3 = 19.
+  -- The map g : x ↦ 36 * x^3 is bijective: it is the composition of the cubing map (bijective by cube_bijective_of_two_mod_three hp) with multiplication by the unit 36. Since p ≥ 5, 36 ≠ 0 in ZMod p (p prime, p ∤ 36 since p ≥ 5 and 36 = 2^2*3^2, p ≠ 2,3). Multiplication by a nonzero element of the field ZMod p is bijective. So g is bijective, hence there is a unique preimage of 19.
+  have h_bijective : Function.Bijective (fun x : ZMod p => 36 * x ^ 3) := by
+    -- Since $p \geq 5$, $36 \neq 0$ in $ZMod p$ (p prime, p ∤ 36 since p ≥ 5 and 36 = 2^2*3^2, p ≠ 2,3). Multiplication by a nonzero element of the field $ZMod p$ is bijective.
+    have h_mul_bijective : Function.Bijective (fun x : ZMod p => 36 * x) := by
+      exact ⟨ mul_right_injective₀ ( show ( 36 : ZMod p ) ≠ 0 from by erw [ Ne.eq_def, ZMod.natCast_eq_zero_iff ] ; exact fun h => by have := Nat.le_of_dvd ( by decide ) h; interval_cases p <;> trivial ), mul_left_surjective₀ ( show ( 36 : ZMod p ) ≠ 0 from by erw [ Ne.eq_def, ZMod.natCast_eq_zero_iff ] ; exact fun h => by have := Nat.le_of_dvd ( by decide ) h; interval_cases p <;> trivial ) ⟩;
+    convert h_mul_bijective.comp ( cube_bijective_of_two_mod_three hp ) using 1;
+  exact h_bijective.existsUnique _
+/-
+Theorem 2.1(2): for a prime `p ≥ 5`, `p ≡ 1 (mod 3)`, the equation `36 n^3 = 19` is
+solvable in `ZMod p` if and only if the cubic-residue condition `c_p^((p-1)/3) = 1` holds,
+where `c_p = 19 · 36⁻¹`.
+-/
+theorem solvable_iff_one_mod_three {p : ℕ} [Fact p.Prime] (hp5 : 5 ≤ p) (hp19 : p ≠ 19)
+    (hp : p % 3 = 1) :
+    (∃ n : ZMod p, 36 * n ^ 3 = 19) ↔
+      ((19 : ZMod p) * (36 : ZMod p)⁻¹) ^ ((p - 1) / 3) = 1 := by
+  constructor;
+  · rintro ⟨ n, hn ⟩;
+    rw [ ← hn ];
+    rw [ show ( 36 : ZMod p ) * n ^ 3 * 36⁻¹ = n ^ 3 by rw [ mul_right_comm, mul_inv_cancel₀ ( show ( 36 : ZMod p ) ≠ 0 from by erw [ Ne.eq_def, ZMod.natCast_eq_zero_iff ] ; exact fun h => by have := Nat.le_of_dvd ( by linarith ) h; interval_cases p <;> trivial ), one_mul ] ];
+    rw [ ← pow_mul, Nat.mul_div_cancel' ];
+    · rw [ ZMod.pow_card_sub_one_eq_one ];
+      rintro rfl; norm_num at hn;
+      erw [ eq_comm, ZMod.natCast_eq_zero_iff ] at hn ; have := Nat.le_of_dvd ( by decide ) hn ; interval_cases p <;> contradiction;
+    · omega;
+  · intro h
+    obtain ⟨g, hg⟩ : ∃ g : (ZMod p)ˣ, (g ^ 3 = (19 * (36 : ZMod p)⁻¹)) := by
+      -- Since $g$ is a generator of the multiplicative group modulo $p$, we can write $19 \cdot 36^{-1} = g^k$ for some integer $k$.
+      obtain ⟨k, hk⟩ : ∃ k : ℕ, (19 * (36 : ZMod p)⁻¹) = (IsCyclic.exists_generator (α := (ZMod p)ˣ)).choose ^ k := by
+        have h_gen : ∀ x : (ZMod p)ˣ, ∃ k : ℕ, x = (IsCyclic.exists_generator (α := (ZMod p)ˣ)).choose ^ k := by
+          intro x;
+          have := Exists.choose_spec ( IsCyclic.exists_generator ( α := ( ZMod p ) ˣ ) );
+          obtain ⟨ k, rfl ⟩ := this x; use Int.toNat ( k % ( orderOf ( Exists.choose ( IsCyclic.exists_generator ( α := ( ZMod p ) ˣ ) ) ) ) ) ; simp +decide [ ← zpow_natCast, Int.toNat_of_nonneg ( Int.emod_nonneg _ <| Nat.cast_ne_zero.mpr <| ne_of_gt <| orderOf_pos _ ), zpow_mod_orderOf ] ;
+        obtain ⟨ k, hk ⟩ := h_gen ( Units.mk0 ( 19 * ( 36 : ZMod p ) ⁻¹ ) ( by
+          simp +zetaDelta at *;
+          constructor <;> intro h <;> erw [ ZMod.natCast_eq_zero_iff ] at h <;> have := Nat.le_of_dvd ( by decide ) h <;> interval_cases p <;> trivial ) )
+        generalize_proofs at *;
+        exact ⟨ k, by simpa [ Units.ext_iff ] using hk ⟩;
+      -- Since $g$ is a generator of the multiplicative group modulo $p$, we know that $g^{(p-1)/3}$ is a cube root of $1$.
+      have h_cube_root : k % 3 = 0 := by
+        have h_cube_root : (IsCyclic.exists_generator (α := (ZMod p)ˣ)).choose ^ (k * ((p - 1) / 3)) = 1 := by
+          convert h using 1 ; rw [ hk ] ; norm_cast ; ring_nf;
+          simp +decide [ ← Units.val_inj, pow_mul ];
+        have h_order : orderOf (IsCyclic.exists_generator (α := (ZMod p)ˣ)).choose = p - 1 := by
+          rw [ orderOf_eq_card_of_forall_mem_zpowers ];
+          · norm_num [ Nat.totient_prime Fact.out ];
+          · exact fun x => IsCyclic.exists_generator ( α := ( ZMod p ) ˣ ) |> Exists.choose_spec |> fun h => h x;
+        have := orderOf_dvd_iff_pow_eq_one.mpr h_cube_root; simp_all +decide [ Nat.dvd_iff_mod_eq_zero ] ;
+        rw [ ← Nat.dvd_iff_mod_eq_zero ] at *;
+        exact Nat.dvd_of_mul_dvd_mul_right ( Nat.div_pos ( Nat.le_sub_one_of_lt ( by linarith ) ) zero_lt_three ) ( dvd_trans ( by rw [ Nat.mul_div_cancel' ( show 3 ∣ p - 1 from Nat.dvd_of_mod_eq_zero ( by omega ) ) ] ) this );
+      obtain ⟨ m, rfl ⟩ := Nat.modEq_zero_iff_dvd.mp h_cube_root; use ( IsCyclic.exists_generator ( α := ( ZMod p ) ˣ ) ).choose ^ m; simp_all +decide [ pow_mul' ] ;
+    use g.val;
+    by_cases h : ( 36 : ZMod p ) = 0 <;> simp_all +decide [ mul_comm, mul_left_comm ]
+/-
+Theorem 2.1(2): when the cubic-residue condition holds, there are exactly three
+solutions of `36 n^3 = 19` in `ZMod p`.
+-/
+theorem cube_roots_card_of_one_mod_three {p : ℕ} [Fact p.Prime] (hp5 : 5 ≤ p)
+    (hp19 : p ≠ 19) (hp : p % 3 = 1)
+    (hc : ((19 : ZMod p) * (36 : ZMod p)⁻¹) ^ ((p - 1) / 3) = 1) :
+    (Finset.univ.filter (fun n : ZMod p => 36 * n ^ 3 = 19)).card = 3 := by
+  -- By definition of $c_p$, we know that $c_p = 19 \cdot 36^{-1}$ has a cube root.
+  obtain ⟨n₀, hn₀⟩ : ∃ n₀ : ZMod p, 36 * n₀ ^ 3 = 19 := by
+    convert solvable_iff_one_mod_three hp5 hp19 hp |>.2 hc using 1;
+  -- For any $n$, $36*n^3 = 19 ↔ 36*n^3 = 36*n₀^3 ↔ n^3 = n₀^3$ (cancel the unit $36$) ↔ $(n/n₀)^3 = 1$ ($n₀ ≠ 0$).
+  have h_eq : {n : ZMod p | 36 * n ^ 3 = 19} = Finset.image (fun x : ZMod p => x * n₀) {x : ZMod p | x ^ 3 = 1} := by
+    ext n;
+    by_cases hn₀ : n₀ = 0 <;> simp_all +decide [ pow_succ, mul_assoc ];
+    · rcases p with ( _ | _ | _ | _ | _ | _ | _ | _ | _ | _ | _ | _ | _ | _ | _ | _ | _ | _ | _ | _ | _ | p ) <;> cases ‹ ( 0 : ZMod _ ) = 19 › <;> contradiction;
+    · constructor;
+      · intro hn
+        use n / n₀;
+        grind +qlia;
+      · grind;
+  -- Since $n₀ \neq 0$, the map $x \mapsto x * n₀$ is a bijection between the set of cube roots of unity and the set of solutions to $36n^3 = 19$.
+  have h_bij : Finset.card {x : ZMod p | x ^ 3 = 1} = 3 := by
+    -- Since $p \equiv 1 \pmod{3}$, we know that there exists a primitive cube root of unity $\zeta$ in $\mathbb{Z}/p\mathbb{Z}$.
+    obtain ⟨ζ, hζ⟩ : ∃ ζ : ZMod p, ζ ^ 3 = 1 ∧ ζ ≠ 1 := by
+      -- Since $p \equiv 1 \pmod{3}$, we know that there exists a primitive cube root of unity $\zeta$ in $\mathbb{Z}/p\mathbb{Z}$ by definition of primitive roots.
+      obtain ⟨g, hg⟩ : ∃ g : ZMod p, orderOf g = p - 1 := by
+        obtain ⟨ g, hg ⟩ := IsCyclic.exists_generator ( α := ( ZMod p )ˣ );
+        use g; rw [ orderOf_units, orderOf_eq_card_of_forall_mem_zpowers hg ] ; simp +decide [ Nat.totient_prime Fact.out ] ;
+      refine' ⟨ g ^ ( ( p - 1 ) / 3 ), _, _ ⟩;
+      · rw [ ← pow_mul, Nat.div_mul_cancel ( show 3 ∣ p - 1 from Nat.dvd_of_mod_eq_zero ( by omega ) ), ← hg, pow_orderOf_eq_one ];
+      · intro H; have := orderOf_dvd_iff_pow_eq_one.mpr H; rw [ hg ] at this; exact absurd this ( Nat.not_dvd_of_pos_of_lt ( Nat.div_pos ( Nat.le_sub_one_of_lt ( by linarith ) ) zero_lt_three ) ( Nat.div_lt_self ( Nat.sub_pos_of_lt ( by linarith ) ) ( by norm_num ) ) ) ;
+    -- Since $\zeta$ is a primitive cube root of unity, the set of cube roots of unity is $\{1, \zeta, \zeta^2\}$.
+    have h_cube_roots : {x : ZMod p | x ^ 3 = 1} = {1, ζ, ζ^2} := by
+      grind;
+    rw [ show ( { x : ZMod p | x ^ 3 = 1 } : Finset ( ZMod p ) ) = { 1, ζ, ζ ^ 2 } by ext; simpa using Set.ext_iff.mp h_cube_roots _ ] ; rw [ Finset.card_insert_of_notMem, Finset.card_insert_of_notMem ] <;> norm_num [ hζ ]; all_goals grind;
+  convert h_bij using 1;
+  convert Finset.card_image_of_injective _ ( mul_left_injective₀ <| show n₀ ≠ 0 from _ ) using 1;
+  · exact congr_arg Finset.card ( by ext; simpa using Set.ext_iff.mp h_eq _ );
+  · rintro rfl; norm_num at hn₀;
+    rcases p with ( _ | _ | _ | _ | _ | _ | _ | _ | _ | _ | _ | _ | _ | _ | _ | _ | _ | _ | _ | _ | _ | p ) <;> cases hn₀ <;> contradiction
+/-! ## Section 3. Necessary and sufficient conditions (Theorem 3.1)
+The complete characterisation: `m ∣ 36 n^3 - 19` reduces, by CRT, to the prime-power
+conditions, together with the forbidden-prime constraints from Section 1. -/
+/-
+Theorem 3.1: complete characterisation of `m ∣ 36 n^3 - 19`.
+`m ∣ 36 n^3 - 19` if and only if `m` is odd, `3 ∤ m`, `19^2 ∤ m`, and for every prime
+`p ∣ m` the prime-power `p^{v_p(m)}` divides `36 n^3 - 19`.  (The per-prime conditions are
+made explicit, prime type by prime type, in Theorem 2.1 and Proposition 1.2.)
+-/
+theorem complete_characterisation (m : ℕ) (hm : 1 ≤ m) (n : ℤ) :
+    (m : ℤ) ∣ 36 * n ^ 3 - 19 ↔
+      Odd m ∧ ¬ (3 ∣ m) ∧ ¬ (361 ∣ m) ∧
+        ∀ p ∈ m.primeFactors,
+          ((p ^ m.factorization p : ℕ) : ℤ) ∣ 36 * n ^ 3 - 19 := by
+  constructor <;> intro h;
+  · refine' ⟨ _, _, _, fun p hp => dvd_trans ( mod_cast Nat.ordProj_dvd _ _ ) h ⟩;
+    · replace h := h.even; simp_all +decide [ parity_simps ] ;
+    · exact fun h' => by have := dvd_trans ( Int.natCast_dvd_natCast.mpr h' ) h; norm_num [ Int.dvd_iff_emod_eq_zero, Int.sub_emod, Int.mul_emod, pow_three ] at this;
+    · exact fun h' => not_threesixtyone_dvd n <| dvd_trans ( mod_cast h' ) h;
+  · -- Since m is odd, 3 doesn't divide m, and 361 doesn't divide m, the prime factors of m are all distinct and their powers are coprime.
+    have h_coprime : ∀ p ∈ m.primeFactors, ∀ q ∈ m.primeFactors, p ≠ q → Nat.gcd (p ^ (m.factorization p)) (q ^ (m.factorization q)) = 1 := by
+      simp +contextual [ Nat.coprime_pow_primes ];
+    convert Finset.prod_dvd_of_coprime _ _;
+    any_goals exact m.primeFactors;
+    rotate_left;
+    use fun p => p ^ m.factorization p;
+    · intros p hp q hq hpq;
+      exact Int.isCoprime_iff_gcd_eq_one.mpr (h_coprime p hp q hq hpq);
+    · aesop;
+    · exact_mod_cast Eq.symm ( Nat.factorization_prod_pow_eq_self ( by positivity ) )
+/-! ## Section 5. Explicit congruence pairs
+All congruences `(1)–(11)` of the paper, verified computationally. -/
+/-- (1) `n ≡ 4 (mod 5)`. -/
+theorem cong_5 : (5 : ℤ) ∣ 36 * (4 : ℤ) ^ 3 - 19 := by native_decide
+/-- (2) `n ≡ 10 (mod 11)`. -/
+theorem cong_11 : (11 : ℤ) ∣ 36 * (10 : ℤ) ^ 3 - 19 := by native_decide
+/-- (3) The 14-prime congruence (22-digit modulus). -/
+theorem cong_14 :
+    (3782234599225650235415 : ℤ) ∣
+      36 * (2094194294170672539119 : ℤ) ^ 3 - 19 := by native_decide
+/-- (4) The 19-prime congruence (33-digit modulus). -/
+theorem cong_19 :
+    (122289400386770180574091623094795 : ℤ) ∣
+      36 * (2061198082866885394580192416899 : ℤ) ^ 3 - 19 := by native_decide
+/-- (5) First 20-prime branch at `p = 61` (34-digit modulus). -/
+theorem cong_20a :
+    (7459653423592981015019589008782495 : ℤ) ∣
+      36 * (6850267619741996997543711085725419 : ℤ) ^ 3 - 19 := by native_decide
+/-- (6) Second 20-prime branch at `p = 61`. -/
+theorem cong_20b :
+    (7459653423592981015019589008782495 : ℤ) ∣
+      36 * (246639998856407246542763438606489 : ℤ) ^ 3 - 19 := by native_decide
+/-- (7) Third 20-prime branch at `p = 61`. -/
+theorem cong_20c :
+    (7459653423592981015019589008782495 : ℤ) ∣
+      36 * (3181585608138891580320962392881569 : ℤ) ^ 3 - 19 := by native_decide
+/-- (8) The 25-prime congruence (46-digit modulus). -/
+theorem cong_25 :
+    (5401692671255252249102543156076416601168074395 : ℤ) ∣
+      36 * (4019183757032484548523860772875824760867794909 : ℤ) ^ 3 - 19 := by native_decide
+/-- (9) The 30-prime congruence (58-digit modulus). -/
+theorem cong_30 :
+    (5103243448423190660018404944928000789930010683701564743465 : ℤ) ∣
+      36 * (1820733127217158956577191662349053768348092988705876831189 : ℤ) ^ 3 - 19 := by
+  native_decide
+/-- (10) The 40-prime congruence (83-digit modulus). -/
+theorem cong_40 :
+    (73002740255141859079375773096078135885056475263749065058307196472256356922583423605 : ℤ) ∣
+      36 * (64186161674016772165436788379325330529384310249919785608574714088348016689324291069 : ℤ) ^ 3 - 19 := by
+  native_decide
+/-- (11) The 49-prime congruence (107-digit modulus). -/
+theorem cong_49 :
+    (53242655346920594454923083999920274605788284504467036396399875000401315167289606342570029910838928236119345 : ℤ) ∣
+      36 * (35667787894172015979160493470749840557991890572930777691036590258659021850176071393363418182763729164869824 : ℤ) ^ 3 - 19 := by
+  native_decide
+/-! ## Section 7. Structural observations and obstructions -/
+/-
+Proposition 7.1: the moduli grow without bound.  For any bound `B` there is a congruence
+pair `(n, M)` with `M > B` and `M ∣ 36 n^3 - 19`.  (Uses Dirichlet's theorem to find a large
+prime `p ≡ 2 (mod 3)`, which always admits a cube root.)
+-/
+theorem moduli_unbounded (B : ℤ) : ∃ (M : ℤ) (n : ℤ), B < M ∧ M ∣ 36 * n ^ 3 - 19 := by
+  -- By Nat.infinite_setOf_prime_and_eq_mod, the set {p | p.Prime ∧ (p : ZMod 3) = 2} is infinite.
+  have h_inf : Set.Infinite {p : ℕ | Nat.Prime p ∧ p % 3 = 2} := by
+    convert Nat.infinite_setOf_prime_and_eq_mod ( show IsUnit ( 2 : ZMod 3 ) by decide ) using 1;
+    norm_num [ Set.ext_iff, ZMod.natCast_eq_natCast_iff' ];
+    intro x hx; erw [ ZMod.natCast_eq_natCast_iff ] ; norm_num [ Nat.ModEq ] ;
+  obtain ⟨ p, hp₁, hp₂ ⟩ := h_inf.exists_gt ( Int.toNat B + 5 );
+  -- By exists_unique_of_two_mod_three, there exists a unique $n_0 \in \mathbb{Z}/p\mathbb{Z}$ such that $36 n_0^3 = 19$.
+  obtain ⟨ n₀, hn₀ ⟩ : ∃ n₀ : ZMod p, 36 * n₀ ^ 3 = 19 := by
+    haveI := Fact.mk hp₁.1;
+    exact exists_unique_of_two_mod_three ( by linarith [ Int.self_le_toNat B ] ) hp₁.2 |> ExistsUnique.exists;
+  refine' ⟨ p, n₀.val, _, _ ⟩;
+  · linarith [ Int.self_le_toNat B ];
+  · haveI := Fact.mk hp₁.1; simp_all +decide [ ← ZMod.intCast_zmod_eq_zero_iff_dvd ] ;
+/-- Proposition 7.2: hard obstruction at `2`, `3` and `19^2`.  None of `2`, `3`, `361`
+divides `36 n^3 - 19` for any `n`. -/
+theorem hard_obstruction (n : ℤ) :
+    ¬ (2 ∣ 36 * n ^ 3 - 19) ∧ ¬ (3 ∣ 36 * n ^ 3 - 19) ∧ ¬ (361 ∣ 36 * n ^ 3 - 19) :=
+  ⟨not_two_dvd n, not_three_dvd n, not_threesixtyone_dvd n⟩
+end Congruences36n3
