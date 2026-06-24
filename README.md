@@ -1,3 +1,6 @@
+This repository contains Magma and SageMath codes relevant to exploring the sums of three cubes problem largely for 114. The first two folders are different projects I am running different
+equations which leads to solving this problem once we search within the right ranges. While this many files might look a bit messy, I have referenced them in a [paper](https://figshare.com/articles/preprint/Closed_form_formulas_on_the_sums_of_three_cubes_for_k_114_192_/30509981?file=61812286) which is still in progress.
+
 ## Approach 1
 
 This project [\[1\]](https://github.com/JAgbanwa/heading-somewhere-with-this/tree/main/Potential%20directions%20with%20specific%20equations) involves running computational searches 
