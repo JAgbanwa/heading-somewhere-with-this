@@ -2,7 +2,8 @@
 
 This project [\[1\]](https://github.com/JAgbanwa/heading-somewhere-with-this/tree/main/Potential%20directions%20with%20specific%20equations) involves running computational searches 
 for solutions to a diophantine equation, which after a substitution returns rational solutions to $x^3 + y^3 + z^3 = 114$. These computational searches were run over all 8 cores of my 
-MacBook M1 Pro in two waves. Wave 1 had 2/8 its 8 cores returning integer solutions with 12 hours of search and Wave 2 having 6 out of 8 cores returning integer solutions.
+MacBook M1 Pro in two waves. Wave 1 had 2/8 its 8 cores returning integer solutions with 12 hours of search and Wave 2 having 7 out of 8 cores returning integer solutions. 
+The computations of Wave 2 lasted 3 days.
 ## Claim
 The equation as in [\[1\]](https://github.com/JAgbanwa/heading-somewhere-with-this/tree/main/Potential%20directions%20with%20specific%20equations) has infinitely many integer solutions 
 which translate to non-integer rational solutions to $x^3 + y^3 + z^3 = 114$ and a finite number of such integers leading to integer solutions to this problem. Such set of integers are
@@ -42,4 +43,5 @@ y'^2 = (\dfrac{12*X + 7 + 918583820716174318803312890087040142187401923066281653
 \dfrac{129182928346376740266595714425791085284245922171550725680478307284846030783597125778739479277660753160465037725840975213894112604588699561254027673109529241064975878177679675500*K^3 + 304455689460548160236233880912897083350547440666170452919130542086637178628542126425039176952449104709441283506436896495420606480949523188380756198674086801013469086953056233300*K^2 +
 239178318764536020086184553233652317243360434423076318137697542423713396688239814775749095479077892321916015880457454407344959931344023147660746987382227693505245691315194788260*K + 62632286785192847228905781564366028572624225647875692400327605775540449154612697671196453168892774671460403022303687769142467749764265263811872872296667835977971923384382049705}{36 *(12*X + 7)}
 ```
-A final resort would be to turn to Charity Engine. I sent a mail to CE pending feedback.
+A final resort would be to turn to Charity Engine. I sent an email to CE pending feedback with this [code](https://github.com/JAgbanwa/heading-somewhere-with-this/tree/main/Efforts%20towards%20solving%20Y%5E2%20%20%3D%2036%20%5Ccdot%20x%5E3%20%2B%2036m%5E2%20%5Ccdot%20x%5E2%20%2B%2012%20m%5E3%20%5Ccdot%20x%20%2B%20m%5E4%20-%2019m%20/search_114)
+.
