@@ -1,0 +1,258 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{seqsplit}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.7em}
+\setlist{nosep}
+\sloppy
+\emergencystretch=3em
+
+\newcommand{\bignum}[1]{\texttt{\footnotesize\seqsplit{#1}}}
+\newcommand{\QQ}{\mathbb{Q}}
+
+\title{The Mordell-Type Weierstrass Curve Associated to the Given Equation}
+\author{Derived from the parameterized equation}
+\date{28 June 2026}
+
+\begin{document}
+\maketitle
+
+\section*{1. Compression of the original equation}
+
+Write the equation in the compact form
+\begin{equation}\label{eq:original}
+ y^2=(12x+7+L_1k+L_0)^2+\frac{P(k)}{12x+7},
+\end{equation}
+where
+\[
+P(k)=C_3k^3+C_2k^2+C_1k+C_0.
+\]
+The constants from the prompt are:
+\begin{description}[leftmargin=3.2em,style=nextline]
+\item[$L_1$] \bignum{30619460690539143960110429669568004739580064102209388460790}
+\item[$L_0$] \bignum{10924398763302953739463149974094322610088557932235260987134}
+\item[$C_3$] \bignum{4784552901717657046910952386140410566083182302650026877054752121660964103096189843657017751024472339276482878734850933847930096466248131898297321226278860780184291784358506500}
+\item[$C_2$] \bignum{5121092529754964411449161340146101420228399591452111284241547501882790784594208318617802044125288709834578672750549563070264585752458229541411205828336479875946370066410764700}
+\item[$C_1$] \bignum{1827101315213597820000110416948106607208358810083338384275965340441733187215493526894277304231141196649229390998742010658767143176530548275036317765383648969084915427119792620}
+\item[$C_0$] \bignum{217290822004537567821296280762125148628451240700355478371468113838106817035358593680548375733558724611766519425198024760434348671386193909776843642323732294542277989631353665}
+\end{description}
+
+Both linear coefficients are divisible by \(6\). Define
+\begin{equation}\label{eq:n-def}
+ n=n(k)=ak+b,
+\end{equation}
+where
+\begin{description}[leftmargin=3.2em,style=nextline]
+\item[$a=L_1/6$] \bignum{5103243448423190660018404944928000789930010683701564743465}
+\item[$b=L_0/6$] \bignum{1820733127217158956577191662349053768348092988705876831189}
+\end{description}
+Then
+\begin{equation}\label{eq:linear-compress}
+ L_1k+L_0=6n(k).
+\end{equation}
+A direct coefficient comparison gives
+\begin{equation}\label{eq:coefficient-check}
+ C_3=36a^3,\qquad C_2=108a^2b,\qquad C_1=108ab^2,\qquad C_0=36b^3-19.
+\end{equation}
+Indeed,
+\[
+36(ak+b)^3-19
+=36a^3k^3+108a^2bk^2+108ab^2k+(36b^3-19).
+\]
+Therefore the whole numerator is exactly
+\begin{equation}\label{eq:P-identity}
+ P(k)=36n(k)^3-19.
+\end{equation}
+
+Now put
+\begin{equation}\label{eq:q-def}
+ q=12x+7.
+\end{equation}
+Using \eqref{eq:linear-compress} and \eqref{eq:P-identity}, equation \eqref{eq:original} becomes
+\begin{equation}\label{eq:compressed}
+ y^2=(q+6n)^2+\frac{36n^3-19}{q},
+ \qquad n=n(k),\quad q=12x+7.
+\end{equation}
+The denominator condition is \(q\neq0\), equivalently \(12x+7\neq0\).
+
+\section*{2. Derivation of the Weierstrass curve}
+
+Let
+\begin{equation}\label{eq:R-def}
+ R=36n^3-19.
+\end{equation}
+Then \eqref{eq:compressed} is
+\begin{equation}\label{eq:qR-form}
+ y^2=(q+6n)^2+\frac{R}{q}.
+\end{equation}
+Define
+\begin{equation}\label{eq:UY-def}
+ U=\frac{R}{q},
+ \qquad
+ Y=Uy=\frac{Ry}{q}.
+\end{equation}
+Since \(q=R/U\), equation \eqref{eq:qR-form} gives
+\begin{align*}
+Y^2
+&=U^2y^2\\
+&=U^2\left(\left(\frac{R}{U}+6n\right)^2+U\right)\\
+&=(R+6nU)^2+U^3\\
+&=U^3+36n^2U^2+12nRU+R^2.
+\end{align*}
+Thus the intermediate cubic is
+\begin{equation}\label{eq:U-curve}
+ Y^2=U^3+36n^2U^2+12nRU+R^2.
+\end{equation}
+Remove the quadratic term by shifting
+\begin{equation}\label{eq:X-shift}
+ X=U+12n^2,
+ \qquad
+ U=X-12n^2.
+\end{equation}
+Substituting \eqref{eq:X-shift} into \eqref{eq:U-curve} gives
+\begin{align*}
+Y^2
+&=(X-12n^2)^3+36n^2(X-12n^2)^2\\
+&\qquad +12nR(X-12n^2)+R^2.
+\end{align*}
+Using \(R=36n^3-19\), the \(X^2\)-coefficient cancels. The coefficient of \(X\) is
+\[
+12nR-432n^4
+=12n(36n^3-19)-432n^4
+=-228n.
+\]
+The constant term is
+\begin{align*}
+3456n^6-144n^3R+R^2
+&=3456n^6-144n^3(36n^3-19)+(36n^3-19)^2\\
+&=-432n^6+1368n^3+361.
+\end{align*}
+Therefore the associated short Weierstrass equation is
+\begin{equation}\label{eq:curve-n}
+\boxed{Y^2=X^3-228nX-432n^6+1368n^3+361.}
+\end{equation}
+Equivalently,
+\begin{equation}\label{eq:curve-n-alt}
+\boxed{Y^2=X^3-228nX-\left(432n^6-1368n^3-361\right).}
+\end{equation}
+
+\section*{3. Final curve attached to the parameter \(k\)}
+
+Substituting \(n=n(k)=ak+b\) into \eqref{eq:curve-n}, the curve attached to the original equation is
+\begin{equation}\label{eq:curve-k}
+\boxed{
+E_k:\quad
+Y^2=X^3-228n(k)X-432n(k)^6+1368n(k)^3+361.
+}
+\end{equation}
+Equivalently,
+\begin{equation}\label{eq:curve-k-alt}
+\boxed{
+E_k:\quad
+Y^2=X^3-228n(k)X-\left(432n(k)^6-1368n(k)^3-361\right).
+}
+\end{equation}
+Here
+\[
+n(k)=ak+b,
+\]
+with \(a\) and \(b\) given in Section 1.
+
+This is the natural Mordell-type elliptic curve in short Weierstrass form. Strictly speaking, it is not a pure Mordell curve of the special form \(Y^2=X^3+D\), because the linear term \(-228n(k)X\) is present.
+
+\section*{4. Birational correspondence}
+
+The forward change of variables from the original equation to the Weierstrass equation is
+\begin{equation}\label{eq:forward}
+\boxed{
+X=12n^2+\frac{36n^3-19}{12x+7},
+\qquad
+Y=\frac{(36n^3-19)y}{12x+7}.
+}
+\end{equation}
+Conversely, away from the exceptional denominator \(X=12n^2\), one recovers
+\begin{equation}\label{eq:inverse}
+\boxed{
+12x+7=\frac{36n^3-19}{X-12n^2},
+\qquad
+ y=\frac{Y}{X-12n^2}.
+}
+\end{equation}
+Equivalently,
+\begin{equation}\label{eq:inverse-x}
+\boxed{
+ x=\frac{1}{12}\left(\frac{36n^3-19}{X-12n^2}-7\right),
+\qquad
+ y=\frac{Y}{X-12n^2}.
+}
+\end{equation}
+Thus rational points on \(E_k\) with \(X\ne12n(k)^2\) correspond rationally to solutions of the original equation, subject to \(12x+7\ne0\).
+
+For integer solutions in the original variables, the inverse map must additionally produce integral values. In particular,
+\[
+q=\frac{36n^3-19}{X-12n^2}
+\]
+must be an integer satisfying
+\[
+q\equiv7\pmod{12},
+\]
+and \(Y/(X-12n^2)\) must be an integer.
+
+\section*{5. Nonsingularity}
+
+For a short Weierstrass curve
+\[
+Y^2=X^3+\mathcal A X+\mathcal B,
+\]
+we have
+\[
+\mathcal A=-228n,
+\qquad
+\mathcal B=-432n^6+1368n^3+361.
+\]
+A direct factorization gives
+\begin{equation}\label{eq:disc-factor}
+4\mathcal A^3+27\mathcal B^2
+=27(4n^3-19)(36n^3-19)^3.
+\end{equation}
+Therefore the discriminant is
+\begin{equation}\label{eq:discriminant}
+\Delta=-16(4\mathcal A^3+27\mathcal B^2)
+=-432(4n^3-19)(36n^3-19)^3.
+\end{equation}
+For every integer \(n\), this is nonzero, since neither \(4n^3=19\) nor \(36n^3=19\) has an integer solution. Hence for integer \(k\), the curve \(E_k\) is nonsingular over \(\QQ\).
+
+\section*{6. Summary}
+
+The huge equation reduces to
+\[
+y^2=(q+6n)^2+\frac{36n^3-19}{q},
+\qquad
+q=12x+7,
+\qquad
+n=n(k)=ak+b.
+\]
+The associated curve is
+\[
+\boxed{Y^2=X^3-228nX-432n^6+1368n^3+361,}
+\]
+where \(n=n(k)\). Equivalently,
+\[
+\boxed{E_k:\ Y^2=X^3-228n(k)X-\left(432n(k)^6-1368n(k)^3-361\right).}
+\]
+The explicit correspondence is
+\[
+X=12n^2+\frac{36n^3-19}{12x+7},
+\qquad
+Y=\frac{(36n^3-19)y}{12x+7}.
+\]
+
+\end{document}
