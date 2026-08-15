@@ -1,0 +1,46 @@
+Z := Integers();
+
+N := Z!172757;
+
+sols := {};
+
+for a in Divisors(Abs(N)) do
+    for eps in [-1, 1] do
+
+        u := eps*a;
+
+        if N mod u eq 0 then
+            v := N div u;
+
+            /*
+            u = y - x
+            v = y + x
+
+            Hence
+            y = (u+v)/2
+            x = (v-u)/2
+            */
+
+            if IsEven(u + v) and IsEven(v - u) then
+
+                y := (u + v) div 2;
+                x := (v - u) div 2;
+
+                if y^2 - x^2 eq N then
+                    Include(~sols, <x,y>);
+                end if;
+
+            end if;
+
+        end if;
+
+    end for;
+end for;
+
+print "All integer solutions (x,y):";
+
+for P in Sort(Setseq(sols)) do
+    print P;
+end for;
+
+printf "Number of solutions = %o\n", #sols;
